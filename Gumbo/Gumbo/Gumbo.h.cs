@@ -515,7 +515,42 @@ namespace Gumbo
         public string system_identifier;
     }
 
-    partial class GumboNode { }
+    class GumboNode
+    {
+        public GumboNodeType type;
+        public GumboNode parent;
+        public int index_within_parent;
+        public GumboParseFlags parse_flags;
+
+        //TODO:make union?
+        public GumboDocument document;
+        public GumboElement element;
+        public GumboText text;
+
+        public bool node_html_tag_is(GumboTag tag)
+        {
+            //// Like node_tag_in, but for the single-tag case in the HTML namespace
+            //      static bool node_html_tag_is(const GumboNode* node, GumboTag tag) {
+            //return node_qualified_tag_is(node, GUMBO_NAMESPACE_HTML, tag);
+            //  }
+            return node_qualified_tag_is(GumboNamespaceEnum.GUMBO_NAMESPACE_HTML, tag);
+        }
+        public bool node_qualified_tag_is(GumboNamespaceEnum ns, GumboTag tag)
+        {
+            //        // Like node_tag_in, but for the single-tag case.
+            //        static bool node_qualified_tag_is(
+            //    const GumboNode* node, GumboNamespaceEnum ns, GumboTag tag) {
+            //  assert(node);
+            //  return (node->type == GUMBO_NODE_ELEMENT ||
+            //             node->type == GUMBO_NODE_TEMPLATE) &&
+            //         node->v.element.tag == tag && node->v.element.tag_namespace == ns;
+            //}
+            return (type == GumboNodeType.GUMBO_NODE_ELEMENT ||
+                   type == GumboNodeType.GUMBO_NODE_TEMPLATE) &&
+                   element.tag == tag && element.tag_namespace == ns;
+        }
+
+    }
     ///**
     // * The struct used to represent TEXT, CDATA, COMMENT, and WHITESPACE elements.
     // * This contains just a block of text and its position.
@@ -601,24 +636,20 @@ namespace Gumbo
          //   * are owned.
          //   */
          //  GumboVector /* GumboNode* */ children;
-        List<GumboElement> children;
+        public List<GumboElement> children;
 
-        GumboTag tag;
-
-        GumboNamespaceEnum tag_namespace;
-        GumboStringPiece original_end_tag;
-        GumboSourcePosition start_pos;
-        GumboSourcePosition end_pos;
-        List<GumboAttribute> attributes;
+        public GumboTag tag;
+        public GumboNamespaceEnum tag_namespace;
+        public GumboStringPiece original_end_tag;
+        public GumboSourcePosition start_pos;
+        public GumboSourcePosition end_pos;
+        public List<GumboAttribute> attributes;
     }
 
     class GumboAttribute
     {
     }
-    class GumboTag
-    {
 
-    }
 
 
     ///**
@@ -652,17 +683,9 @@ namespace Gumbo
 
 
 
-    class GumboInternalNode
+    class GumboInternalNode : GumboNode
     {
-        GumboNodeType type;
-        GumboNode parent;
-        int index_within_parent;
-        GumboParseFlags parse_flags;
 
-        //TODO:make union?
-        GumboDocument document;
-        GumboElement element;
-        GumboText text;
     }
 
     [Flags]

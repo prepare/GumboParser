@@ -37,6 +37,7 @@
     <Compile Include="Gumbo.h.cs" />
     <Compile Include="GumboParser.c.cs" />
     <Compile Include="GumboParser.h.cs" />
+    <Compile Include="GumboTag.cs" />
     <Compile Include="GumboToken.cs" />
     <Compile Include="InsertionMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
