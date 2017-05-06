@@ -252,10 +252,9 @@ namespace Gumbo
             parser_state._text_node._buffer = new GumboStringBuffer();
             parser_state._open_elements = new List<GumboNode>(10);
             parser_state._active_formatting_elements = new List<GumboNode>(5);
-            parser_state._template_insertion_modes = new List<GumboNode>(5);
+            parser_state._template_insertion_modes = new List<GumboInsertionMode>(5);
             //
-
-
+            //... else fields are set to its default in C#
             this.parser_state = parser_state;
         }
 
