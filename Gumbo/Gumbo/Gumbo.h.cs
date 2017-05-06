@@ -18,6 +18,9 @@
 //// GUMBO_ as a prefix for enum constants (static constants get the Google-style
 //// kGumbo prefix).
 
+using System;
+using System.Collections.Generic;
+
 ///**
 // * @file
 // * @mainpage Gumbo HTML Parser
@@ -502,8 +505,17 @@ namespace Gumbo
     //   */
     //  GumboQuirksModeEnum doc_type_quirks_mode;
     //} GumboDocument;
+    public class GumboDocument
+    {
+        List<GumboNode> children = new List<GumboNode>();
+        public bool has_doctype;
 
+        public string name;
+        public string public_identifier;
+        public string system_identifier;
+    }
 
+    partial class GumboNode { }
     ///**
     // * The struct used to represent TEXT, CDATA, COMMENT, and WHITESPACE elements.
     // * This contains just a block of text and its position.
@@ -528,6 +540,16 @@ namespace Gumbo
     //  GumboSourcePosition start_pos;
     //} GumboText;
 
+    public class GumboText
+    {
+        public string text;
+        public GumboStringPiece original_text;
+        public GumboSourcePosition start_pos;
+    }
+
+    //public struct GumboStringPiece { }
+    //public struct GumboSourcePosition { }
+    //-----------------------------------------------
     ///**
     // * The struct used to represent all HTML elements.  This contains information
     // * about the tag, attributes, and child nodes.
@@ -573,6 +595,32 @@ namespace Gumbo
     //  GumboVector /* GumboAttribute* */ attributes;
     //} GumboElement;
 
+    class GumboElement
+    {    //  /**
+         //   * An array of GumboNodes, containing the children of this element.  Pointers
+         //   * are owned.
+         //   */
+         //  GumboVector /* GumboNode* */ children;
+        List<GumboElement> children;
+
+        GumboTag tag;
+
+        GumboNamespaceEnum tag_namespace;
+        GumboStringPiece original_end_tag;
+        GumboSourcePosition start_pos;
+        GumboSourcePosition end_pos;
+        List<GumboAttribute> attributes;
+    }
+
+    class GumboAttribute
+    {
+    }
+    class GumboTag
+    {
+
+    }
+
+
     ///**
     // * A supertype for GumboElement and GumboText, so that we can include one
     // * generic type in lists of children and cast as necessary to subtypes.
@@ -601,6 +649,27 @@ namespace Gumbo
     //    GumboText text;          // For everything else.
     //  } v;
     //};
+
+
+
+    class GumboInternalNode
+    {
+        GumboNodeType type;
+        GumboNode parent;
+        int index_within_parent;
+        GumboParseFlags parse_flags;
+
+        //TODO:make union?
+        GumboDocument document;
+        GumboElement element;
+        GumboText text;
+    }
+
+    [Flags]
+    enum GumboParseFlags
+    {
+
+    }
 
     ///**
     // * The type for an allocator function.  Takes the 'userdata' member of the
@@ -708,6 +777,14 @@ namespace Gumbo
     //  GumboVector /* GumboError */ errors;
     //} GumboOutput;
 
+    class GumboError { }
+    class GumboInternalOutput
+    {
+        GumboDocument document;
+        GumboNode root;
+        List<GumboError> errors;
+    }
+
     ///**
     // * Parses a buffer of UTF8 text into an GumboNode parse tree.  The buffer must
     // * live at least as long as the parse tree, as some fields (eg. original_text)
@@ -716,6 +793,11 @@ namespace Gumbo
     // * This doesn't support buffers longer than 4 gigabytes.
     // */
     //GumboOutput* gumbo_parse(const char* buffer);
+
+
+    class GumboOutput { }
+    delegate GumboOutput Gumbo_Parse(char[] buffer);
+
 
     ///**
     // * Extended version of gumbo_parse that takes an explicit options structure,
@@ -732,4 +814,9 @@ namespace Gumbo
     //#endif
 
     //#endif  // GUMBO_GUMBO_H_
+
+    //find reference location
+    class GumboInternalOptions { }
+    enum GumboInternalTokenizerState { }
+     
 }

@@ -35,7 +35,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Gumbo.h.cs" />
-    <Compile Include="InsertMode.cs" />
+    <Compile Include="GumboParser.c.cs" />
+    <Compile Include="GumboParser.h.cs" />
+    <Compile Include="GumboToken.cs" />
+    <Compile Include="InsertionMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

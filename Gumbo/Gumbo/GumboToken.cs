@@ -1,0 +1,4 @@
+﻿namespace Gumbo
+{
+    class GumboToken { }
+}
