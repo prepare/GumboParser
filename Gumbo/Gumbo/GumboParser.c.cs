@@ -213,7 +213,7 @@ namespace Gumbo
         {
 
         }
-        void ParserStateInit()
+        void parser_state_init()
         {
             //TODO: review how to alloc new object
 
@@ -257,7 +257,30 @@ namespace Gumbo
             //... else fields are set to its default in C#
             this.parser_state = parser_state;
         }
-
+        void parser_state_destroy()
+        {
+            //static void parser_state_destroy(GumboParser* parser)
+            //{
+            //    GumboParserState* state = parser->_parser_state;
+            //    if (state->_fragment_ctx)
+            //    {
+            //        destroy_node(parser, state->_fragment_ctx);
+            //    }
+            //    gumbo_vector_destroy(parser, &state->_active_formatting_elements);
+            //    gumbo_vector_destroy(parser, &state->_open_elements);
+            //    gumbo_vector_destroy(parser, &state->_template_insertion_modes);
+            //    gumbo_string_buffer_destroy(parser, &state->_text_node._buffer);
+            //    gumbo_parser_deallocate(parser, state);
+            //}
+        }
+        public GumboNode get_document_node()
+        {
+            return this._output.document;
+        }
+        //static GumboNode* get_document_node(GumboParser* parser)
+        //{
+        //    return parser->_output->document;
+        //}
     }
 
 

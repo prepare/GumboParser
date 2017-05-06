@@ -505,7 +505,7 @@ namespace Gumbo
     //   */
     //  GumboQuirksModeEnum doc_type_quirks_mode;
     //} GumboDocument;
-    public class GumboDocument
+    class GumboDocument : GumboNode
     {
         List<GumboNode> children = new List<GumboNode>();
         public bool has_doctype;
@@ -780,9 +780,9 @@ namespace Gumbo
     class GumboError { }
     class GumboInternalOutput
     {
-        GumboDocument document;
-        GumboNode root;
-        List<GumboError> errors;
+        public GumboDocument document;
+        public GumboNode root;
+        public List<GumboError> errors;
     }
 
     ///**
@@ -818,5 +818,5 @@ namespace Gumbo
     //find reference location
     class GumboInternalOptions { }
     enum GumboInternalTokenizerState { }
-     
+
 }
