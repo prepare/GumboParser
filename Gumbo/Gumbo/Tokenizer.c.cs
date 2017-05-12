@@ -45,3 +45,84 @@
 // temporary buffer manipulation.
 
 
+
+namespace Gumbo
+{
+
+
+    partial class GumboParser
+    {
+        bool gumbo_lex(GumboTokenStream output)
+        {
+            //line:2812
+            throw new TODOImplementException();
+            //lex current data to output token stream
+            //bool gumbo_lex(GumboParser* parser, GumboToken* output)
+            //{
+
+            //    // Because of the spec requirements that...
+            //    //
+            //    // 1. Tokens be handled immediately by the parser upon emission.
+            //    // 2. Some states (eg. CDATA, or various error conditions) require the
+            //    // emission of multiple tokens in the same states.
+            //    // 3. The tokenizer often has to reconsume the same character in a different
+            //    // state.
+            //    //
+            //    // ...all state must be held in the GumboTokenizer struct instead of in local
+            //    // variables in this function.  That allows us to return from this method with
+            //    // a token, and then immediately jump back to the same state with the same
+            //    // input if we need to return a different token.  The various emit_* functions
+            //    // are responsible for changing state (eg. flushing the chardata buffer,
+            //    // reading the next input character) to avoid an infinite loop.
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+
+            //    if (tokenizer->_buffered_emit_char != kGumboNoChar)
+            //    {
+            //        tokenizer->_reconsume_current_input = true;
+            //        emit_char(parser, tokenizer->_buffered_emit_char, output);
+            //        // And now that we've avoided advancing the input, make sure we set
+            //        // _reconsume_current_input back to false to make sure the *next* character
+            //        // isn't consumed twice.
+            //        tokenizer->_reconsume_current_input = false;
+            //        tokenizer->_buffered_emit_char = kGumboNoChar;
+            //        return true;
+            //    }
+
+            //    if (maybe_emit_from_temporary_buffer(parser, output))
+            //    {
+            //        return true;
+            //    }
+
+            //    while (1)
+            //    {
+            //        assert(!tokenizer->_temporary_buffer_emit);
+            //        assert(tokenizer->_buffered_emit_char == kGumboNoChar);
+            //        int c = utf8iterator_current(&tokenizer->_input);
+            //        gumbo_debug(
+            //            "Lexing character '%c' (%d) in state %d.\n", c, c, tokenizer->_state);
+            //        StateResult result =
+            //            dispatch_table[tokenizer->_state](parser, tokenizer, c, output);
+            //        // We need to clear reconsume_current_input before returning to prevent
+            //        // certain infinite loop states.
+            //        bool should_advance = !tokenizer->_reconsume_current_input;
+            //        tokenizer->_reconsume_current_input = false;
+
+            //        if (result == RETURN_SUCCESS)
+            //        {
+            //            return true;
+            //        }
+            //        else if (result == RETURN_ERROR)
+            //        {
+            //            return false;
+            //        }
+
+            //        if (should_advance)
+            //        {
+            //            utf8iterator_next(&tokenizer->_input);
+            //        }
+            //    }
+            //}
+        }
+
+    }
+}

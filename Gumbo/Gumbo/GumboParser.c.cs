@@ -355,7 +355,7 @@ namespace Gumbo
             //  return false;
             //}
             throw new System.NotImplementedException();
-            return false;
+
         }
         public void set_insertion_mode(GumboInsertionMode mode)
         {
@@ -4918,8 +4918,9 @@ namespace Gumbo
             //    }
         }
 
-        void gumbo_parse()
+        public void gumbo_parse(char[] buffer)
         {
+
             throw new TODOImplementException();
             //line: 4070
 
@@ -4928,8 +4929,11 @@ namespace Gumbo
             //    &kGumboDefaultOptions, buffer, strlen(buffer));
             //  }
         }
-        void gumbo_parse_with_options()
+        void gumbo_parse_with_options(GumboOptions options, char[] buffer, int length)
         {
+            this._options = options;
+
+
             throw new TODOImplementException();
             //line: 4075
             //        GumboOutput* gumbo_parse_with_options(

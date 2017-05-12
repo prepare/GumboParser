@@ -804,7 +804,7 @@ namespace Gumbo
 
     class TODOImplementException : Exception { }
 
-    
+
     class GumboInternalOutput
     {
         public GumboDocument document;
@@ -843,7 +843,76 @@ namespace Gumbo
     //#endif  // GUMBO_GUMBO_H_
 
     //find reference location
-    class GumboInternalOptions { }
+    public class GumboOptions
+    {
+        //line: 563
+        //       /**
+        //* Input struct containing configuration options for the parser.
+        //* These let you specify alternate memory managers, provide different error
+        //* handling, etc.
+        //* Use kGumboDefaultOptions for sensible defaults, and only set what you need.
+        //*/
+        //       typedef struct GumboInternalOptions
+        //       {
+        //           /** A memory allocator function.  Default: malloc. */
+        //           GumboAllocatorFunction allocator;
+
+        //           /** A memory deallocator function. Default: free. */
+        //           GumboDeallocatorFunction deallocator;
+
+        //           /**
+        //            * An opaque object that's passed in as the first argument to all callbacks
+        //            * used by this library.  Default: NULL.
+        //            */
+        //           void* userdata;
+
+        //           /**
+        //            * The tab-stop size, for computing positions in source code that uses tabs.
+        //            * Default: 8.
+        //            */
+        //           int tab_stop;
+
+        //           /**
+        //            * Whether or not to stop parsing when the first error is encountered.
+        //            * Default: false.
+        //            */
+        //           bool stop_on_first_error;
+
+        //           /**
+        //            * The maximum number of errors before the parser stops recording them.  This
+        //            * is provided so that if the page is totally borked, we don't completely fill
+        //            * up the errors vector and exhaust memory with useless redundant errors.  Set
+        //            * to -1 to disable the limit.
+        //            * Default: -1
+        //            */
+        //           int max_errors;
+
+        //           /**
+        //            * The fragment context for parsing:
+        //            * https://html.spec.whatwg.org/multipage/syntax.html#parsing-html-fragments
+        //            *
+        //            * If GUMBO_TAG_LAST is passed here, it is assumed to be "no fragment", i.e.
+        //            * the regular parsing algorithm.  Otherwise, pass the tag enum for the
+        //            * intended parent of the parsed fragment.  We use just the tag enum rather
+        //            * than a full node because that's enough to set all the parsing context we
+        //            * need, and it provides some additional flexibility for client code to act as
+        //            * if parsing a fragment even when a full HTML tree isn't available.
+        //            *
+        //            * Default: GUMBO_TAG_LAST
+        //            */
+        //           GumboTag fragment_context;
+
+        //           /**
+        //            * The namespace for the fragment context.  This lets client code
+        //            * differentiate between, say, parsing a <title> tag in SVG vs. parsing it in
+        //            * HTML.
+        //            * Default: GUMBO_NAMESPACE_HTML
+        //            */
+        //           GumboNamespaceEnum fragment_namespace;
+        //       }
+        //       GumboOptions;
+    }
+
     enum GumboInternalTokenizerState { }
 
 }

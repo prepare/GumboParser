@@ -1,4 +1,7 @@
-﻿using System; 
+﻿//Apache2, 2017, WinterDev
+using System;
+using System.Collections;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Test
@@ -12,6 +15,10 @@ namespace Test
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string testHtml = "<html><head></head><body></body></html>";
+            //1. tokenize the string buffer
+            char[] strBuffer = testHtml.ToCharArray();
+            //-----------------------------------------------------
 
         }
     }

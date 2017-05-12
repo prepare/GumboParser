@@ -71,7 +71,7 @@ namespace Gumbo
     //GumboInternalParser
     partial class GumboParser
     {
-        GumboInternalOptions _options;
+        GumboOptions _options;
         GumboInternalOutput _output;
         GumboInternalTokenizerState _tokenizer_state;
         GumboParserState _parser_state;
