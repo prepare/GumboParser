@@ -1742,7 +1742,154 @@ namespace Gumbo
             //  return result;
             //}
         }
+        bool close_current_cell()
+        {
+            throw new TODOImplementException();
+            //line: 1537
+            //        // http://www.whatwg.org/specs/web-apps/current-work/complete/tokenization.html#close-the-cell
+            //        // This holds the logic to determine whether we should close a <td> or a <th>.
+            //        static bool close_current_cell(GumboParser* parser, const GumboToken* token) {
+            //  if (has_an_element_in_table_scope(parser, GUMBO_TAG_TD)) {
+            //    assert(!has_an_element_in_table_scope(parser, GUMBO_TAG_TH));
+            //    return close_table_cell(parser, token, GUMBO_TAG_TD);
+            //    } else {
+            //    assert(has_an_element_in_table_scope(parser, GUMBO_TAG_TH));
+            //    return close_table_cell(parser, token, GUMBO_TAG_TH);
+            //}
+            //} 
+        }
+        void close_current_select()
+        {
+            throw new TODOImplementException();
+            //line: 1551
+            //// This factors out the "act as if an end tag of tag name 'select' had been
+            //// seen" clause of the spec, since it's referenced in several places.  It pops
+            //// all nodes from the stack until the current <select> has been closed, then
+            //// resets the insertion mode appropriately.
+            //static void close_current_select(GumboParser* parser)
+            //{
+            //    GumboNode* node = pop_current_node(parser);
+            //    while (!node_html_tag_is(node, GUMBO_TAG_SELECT))
+            //    {
+            //        node = pop_current_node(parser);
+            //    }
+            //    reset_insertion_mode_appropriately(parser);
+            //}
 
+
+        }
+        bool is_special_node()
+        {
+            throw new TODOImplementException();
+            //line: 1551
+            //        // The list of nodes in the "special" category:
+            //        // http://www.whatwg.org/specs/web-apps/current-work/complete/parsing.html#special
+            //        static bool is_special_node(const GumboNode* node) {
+            //  assert(node->type == GUMBO_NODE_ELEMENT || node->type == GUMBO_NODE_TEMPLATE);
+            //  return node_tag_in_set(node,
+            //      (gumbo_tagset){
+            //            TAG(ADDRESS), TAG(APPLET), TAG(AREA), TAG(ARTICLE),
+            //          TAG(ASIDE), TAG(BASE), TAG(BASEFONT), TAG(BGSOUND), TAG(BLOCKQUOTE),
+            //          TAG(BODY), TAG(BR), TAG(BUTTON), TAG(CAPTION), TAG(CENTER), TAG(COL),
+            //          TAG(COLGROUP), TAG(MENUITEM), TAG(DD), TAG(DETAILS), TAG(DIR),
+            //          TAG(DIV), TAG(DL), TAG(DT), TAG(EMBED), TAG(FIELDSET),
+            //          TAG(FIGCAPTION), TAG(FIGURE), TAG(FOOTER), TAG(FORM), TAG(FRAME),
+            //          TAG(FRAMESET), TAG(H1), TAG(H2), TAG(H3), TAG(H4), TAG(H5), TAG(H6),
+            //          TAG(HEAD), TAG(HEADER), TAG(HGROUP), TAG(HR), TAG(HTML), TAG(IFRAME),
+            //          TAG(IMG), TAG(INPUT), TAG(ISINDEX), TAG(LI), TAG(LINK), TAG(LISTING),
+            //          TAG(MARQUEE), TAG(MENU), TAG(META), TAG(NAV), TAG(NOEMBED),
+            //          TAG(NOFRAMES), TAG(NOSCRIPT), TAG(OBJECT), TAG(OL), TAG(P),
+            //          TAG(PARAM), TAG(PLAINTEXT), TAG(PRE), TAG(SCRIPT), TAG(SECTION),
+            //          TAG(SELECT), TAG(STYLE), TAG(SUMMARY), TAG(TABLE), TAG(TBODY),
+            //          TAG(TD), TAG(TEMPLATE), TAG(TEXTAREA), TAG(TFOOT), TAG(TH),
+            //          TAG(THEAD), TAG(TITLE), TAG(TR), TAG(UL), TAG(WBR), TAG(XMP),
+
+            //          TAG_MATHML(MI), TAG_MATHML(MO), TAG_MATHML(MN), TAG_MATHML(MS),
+            //          TAG_MATHML(MTEXT), TAG_MATHML(ANNOTATION_XML),
+
+            //          TAG_SVG(FOREIGNOBJECT), TAG_SVG(DESC)});
+            //}
+        }
+        bool implicitly_close_tags()
+        {
+            //line: 1591
+            throw new TODOImplementException();
+            //// Implicitly closes currently open elements until it reaches an element with
+            //// the
+            //// specified qualified name.  If the elements closed are in the set handled by
+            //// generate_implied_end_tags, this is normal operation and this function returns
+            //// true.  Otherwise, a parse error is recorded and this function returns false.
+            //static bool implicitly_close_tags(GumboParser* parser, GumboToken* token,
+            //    GumboNamespaceEnum target_ns, GumboTag target)
+            //{
+            //    bool result = true;
+            //    generate_implied_end_tags(parser, target);
+            //    if (!node_qualified_tag_is(get_current_node(parser), target_ns, target))
+            //    {
+            //        parser_add_parse_error(parser, token);
+            //        while (
+            //            !node_qualified_tag_is(get_current_node(parser), target_ns, target))
+            //        {
+            //            pop_current_node(parser);
+            //        }
+            //        result = false;
+            //    }
+            //    assert(node_qualified_tag_is(get_current_node(parser), target_ns, target));
+            //    pop_current_node(parser);
+            //    return result;
+            //}
+        }
+        bool maybe_implicitly_close_p_tag()
+        {
+            //line: 1612
+            throw new TODOImplementException();
+            //// If the stack of open elements has a <p> tag in button scope, this acts as if
+            //// a </p> tag was encountered, implicitly closing tags.  Returns false if a
+            //// parse error occurs.  This is a convenience function because this particular
+            //// clause appears several times in the spec.
+            //static bool maybe_implicitly_close_p_tag(
+            //    GumboParser* parser, GumboToken* token)
+            //{
+            //    if (has_an_element_in_button_scope(parser, GUMBO_TAG_P))
+            //    {
+            //        return implicitly_close_tags(
+            //            parser, token, GUMBO_NAMESPACE_HTML, GUMBO_TAG_P);
+            //    }
+            //    return true;
+            //}
+        }
+        void maybe_implicitly_close_list_tag()
+        {
+            //line: 1623
+            throw new TODOImplementException();
+
+            //    // Convenience function to encapsulate the logic for closing <li> or <dd>/<dt>
+            //    // tags.  Pass true to is_li for handling <li> tags, false for <dd> and <dt>.
+            //    static void maybe_implicitly_close_list_tag(
+            //        GumboParser* parser, GumboToken* token, bool is_li)
+            //    {
+            //        GumboParserState* state = parser->_parser_state;
+            //        state->_frameset_ok = false;
+            //        for (int i = state->_open_elements.length; --i >= 0;)
+            //        {
+            //            const GumboNode* node = state->_open_elements.data[i];
+            //            bool is_list_tag =
+            //                is_li ? node_html_tag_is(node, GUMBO_TAG_LI)
+            //                      : node_tag_in_set(node, (gumbo_tagset){ TAG(DD), TAG(DT)});
+            //        if (is_list_tag)
+            //        {
+            //            implicitly_close_tags(
+            //                parser, token, node->v.element.tag_namespace, node->v.element.tag);
+            //            return;
+            //        }
+            //        if (is_special_node(node) &&
+            //            !node_tag_in_set(
+            //                node, (gumbo_tagset){ TAG(ADDRESS), TAG(DIV), TAG(P)})) {
+            //            return;
+            //        }
+            //    }
+            //}
+        }
 
     }
 
