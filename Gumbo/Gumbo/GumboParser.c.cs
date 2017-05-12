@@ -1046,6 +1046,703 @@ namespace Gumbo
             //    return node;
             //} 
         }
+        void create_element_from_token()
+        {
+            throw new TODOImplementException();
+            //line: 1015
+            //// Constructs an element from the given start tag token.
+            //static GumboNode* create_element_from_token(
+            //    GumboParser* parser, GumboToken* token, GumboNamespaceEnum tag_namespace)
+            //{
+            //    assert(token->type == GUMBO_TOKEN_START_TAG);
+            //    GumboTokenStartTag* start_tag = &token->v.start_tag;
+
+            //    GumboNodeType type = (tag_namespace == GUMBO_NAMESPACE_HTML &&
+            //                             start_tag->tag == GUMBO_TAG_TEMPLATE)
+            //                             ? GUMBO_NODE_TEMPLATE
+            //                             : GUMBO_NODE_ELEMENT;
+
+            //    GumboNode* node = create_node(parser, type);
+            //    GumboElement* element = &node->v.element;
+            //    gumbo_vector_init(parser, 1, &element->children);
+            //    element->attributes = start_tag->attributes;
+            //    element->tag = start_tag->tag;
+            //    element->tag_namespace = tag_namespace;
+
+            //    assert(token->original_text.length >= 2);
+            //    assert(token->original_text.data[0] == '<');
+            //    assert(token->original_text.data[token->original_text.length - 1] == '>');
+            //    element->original_tag = token->original_text;
+            //    element->start_pos = token->position;
+            //    element->original_end_tag = kGumboEmptyString;
+            //    element->end_pos = kGumboEmptySourcePosition;
+
+            //    // The element takes ownership of the attributes from the token, so any
+            //    // allocated-memory fields should be nulled out.
+            //    start_tag->attributes = kGumboEmptyVector;
+            //    return node;
+            //}
+        }
+        void insert_element()
+        {
+            throw new TODOImplementException();
+            //line: 1047
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete/tokenization.html#insert-an-html-element
+            //static void insert_element(GumboParser* parser, GumboNode* node,
+            //    bool is_reconstructing_formatting_elements)
+            //{
+            //    GumboParserState* state = parser->_parser_state;
+            //    // NOTE(jdtang): The text node buffer must always be flushed before inserting
+            //    // a node, otherwise we're handling nodes in a different order than the spec
+            //    // mandated.  However, one clause of the spec (character tokens in the body)
+            //    // requires that we reconstruct the active formatting elements *before* adding
+            //    // the character, and reconstructing the active formatting elements may itself
+            //    // result in the insertion of new elements (which should be pushed onto the
+            //    // stack of open elements before the buffer is flushed).  We solve this (for
+            //    // the time being, the spec has been rewritten for <template> and the new
+            //    // version may be simpler here) with a boolean flag to this method.
+            //    if (!is_reconstructing_formatting_elements)
+            //    {
+            //        maybe_flush_text_node_buffer(parser);
+            //    }
+            //    InsertionLocation location = get_appropriate_insertion_location(parser, NULL);
+            //    insert_node(parser, node, location);
+            //    gumbo_vector_add(parser, (void*)node, &state->_open_elements);
+            //}
+        }
+
+        void insert_element_from_token()
+        {
+            throw new TODOImplementException();
+            //line: 1070
+            //// Convenience method that combines create_element_from_token and
+            //// insert_element, inserting the generated element directly into the current
+            //// node.  Returns the node inserted.
+            //static GumboNode* insert_element_from_token(
+            //    GumboParser* parser, GumboToken* token)
+            //{
+            //    GumboNode* element =
+            //        create_element_from_token(parser, token, GUMBO_NAMESPACE_HTML);
+            //    insert_element(parser, element, false);
+            //    gumbo_debug("Inserting <%s> element (@%x) from token.\n",
+            //        gumbo_normalized_tagname(element->v.element.tag), element);
+            //    return element;
+            //}
+        }
+        void insert_element_of_tag_type()
+        {
+            throw new TODOImplementException();
+            //line: 1083
+            //// Convenience method that combines create_element and insert_element, inserting
+            //// a parser-generated element of a specific tag type.  Returns the node
+            //// inserted.
+            //static GumboNode* insert_element_of_tag_type(
+            //    GumboParser* parser, GumboTag tag, GumboParseFlags reason)
+            //{
+            //    GumboNode* element = create_element(parser, tag);
+            //    element->parse_flags |= GUMBO_INSERTION_BY_PARSER | reason;
+            //    insert_element(parser, element, false);
+            //    gumbo_debug("Inserting %s element (@%x) from tag type.\n",
+            //        gumbo_normalized_tagname(tag), element);
+            //    return element;
+            //}
+        }
+        void insert_foreign_element()
+        {
+            throw new TODOImplementException();
+            //line: 1095
+            //// Convenience method for creating foreign namespaced element.  Returns the node
+            //// inserted.
+            //static GumboNode* insert_foreign_element(
+            //    GumboParser* parser, GumboToken* token, GumboNamespaceEnum tag_namespace)
+            //{
+            //    assert(token->type == GUMBO_TOKEN_START_TAG);
+            //    GumboNode* element = create_element_from_token(parser, token, tag_namespace);
+            //    insert_element(parser, element, false);
+            //    if (token_has_attribute(token, "xmlns") &&
+            //        !attribute_matches_case_sensitive(&token->v.start_tag.attributes, "xmlns",
+            //            kLegalXmlns[tag_namespace]))
+            //    {
+            //        // TODO(jdtang): Since there're multiple possible error codes here, we
+            //        // eventually need reason codes to differentiate them.
+            //        parser_add_parse_error(parser, token);
+            //    }
+            //    if (token_has_attribute(token, "xmlns:xlink") &&
+            //        !attribute_matches_case_sensitive(&token->v.start_tag.attributes,
+            //            "xmlns:xlink", "http://www.w3.org/1999/xlink"))
+            //    {
+            //        parser_add_parse_error(parser, token);
+            //    }
+            //    return element;
+            //} 
+        }
+        void insert_text_token()
+        {
+            throw new TODOImplementException();
+            //line: 1115
+            //static void insert_text_token(GumboParser* parser, GumboToken* token)
+            //{
+            //    assert(token->type == GUMBO_TOKEN_WHITESPACE ||
+            //           token->type == GUMBO_TOKEN_CHARACTER ||
+            //           token->type == GUMBO_TOKEN_NULL || token->type == GUMBO_TOKEN_CDATA);
+            //    TextNodeBufferState* buffer_state = &parser->_parser_state->_text_node;
+            //    if (buffer_state->_buffer.length == 0)
+            //    {
+            //        // Initialize position fields.
+            //        buffer_state->_start_original_text = token->original_text.data;
+            //        buffer_state->_start_position = token->position;
+            //    }
+            //    gumbo_string_buffer_append_codepoint(
+            //        parser, token->v.character, &buffer_state->_buffer);
+            //    if (token->type == GUMBO_TOKEN_CHARACTER)
+            //    {
+            //        buffer_state->_type = GUMBO_NODE_TEXT;
+            //    }
+            //    else if (token->type == GUMBO_TOKEN_CDATA)
+            //    {
+            //        buffer_state->_type = GUMBO_NODE_CDATA;
+            //    }
+            //    gumbo_debug("Inserting text token '%c'.\n", token->v.character);
+            //} 
+        }
+
+        void run_generic_parsing_algorithm()
+        {
+            throw new TODOImplementException();
+            //line: 1136
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete/tokenization.html#generic-rcdata-element-parsing-algorithm
+            //static void run_generic_parsing_algorithm(
+            //    GumboParser* parser, GumboToken* token, GumboTokenizerEnum lexer_state)
+            //{
+            //    insert_element_from_token(parser, token);
+            //    gumbo_tokenizer_set_state(parser, lexer_state);
+            //    parser->_parser_state->_original_insertion_mode =
+            //        parser->_parser_state->_insertion_mode;
+            //    parser->_parser_state->_insertion_mode = GUMBO_INSERTION_MODE_TEXT;
+            //} 
+        }
+
+        void acknowledge_self_closing_tag()
+        {
+            throw new TODOImplementException();
+            //line: 1145
+            //static void acknowledge_self_closing_tag(GumboParser* parser)
+            //{
+            //    parser->_parser_state->_self_closing_flag_acknowledged = true;
+            //}
+        }
+        bool find_last_anchor_index()
+        {
+            throw new TODOImplementException();
+            //line: 1151
+            //// Returns true if there's an anchor tag in the list of active formatting
+            //// elements, and fills in its index if so.
+            //static bool find_last_anchor_index(GumboParser* parser, int* anchor_index)
+            //{
+            //    GumboVector* elements = &parser->_parser_state->_active_formatting_elements;
+            //    for (int i = elements->length; --i >= 0;)
+            //    {
+            //        GumboNode* node = elements->data[i];
+            //        if (node == &kActiveFormattingScopeMarker)
+            //        {
+            //            return false;
+            //        }
+            //        if (node_html_tag_is(node, GUMBO_TAG_A))
+            //        {
+            //            *anchor_index = i;
+            //            return true;
+            //        }
+            //    }
+            //    return false;
+            //} 
+        }
+        int count_formatting_elements_of_tag()
+        {
+            throw new TODOImplementException();
+            //line:  1170
+            //        // Counts the number of open formatting elements in the list of active
+            //        // formatting elements (after the last active scope marker) that have a specific
+            //        // tag.  If this is > 0, then earliest_matching_index will be filled in with the
+            //        // index of the first such element.
+            //static int count_formatting_elements_of_tag(GumboParser* parser,
+            //    const GumboNode* desired_node, int* earliest_matching_index) {
+            //  const GumboElement* desired_element = &desired_node->v.element;
+            //        GumboVector* elements = &parser->_parser_state->_active_formatting_elements;
+            //        int num_identical_elements = 0;
+            //  for (int i = elements->length; --i >= 0;) {
+            //    GumboNode* node = elements->data[i];
+            //    if (node == &kActiveFormattingScopeMarker) {
+            //      break;
+            //    }
+            //    assert(node->type == GUMBO_NODE_ELEMENT);
+            //    if (node_qualified_tag_is(
+            //            node, desired_element->tag_namespace, desired_element->tag) &&
+            //        all_attributes_match(
+            //            &node->v.element.attributes, &desired_element->attributes)) {
+            //      num_identical_elements++;
+            //      *earliest_matching_index = i;
+            //    }
+            //}
+            //  return num_identical_elements;
+            //}
+        }
+        void add_formatting_element()
+        {
+            throw new TODOImplementException();
+            //line: 1193 
+            //        // http://www.whatwg.org/specs/web-apps/current-work/complete/parsing.html#reconstruct-the-active-formatting-elements
+            //        static void add_formatting_element(GumboParser* parser, const GumboNode* node) {
+            //  assert(node == &kActiveFormattingScopeMarker ||
+            //         node->type == GUMBO_NODE_ELEMENT);
+            //        GumboVector* elements = &parser->_parser_state->_active_formatting_elements;
+            //  if (node == &kActiveFormattingScopeMarker) {
+            //    gumbo_debug("Adding a scope marker.\n");
+            //    } else {
+            //    gumbo_debug("Adding a formatting element.\n");
+            //}
+
+            //// Hunt for identical elements.
+            //int earliest_identical_element = elements->length;
+            //int num_identical_elements = count_formatting_elements_of_tag(
+            //    parser, node, &earliest_identical_element);
+
+            //  // Noah's Ark clause: if there're at least 3, remove the earliest.
+            //  if (num_identical_elements >= 3) {
+            //    gumbo_debug("Noah's ark clause: removing element at %d.\n",
+            //        earliest_identical_element);
+            //    gumbo_vector_remove_at(parser, earliest_identical_element, elements);
+            //  }
+
+            //  gumbo_vector_add(parser, (void*) node, elements);
+            //}
+        }
+
+        bool is_open_element()
+        {
+            //line: 1218
+            throw new TODOImplementException();
+            //        static bool is_open_element(GumboParser* parser, const GumboNode* node) {
+            //  GumboVector* open_elements = &parser->_parser_state->_open_elements;
+            //  for (unsigned int i = 0; i<open_elements->length; ++i) {
+            //    if (open_elements->data[i] == node) {
+            //      return true;
+            //    }
+            //  }
+            //  return false;
+            //}
+        }
+        void clone_node()
+        {
+            throw new TODOImplementException();
+            //line: 1231
+            //// Clones attributes, tags, etc. of a node, but does not copy the content.  The
+            //// clone shares no structure with the original node: all owned strings and
+            //// values are fresh copies.
+            //GumboNode* clone_node(
+            //    GumboParser* parser, GumboNode* node, GumboParseFlags reason)
+            //{
+            //    assert(node->type == GUMBO_NODE_ELEMENT || node->type == GUMBO_NODE_TEMPLATE);
+            //    GumboNode* new_node = gumbo_parser_allocate(parser, sizeof(GumboNode));
+            //    *new_node = *node;
+            //    new_node->parent = NULL;
+            //    new_node->index_within_parent = -1;
+            //    // Clear the GUMBO_INSERTION_IMPLICIT_END_TAG flag, as the cloned node may
+            //    // have a separate end tag.
+            //    new_node->parse_flags &= ~GUMBO_INSERTION_IMPLICIT_END_TAG;
+            //    new_node->parse_flags |= reason | GUMBO_INSERTION_BY_PARSER;
+            //    GumboElement* element = &new_node->v.element;
+            //    gumbo_vector_init(parser, 1, &element->children);
+
+            //    const GumboVector* old_attributes = &node->v.element.attributes;
+            //    gumbo_vector_init(parser, old_attributes->length, &element->attributes);
+            //    for (unsigned int i = 0; i < old_attributes->length; ++i)
+            //    {
+            //        const GumboAttribute* old_attr = old_attributes->data[i];
+            //        GumboAttribute* attr =
+            //            gumbo_parser_allocate(parser, sizeof(GumboAttribute));
+            //        *attr = *old_attr;
+            //        attr->name = gumbo_copy_stringz(parser, old_attr->name);
+            //        attr->value = gumbo_copy_stringz(parser, old_attr->value);
+            //        gumbo_vector_add(parser, attr, &element->attributes);
+            //    }
+            //    return new_node;
+            //} 
+        }
+        void reconstruct_active_formatting_elements()
+        {
+            throw new TODOImplementException();
+            //line: 1263
+            //// "Reconstruct active formatting elements" part of the spec.
+            //// This implementation is based on the html5lib translation from the mess of
+            //// GOTOs in the spec to reasonably structured programming.
+            //// http://code.google.com/p/html5lib/source/browse/python/html5lib/treebuilders/_base.py
+            //static void reconstruct_active_formatting_elements(GumboParser* parser)
+            //{
+            //    GumboVector* elements = &parser->_parser_state->_active_formatting_elements;
+            //    // Step 1
+            //    if (elements->length == 0)
+            //    {
+            //        return;
+            //    }
+
+            //    // Step 2 & 3
+            //    unsigned int i = elements->length - 1;
+            //    GumboNode* element = elements->data[i];
+            //    if (element == &kActiveFormattingScopeMarker ||
+            //        is_open_element(parser, element))
+            //    {
+            //        return;
+            //    }
+
+            //    // Step 6
+            //    do
+            //    {
+            //        if (i == 0)
+            //        {
+            //            // Step 4
+            //            i = -1;  // Incremented to 0 below.
+            //            break;
+            //        }
+            //        // Step 5
+            //        element = elements->data[--i];
+            //    } while (element != &kActiveFormattingScopeMarker &&
+            //             !is_open_element(parser, element));
+
+            //    ++i;
+            //    gumbo_debug("Reconstructing elements from %d on %s parent.\n", i,
+            //        gumbo_normalized_tagname(get_current_node(parser)->v.element.tag));
+            //    for (; i < elements->length; ++i)
+            //    {
+            //        // Step 7 & 8.
+            //        assert(elements->length > 0);
+            //        assert(i < elements->length);
+            //        element = elements->data[i];
+            //        assert(element != &kActiveFormattingScopeMarker);
+            //        GumboNode* clone = clone_node(
+            //            parser, element, GUMBO_INSERTION_RECONSTRUCTED_FORMATTING_ELEMENT);
+            //        // Step 9.
+            //        InsertionLocation location =
+            //            get_appropriate_insertion_location(parser, NULL);
+            //        insert_node(parser, clone, location);
+            //        gumbo_vector_add(
+            //            parser, (void*)clone, &parser->_parser_state->_open_elements);
+
+            //        // Step 10.
+            //        elements->data[i] = clone;
+            //        gumbo_debug("Reconstructed %s element at %d.\n",
+            //            gumbo_normalized_tagname(clone->v.element.tag), i);
+            //    }
+            //}
+        }
+        void clear_active_formatting_elements()
+        {
+            throw new TODOImplementException();
+            //line: 1315
+            //static void clear_active_formatting_elements(GumboParser* parser)
+            //{
+            //    GumboVector* elements = &parser->_parser_state->_active_formatting_elements;
+            //    int num_elements_cleared = 0;
+            //    const GumboNode* node;
+            //    do
+            //    {
+            //        node = gumbo_vector_pop(parser, elements);
+            //        ++num_elements_cleared;
+            //    } while (node && node != &kActiveFormattingScopeMarker);
+            //    gumbo_debug("Cleared %d elements from active formatting list.\n",
+            //        num_elements_cleared);
+            //}
+        }
+        void compute_quirks_mode()
+        {
+            throw new TODOImplementException();
+            //line: 1328
+            //        // http://www.whatwg.org/specs/web-apps/current-work/complete/tokenization.html#the-initial-insertion-mode
+            //        static GumboQuirksModeEnum compute_quirks_mode(
+            //    const GumboTokenDocType* doctype) {
+            //  if (doctype->force_quirks || strcmp(doctype->name, kDoctypeHtml.data) ||
+            //      is_in_static_list(
+            //          doctype->public_identifier, kQuirksModePublicIdPrefixes, false) ||
+            //      is_in_static_list(
+            //          doctype->public_identifier, kQuirksModePublicIdExactMatches, true) ||
+            //      is_in_static_list(
+            //          doctype->system_identifier, kQuirksModeSystemIdExactMatches, true) ||
+            //      (is_in_static_list(doctype->public_identifier,
+            //           kLimitedQuirksRequiresSystemIdPublicIdPrefixes, false) &&
+            //          !doctype->has_system_identifier)) {
+            //    return GUMBO_DOCTYPE_QUIRKS;
+            //  } else if (is_in_static_list(doctype->public_identifier,
+            //                 kLimitedQuirksPublicIdPrefixes, false) ||
+            //             (is_in_static_list(doctype->public_identifier,
+            //                  kLimitedQuirksRequiresSystemIdPublicIdPrefixes, false) &&
+            //                 doctype->has_system_identifier)) {
+            //    return GUMBO_DOCTYPE_LIMITED_QUIRKS;
+            //  }
+            //  return GUMBO_DOCTYPE_NO_QUIRKS;
+            //}
+        }
+
+
+        bool has_an_element_in_specific_scope()
+        {
+            throw new TODOImplementException();
+            //line:  1362
+            //        // The following functions are all defined by the "has an element in __ scope"
+            //        // sections of the HTML5 spec:
+            //        // http://www.whatwg.org/specs/web-apps/current-work/multipage/parsing.html#has-an-element-in-the-specific-scope
+            //        // The basic idea behind them is that they check for an element of the given
+            //        // qualified name, contained within a scope formed by a set of other qualified
+            //        // names.  For example, "has an element in list scope" looks for an element of
+            //        // the given qualified name within the nearest enclosing <ol> or <ul>, along
+            //        // with a bunch of generic element types that serve to "firewall" their content
+            //        // from the rest of the document. Note that because of the way the spec is
+            //        // written,
+            //        // all elements are expected to be in the HTML namespace
+            //        static bool has_an_element_in_specific_scope(GumboParser* parser,
+            //            int expected_size, const GumboTag* expected, bool negate,
+            //    const gumbo_tagset tags) {
+            //  GumboVector* open_elements = &parser->_parser_state->_open_elements;
+            //  for (int i = open_elements->length; --i >= 0;) {
+            //    const GumboNode* node = open_elements->data[i];
+            //    if (node->type != GUMBO_NODE_ELEMENT && node->type != GUMBO_NODE_TEMPLATE)
+            //      continue;
+
+            //    GumboTag node_tag = node->v.element.tag;
+            //        GumboNamespaceEnum node_ns = node->v.element.tag_namespace;
+            //    for (int j = 0; j<expected_size; ++j) {
+            //      if (node_tag == expected[j] && node_ns == GUMBO_NAMESPACE_HTML)
+            //        return true;
+            //    }
+
+            //    bool found = TAGSET_INCLUDES(tags, node_ns, node_tag);
+            //    if (negate != found) return false;
+            //  }
+            //  return false;
+            //}
+
+        }
+        bool has_open_element()
+        {
+            throw new TODOImplementException();
+            //line: 1385
+            //// Checks for the presence of an open element of the specified tag type.
+            //static bool has_open_element(GumboParser* parser, GumboTag tag)
+            //{
+            //    return has_an_element_in_specific_scope(
+            //        parser, 1, &tag, false, (gumbo_tagset){ TAG(HTML)});
+            //}
+        }
+        bool has_an_element_in_scope()
+        {
+            throw new TODOImplementException();
+            //line: 1391
+            //// http://www.whatwg.org/specs/web-apps/current-work/multipage/parsing.html#has-an-element-in-scope
+            //static bool has_an_element_in_scope(GumboParser* parser, GumboTag tag)
+            //{
+            //    return has_an_element_in_specific_scope(parser, 1, &tag, false,
+            //        (gumbo_tagset){
+            //        TAG(APPLET), TAG(CAPTION), TAG(HTML), TAG(TABLE), TAG(TD),
+            //  TAG(TH), TAG(MARQUEE), TAG(OBJECT), TAG(TEMPLATE), TAG_MATHML(MI),
+            //  TAG_MATHML(MO), TAG_MATHML(MN), TAG_MATHML(MS), TAG_MATHML(MTEXT),
+            //  TAG_MATHML(ANNOTATION_XML), TAG_SVG(FOREIGNOBJECT), TAG_SVG(DESC),
+            //  TAG_SVG(TITLE)});
+            //}
+        }
+        bool has_node_in_scope()
+        {
+
+            throw new TODOImplementException();
+            //line: 1406
+            //        // Like "has an element in scope", but for the specific case of looking for a
+            //        // unique target node, not for any node with a given tag name.  This duplicates
+            //        // much of the algorithm from has_an_element_in_specific_scope because the
+            //        // predicate is different when checking for an exact node, and it's easier &
+            //        // faster just to duplicate the code for this one case than to try and
+            //        // parameterize it.
+            //static bool has_node_in_scope(GumboParser* parser, const GumboNode* node) {
+            //  GumboVector* open_elements = &parser->_parser_state->_open_elements;
+            //  for (int i = open_elements->length; --i >= 0;) {
+            //    const GumboNode* current = open_elements->data[i];
+            //    if (current == node) {
+            //      return true;
+            //    }
+            //    if (current->type != GUMBO_NODE_ELEMENT &&
+            //        current->type != GUMBO_NODE_TEMPLATE) {
+            //      continue;
+            //    }
+            //    if (node_tag_in_set(current,
+            //            (gumbo_tagset){TAG(APPLET), TAG(CAPTION), TAG(HTML), TAG(TABLE),
+            //                TAG(TD), TAG(TH), TAG(MARQUEE), TAG(OBJECT), TAG(TEMPLATE),
+            //                TAG_MATHML(MI), TAG_MATHML(MO), TAG_MATHML(MN), TAG_MATHML(MS),
+            //                TAG_MATHML(MTEXT), TAG_MATHML(ANNOTATION_XML),
+            //                TAG_SVG(FOREIGNOBJECT), TAG_SVG(DESC), TAG_SVG(TITLE)})) {
+            //      return false;
+            //    }
+            //  }
+            //  assert(false);
+            //  return false;
+            //}
+        }
+
+        bool has_an_element_in_scope_with_tagname()
+        {
+            throw new TODOImplementException();
+            //line: 1432
+            //        // Like has_an_element_in_scope, but restricts the expected qualified name to a
+            //        // range of possible qualified names instead of just a single one.
+            // static bool has_an_element_in_scope_with_tagname(
+            //            GumboParser* parser, int expected_len, const GumboTag expected[]) {
+            //  return has_an_element_in_specific_scope(parser, expected_len, expected, false,
+            //      (gumbo_tagset){
+            //            TAG(APPLET), TAG(CAPTION), TAG(HTML), TAG(TABLE), TAG(TD),
+            //          TAG(TH), TAG(MARQUEE), TAG(OBJECT), TAG(TEMPLATE), TAG_MATHML(MI),
+            //          TAG_MATHML(MO), TAG_MATHML(MN), TAG_MATHML(MS), TAG_MATHML(MTEXT),
+            //          TAG_MATHML(ANNOTATION_XML), TAG_SVG(FOREIGNOBJECT), TAG_SVG(DESC),
+            //          TAG_SVG(TITLE)});
+            //}
+        }
+
+        bool has_an_element_in_list_scope()
+        {
+            throw new TODOImplementException();
+            //line: 1443
+            //// http://www.whatwg.org/specs/web-apps/current-work/multipage/parsing.html#has-an-element-in-list-item-scope
+            //static bool has_an_element_in_list_scope(GumboParser* parser, GumboTag tag)
+            //{
+            //    return has_an_element_in_specific_scope(parser, 1, &tag, false,
+            //        (gumbo_tagset){
+            //        TAG(APPLET), TAG(CAPTION), TAG(HTML), TAG(TABLE), TAG(TD),
+            //  TAG(TH), TAG(MARQUEE), TAG(OBJECT), TAG(TEMPLATE), TAG_MATHML(MI),
+            //  TAG_MATHML(MO), TAG_MATHML(MN), TAG_MATHML(MS), TAG_MATHML(MTEXT),
+            //  TAG_MATHML(ANNOTATION_XML), TAG_SVG(FOREIGNOBJECT), TAG_SVG(DESC),
+            //  TAG_SVG(TITLE), TAG(OL), TAG(UL)});
+            //}
+        }
+
+        bool has_an_element_in_button_scope()
+        {
+            throw new TODOImplementException();
+            //line: 1453
+            //// http://www.whatwg.org/specs/web-apps/current-work/multipage/parsing.html#has-an-element-in-button-scope
+            //static bool has_an_element_in_button_scope(GumboParser* parser, GumboTag tag)
+            //{
+            //    return has_an_element_in_specific_scope(parser, 1, &tag, false,
+            //        (gumbo_tagset){
+            //        TAG(APPLET), TAG(CAPTION), TAG(HTML), TAG(TABLE), TAG(TD),
+            //  TAG(TH), TAG(MARQUEE), TAG(OBJECT), TAG(TEMPLATE), TAG_MATHML(MI),
+            //  TAG_MATHML(MO), TAG_MATHML(MN), TAG_MATHML(MS), TAG_MATHML(MTEXT),
+            //  TAG_MATHML(ANNOTATION_XML), TAG_SVG(FOREIGNOBJECT), TAG_SVG(DESC),
+            //  TAG_SVG(TITLE), TAG(BUTTON)});
+            //}
+        }
+
+        bool has_an_element_in_table_scope()
+        {
+            throw new TODOImplementException();
+            //line: 1463
+            //// http://www.whatwg.org/specs/web-apps/current-work/multipage/parsing.html#has-an-element-in-table-scope
+            //static bool has_an_element_in_table_scope(GumboParser* parser, GumboTag tag)
+            //{
+            //    return has_an_element_in_specific_scope(parser, 1, &tag, false,
+            //        (gumbo_tagset){ TAG(HTML), TAG(TABLE), TAG(TEMPLATE)});
+            //} 
+        }
+
+        bool has_an_element_in_select_scope()
+        {
+            throw new TODOImplementException();
+            //line: 1469
+            //    // http://www.whatwg.org/specs/web-apps/current-work/multipage/parsing.html#has-an-element-in-select-scope
+            //    static bool has_an_element_in_select_scope(GumboParser* parser, GumboTag tag)
+            //    {
+            //        return has_an_element_in_specific_scope(
+            //            parser, 1, &tag, true, (gumbo_tagset){ TAG(OPTGROUP), TAG(OPTION)});
+            //}
+        }
+        void generate_implied_end_tags()
+        {
+            throw new TODOImplementException();
+            //line: 1477
+            //    // http://www.whatwg.org/specs/web-apps/current-work/complete/tokenization.html#generate-implied-end-tags
+            //    // "exception" is the "element to exclude from the process" listed in the spec.
+            //    // Pass GUMBO_TAG_LAST to not exclude any of them.
+            //    static void generate_implied_end_tags(GumboParser* parser, GumboTag exception)
+            //    {
+            //        for (; node_tag_in_set(get_current_node(parser),
+            //                   (gumbo_tagset){
+            //            TAG(DD), TAG(DT), TAG(LI), TAG(OPTION),
+            //             TAG(OPTGROUP), TAG(P), TAG(RP), TAG(RB), TAG(RT), TAG(RTC)}) &&
+            //     !node_html_tag_is(get_current_node(parser), exception);
+            //        pop_current_node(parser))
+            //;
+            //    } 
+        }
+        void generate_all_implied_end_tags_thoroughly()
+        {
+            throw new TODOImplementException();
+            //line: 1488
+            //    // This is the "generate all implied end tags thoroughly" clause of the spec.
+            //    // https://html.spec.whatwg.org/multipage/syntax.html#closing-elements-that-have-implied-end-tags
+            //    static void generate_all_implied_end_tags_thoroughly(GumboParser* parser)
+            //    {
+            //        for (
+            //            ; node_tag_in_set(get_current_node(parser),
+            //                (gumbo_tagset){
+            //            TAG(CAPTION), TAG(COLGROUP), TAG(DD), TAG(DT), TAG(LI),
+            //          TAG(OPTION), TAG(OPTGROUP), TAG(P), TAG(RP), TAG(RT), TAG(RTC),
+            //          TAG(TBODY), TAG(TD), TAG(TFOOT), TAG(TH), TAG(HEAD), TAG(TR)});
+            //        pop_current_node(parser))
+            //;
+            //    } 
+        }
+        bool close_table()
+        {
+            throw new TODOImplementException();
+            //line: 1502
+            //// This factors out the clauses relating to "act as if an end tag token with tag
+            //// name "table" had been seen.  Returns true if there's a table element in table
+            //// scope which was successfully closed, false if not and the token should be
+            //// ignored.  Does not add parse errors; callers should handle that.
+            //static bool close_table(GumboParser* parser)
+            //{
+            //    if (!has_an_element_in_table_scope(parser, GUMBO_TAG_TABLE))
+            //    {
+            //        return false;
+            //    }
+
+            //    GumboNode* node = pop_current_node(parser);
+            //    while (!node_html_tag_is(node, GUMBO_TAG_TABLE))
+            //    {
+            //        node = pop_current_node(parser);
+            //    }
+            //    reset_insertion_mode_appropriately(parser);
+            //    return true;
+            //}
+        }
+        bool close_table_cell()
+        {
+            throw new TODOImplementException();
+            //line: 1517
+            //        // This factors out the clauses relating to "act as if an end tag token with tag
+            //        // name `cell_tag` had been seen".
+            //        static bool close_table_cell(
+            //            GumboParser* parser, const GumboToken* token, GumboTag cell_tag) {
+            //  bool result = true;
+            //  generate_implied_end_tags(parser, GUMBO_TAG_LAST);
+            //        const GumboNode* node = get_current_node(parser);
+            //  if (!node_html_tag_is(node, cell_tag)) {
+            //    parser_add_parse_error(parser, token);
+            //        result = false;
+            //  }
+            //  do {
+            //    node = pop_current_node(parser);
+            //} while (!node_html_tag_is(node, cell_tag));
+
+            //  clear_active_formatting_elements(parser);
+            //  set_insertion_mode(parser, GUMBO_INSERTION_MODE_IN_ROW);
+            //  return result;
+            //}
+        }
+
 
     }
 
