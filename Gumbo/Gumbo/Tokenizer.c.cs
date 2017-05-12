@@ -1605,17 +1605,1060 @@ namespace Gumbo
 
 
 
+        void handle_script_lt_state()
+        {
+            throw new TODOImplementException();
+            //line: 1225,
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-less-than-sign-state
+            //static StateResult handle_script_lt_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    assert(temporary_buffer_equals(parser, "<"));
+            //    if (c == '/')
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_END_TAG_OPEN);
+            //        append_char_to_temporary_buffer(parser, '/');
+            //        return NEXT_CHAR;
+            //    }
+            //    else if (c == '!')
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED_START);
+            //        append_char_to_temporary_buffer(parser, '!');
+            //        return emit_temporary_buffer(parser, output);
+            //    }
+            //    else
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT);
+            //        tokenizer->_reconsume_current_input = true;
+            //        return emit_temporary_buffer(parser, output);
+            //    }
+            //}
+        }
 
 
+        void handle_script_end_tag_open_state()
+        {
+            throw new TODOImplementException();
+            //line: 1244,
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-end-tag-open-state
+            //static StateResult handle_script_end_tag_open_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    assert(temporary_buffer_equals(parser, "</"));
+            //    if (is_alpha(c))
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_END_TAG_NAME);
+            //        start_new_tag(parser, false);
+            //        append_char_to_temporary_buffer(parser, c);
+            //        return NEXT_CHAR;
+            //    }
+            //    else
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT);
+            //        return emit_temporary_buffer(parser, output);
+            //    }
+            //}
 
 
+        }
 
 
+        void handle_script_end_tag_name_state()
+        {
+            throw new TODOImplementException();
+            //line: 1259,
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-end-tag-name-state
+            //static StateResult handle_script_end_tag_name_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    assert(tokenizer->_temporary_buffer.length >= 2);
+            //    if (is_alpha(c))
+            //    {
+            //        append_char_to_tag_buffer(parser, ensure_lowercase(c), true);
+            //        append_char_to_temporary_buffer(parser, c);
+            //        return NEXT_CHAR;
+            //    }
+            //    else if (is_appropriate_end_tag(parser))
+            //    {
+            //        switch (c)
+            //        {
+            //            case '\t':
+            //            case '\n':
+            //            case '\f':
+            //            case ' ':
+            //                finish_tag_name(parser);
+            //                gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_ATTR_NAME);
+            //                return NEXT_CHAR;
+            //            case '/':
+            //                finish_tag_name(parser);
+            //                gumbo_tokenizer_set_state(parser, GUMBO_LEX_SELF_CLOSING_START_TAG);
+            //                return NEXT_CHAR;
+            //            case '>':
+            //                finish_tag_name(parser);
+            //                gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //                return emit_current_tag(parser, output);
+            //        }
+            //    }
+            //    gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT);
+            //    abandon_current_tag(parser);
+            //    return emit_temporary_buffer(parser, output);
+            //}
+
+        }
+
+        void handle_script_escaped_start_state()
+        {
+            throw new TODOImplementException();
+            //line: 1291,
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-escape-start-state
+            //static StateResult handle_script_escaped_start_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    if (c == '-')
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED_START_DASH);
+            //        return emit_current_char(parser, output);
+            //    }
+            //    else
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT);
+            //        tokenizer->_reconsume_current_input = true;
+            //        return NEXT_CHAR;
+            //    }
+            //}
+
+        }
+
+        void handle_script_escaped_start_dash_state()
+        {
+            throw new TODOImplementException();
+            //line: 1304,
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-escape-start-dash-state
+            //static StateResult handle_script_escaped_start_dash_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    if (c == '-')
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED_DASH_DASH);
+            //        return emit_current_char(parser, output);
+            //    }
+            //    else
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT);
+            //        tokenizer->_reconsume_current_input = true;
+            //        return NEXT_CHAR;
+            //    }
+            //}
+
+        }
+        void handle_script_escaped_state()
+        {
+            throw new TODOImplementException();
+            //line: 1317,
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-escaped-state
+            //static StateResult handle_script_escaped_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '-':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED_DASH);
+            //            return emit_current_char(parser, output);
+            //        case '<':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED_LT);
+            //            clear_temporary_buffer(parser);
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            return emit_replacement_char(parser, output);
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_SCRIPT_EOF);
+            //            return emit_eof(parser, output);
+            //        default:
+            //            return emit_current_char(parser, output);
+            //    }
+            //}
+        }
+        void handle_script_escaped_dash_state()
+        {
+            throw new TODOImplementException();
+            //line: 1339,
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-escaped-dash-state
+            //static StateResult handle_script_escaped_dash_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '-':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED_DASH_DASH);
+            //            return emit_current_char(parser, output);
+            //        case '<':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED_LT);
+            //            clear_temporary_buffer(parser);
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED);
+            //            return emit_replacement_char(parser, output);
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_SCRIPT_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            return NEXT_CHAR;
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED);
+            //            return emit_current_char(parser, output);
+            //    }
+            //}
+
+        }
+
+        void handle_script_escaped_dash_dash_state()
+        {
+            throw new TODOImplementException();
+            //line: 1364
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-escaped-dash-dash-state
+            //static StateResult handle_script_escaped_dash_dash_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '-':
+            //            return emit_current_char(parser, output);
+            //        case '<':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED_LT);
+            //            clear_temporary_buffer(parser);
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT);
+            //            return emit_current_char(parser, output);
+            //        case '\0':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED);
+            //            return emit_replacement_char(parser, output);
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_SCRIPT_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            return NEXT_CHAR;
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED);
+            //            return emit_current_char(parser, output);
+            //    }
+            //}
+
+        }
+
+        void handle_script_escaped_lt_state()
+        {
+            throw new TODOImplementException();
+            //line: 1391
+
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-escaped-less-than-sign-state
+            //static StateResult handle_script_escaped_lt_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    assert(temporary_buffer_equals(parser, "<"));
+            //    assert(!tokenizer->_script_data_buffer.length);
+            //    if (c == '/')
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED_END_TAG_OPEN);
+            //        append_char_to_temporary_buffer(parser, c);
+            //        return NEXT_CHAR;
+            //    }
+            //    else if (is_alpha(c))
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_START);
+            //        append_char_to_temporary_buffer(parser, c);
+            //        gumbo_string_buffer_append_codepoint(
+            //            parser, ensure_lowercase(c), &tokenizer->_script_data_buffer);
+            //        return emit_temporary_buffer(parser, output);
+            //    }
+            //    else
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED);
+            //        return emit_temporary_buffer(parser, output);
+            //    }
+            //}
+        }
+
+        void handle_script_escaped_end_tag_open_state()
+        {
+            throw new TODOImplementException();
+            //line: 1412
+
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-escaped-end-tag-open-state
+            //static StateResult handle_script_escaped_end_tag_open_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    assert(temporary_buffer_equals(parser, "</"));
+            //    if (is_alpha(c))
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED_END_TAG_NAME);
+            //        start_new_tag(parser, false);
+            //        append_char_to_temporary_buffer(parser, c);
+            //        return NEXT_CHAR;
+            //    }
+            //    else
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED);
+            //        return emit_temporary_buffer(parser, output);
+            //    }
+            //}
+
+        }
+
+        void handle_script_escaped_end_tag_name_state()
+        {
+            throw new TODOImplementException();
+            //line: 1427
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-escaped-end-tag-name-state
+            //static StateResult handle_script_escaped_end_tag_name_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    assert(tokenizer->_temporary_buffer.length >= 2);
+            //    if (is_alpha(c))
+            //    {
+            //        append_char_to_tag_buffer(parser, ensure_lowercase(c), true);
+            //        append_char_to_temporary_buffer(parser, c);
+            //        return NEXT_CHAR;
+            //    }
+            //    else if (is_appropriate_end_tag(parser))
+            //    {
+            //        switch (c)
+            //        {
+            //            case '\t':
+            //            case '\n':
+            //            case '\f':
+            //            case ' ':
+            //                finish_tag_name(parser);
+            //                gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_ATTR_NAME);
+            //                return NEXT_CHAR;
+            //            case '/':
+            //                finish_tag_name(parser);
+            //                gumbo_tokenizer_set_state(parser, GUMBO_LEX_SELF_CLOSING_START_TAG);
+            //                return NEXT_CHAR;
+            //            case '>':
+            //                finish_tag_name(parser);
+            //                gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //                return emit_current_tag(parser, output);
+            //        }
+            //    }
+            //    gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED);
+            //    abandon_current_tag(parser);
+            //    return emit_temporary_buffer(parser, output);
+            //}
+
+        }
+
+        void handle_script_double_escaped_start_state()
+        {
+            throw new TODOImplementException();
+            //line: 1459
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-double-escape-start-state
+            //static StateResult handle_script_double_escaped_start_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //        case '/':
+            //        case '>':
+            //            gumbo_tokenizer_set_state(
+            //                parser, gumbo_string_equals(&kScriptTag,
+            //                            (GumboStringPiece*)&tokenizer->_script_data_buffer)
+            //                            ? GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED
+            //                            : GUMBO_LEX_SCRIPT_ESCAPED);
+            //            return emit_current_char(parser, output);
+            //        default:
+            //            if (is_alpha(c))
+            //            {
+            //                gumbo_string_buffer_append_codepoint(
+            //                    parser, ensure_lowercase(c), &tokenizer->_script_data_buffer);
+            //                return emit_current_char(parser, output);
+            //            }
+            //            else
+            //            {
+            //                gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_ESCAPED);
+            //                tokenizer->_reconsume_current_input = true;
+            //                return NEXT_CHAR;
+            //            }
+            //    }
+            //}
+        }
+
+        void handle_script_double_escaped_state()
+        {
+            throw new TODOImplementException();
+            //line:1488
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-double-escaped-state
+            //static StateResult handle_script_double_escaped_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '-':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_DASH);
+            //            return emit_current_char(parser, output);
+            //        case '<':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_LT);
+            //            return emit_current_char(parser, output);
+            //        case '\0':
+            //            return emit_replacement_char(parser, output);
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_SCRIPT_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            return NEXT_CHAR;
+            //        default:
+            //            return emit_current_char(parser, output);
+            //    }
+            //}
+        }
+
+        void handle_script_double_escaped_dash_state()
+        {
+            throw new TODOImplementException();
+            //line:1509
+
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-double-escaped-dash-state
+            //static StateResult handle_script_double_escaped_dash_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '-':
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_DASH_DASH);
+            //            return emit_current_char(parser, output);
+            //        case '<':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_LT);
+            //            return emit_current_char(parser, output);
+            //        case '\0':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED);
+            //            return emit_replacement_char(parser, output);
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_SCRIPT_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            return NEXT_CHAR;
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED);
+            //            return emit_current_char(parser, output);
+            //    }
+            //}
+        }
 
 
+        void handle_script_double_escaped_dash_dash_state()
+        {
+            throw new TODOImplementException();
+            //line:1533
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-double-escaped-dash-dash-state
+            //static StateResult handle_script_double_escaped_dash_dash_state(
+            //    GumboParser* parser, GumboTokenizerState* tokenizer, int c,
+            //    GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '-':
+            //            return emit_current_char(parser, output);
+            //        case '<':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_LT);
+            //            return emit_current_char(parser, output);
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT);
+            //            return emit_current_char(parser, output);
+            //        case '\0':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED);
+            //            return emit_replacement_char(parser, output);
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_SCRIPT_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            return NEXT_CHAR;
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED);
+            //            return emit_current_char(parser, output);
+            //    }
+            //}
+        }
 
 
+        void handle_script_double_escaped_lt_state()
+        {
+            throw new TODOImplementException();
+            //line:1559
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-double-escaped-less-than-sign-state
+            //static StateResult handle_script_double_escaped_lt_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    if (c == '/')
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_END);
+            //        gumbo_string_buffer_clear(parser, &tokenizer->_script_data_buffer);
+            //        return emit_current_char(parser, output);
+            //    }
+            //    else
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED);
+            //        tokenizer->_reconsume_current_input = true;
+            //        return NEXT_CHAR;
+            //    }
+            //}
 
+        }
+
+        void handle_script_double_escaped_end_state()
+        {
+            throw new TODOImplementException();
+            //line:1573
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-double-escape-end-state
+            //static StateResult handle_script_double_escaped_end_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //        case '/':
+            //        case '>':
+            //            gumbo_tokenizer_set_state(
+            //                parser, gumbo_string_equals(&kScriptTag,
+            //                            (GumboStringPiece*)&tokenizer->_script_data_buffer)
+            //                            ? GUMBO_LEX_SCRIPT_ESCAPED
+            //                            : GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED);
+            //            return emit_current_char(parser, output);
+            //        default:
+            //            if (is_alpha(c))
+            //            {
+            //                gumbo_string_buffer_append_codepoint(
+            //                    parser, ensure_lowercase(c), &tokenizer->_script_data_buffer);
+            //                return emit_current_char(parser, output);
+            //            }
+            //            else
+            //            {
+            //                gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED);
+            //                tokenizer->_reconsume_current_input = true;
+            //                return NEXT_CHAR;
+            //            }
+            //    }
+            //}
+
+        }
+
+        void handle_before_attr_name_state()
+        {
+            throw new TODOImplementException();
+            //line:1602
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#before-attribute-name-state
+            //static StateResult handle_before_attr_name_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            return NEXT_CHAR;
+            //        case '/':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SELF_CLOSING_START_TAG);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            return emit_current_tag(parser, output);
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_ATTR_NAME);
+            //            append_char_to_temporary_buffer(parser, 0xfffd);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_NAME_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            abandon_current_tag(parser);
+            //            return NEXT_CHAR;
+            //        case '"':
+            //        case '\'':
+            //        case '<':
+            //        case '=':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_NAME_INVALID);
+            //        // Fall through.
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_ATTR_NAME);
+            //            append_char_to_tag_buffer(parser, ensure_lowercase(c), true);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+        }
+
+        void handle_attr_name_state()
+        {
+            throw new TODOImplementException();
+            //line:2812
+
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#attribute-name-state
+            //static StateResult handle_attr_name_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            finish_attribute_name(parser);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_AFTER_ATTR_NAME);
+            //            return NEXT_CHAR;
+            //        case '/':
+            //            finish_attribute_name(parser);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SELF_CLOSING_START_TAG);
+            //            return NEXT_CHAR;
+            //        case '=':
+            //            finish_attribute_name(parser);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_ATTR_VALUE);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            finish_attribute_name(parser);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            return emit_current_tag(parser, output);
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            append_char_to_tag_buffer(parser, kUtf8ReplacementChar, true);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            abandon_current_tag(parser);
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_NAME_EOF);
+            //            return NEXT_CHAR;
+            //        case '"':
+            //        case '\'':
+            //        case '<':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_NAME_INVALID);
+            //        // Fall through.
+            //        default:
+            //            append_char_to_tag_buffer(parser, ensure_lowercase(c), true);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_after_attr_name_state()
+        {
+            throw new TODOImplementException();
+            //line:1683
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#after-attribute-name-state
+            //static StateResult handle_after_attr_name_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            return NEXT_CHAR;
+            //        case '/':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SELF_CLOSING_START_TAG);
+            //            return NEXT_CHAR;
+            //        case '=':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_ATTR_VALUE);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            return emit_current_tag(parser, output);
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_ATTR_NAME);
+            //            append_char_to_temporary_buffer(parser, 0xfffd);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_NAME_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            abandon_current_tag(parser);
+            //            return NEXT_CHAR;
+            //        case '"':
+            //        case '\'':
+            //        case '<':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_NAME_INVALID);
+            //        // Fall through.
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_ATTR_NAME);
+            //            append_char_to_tag_buffer(parser, ensure_lowercase(c), true);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_before_attr_value_state()
+        {
+            throw new TODOImplementException();
+            //line:1723
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#before-attribute-value-state
+            //static StateResult handle_before_attr_value_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            return NEXT_CHAR;
+            //        case '"':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_ATTR_VALUE_DOUBLE_QUOTED);
+            //            reset_tag_buffer_start_point(parser);
+            //            return NEXT_CHAR;
+            //        case '&':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_ATTR_VALUE_UNQUOTED);
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //        case '\'':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_ATTR_VALUE_SINGLE_QUOTED);
+            //            reset_tag_buffer_start_point(parser);
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_ATTR_VALUE_UNQUOTED);
+            //            append_char_to_tag_buffer(parser, kUtf8ReplacementChar, true);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_UNQUOTED_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            abandon_current_tag(parser);
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_UNQUOTED_RIGHT_BRACKET);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_current_tag(parser, output);
+            //            return RETURN_ERROR;
+            //        case '<':
+            //        case '=':
+            //        case '`':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_UNQUOTED_EQUALS);
+            //        // Fall through.
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_ATTR_VALUE_UNQUOTED);
+            //            append_char_to_tag_buffer(parser, c, true);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+        }
+
+
+        void handle_attr_value_double_quoted_state()
+        {
+            throw new TODOImplementException();
+            //line:1772
+
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#attribute-value-double-quoted-state
+            //static StateResult handle_attr_value_double_quoted_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '"':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_AFTER_ATTR_VALUE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '&':
+            //            tokenizer->_tag_state._attr_value_state = tokenizer->_state;
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_CHAR_REF_IN_ATTR_VALUE);
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            append_char_to_tag_buffer(parser, kUtf8ReplacementChar, false);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_DOUBLE_QUOTE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            abandon_current_tag(parser);
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //        default:
+            //            append_char_to_tag_buffer(parser, c, false);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+
+        }
+
+        void handle_attr_value_single_quoted_state()
+        {
+            throw new TODOImplementException();
+            //line:1800
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#attribute-value-single-quoted-state
+            //static StateResult handle_attr_value_single_quoted_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\'':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_AFTER_ATTR_VALUE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '&':
+            //            tokenizer->_tag_state._attr_value_state = tokenizer->_state;
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_CHAR_REF_IN_ATTR_VALUE);
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            append_char_to_tag_buffer(parser, kUtf8ReplacementChar, false);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_SINGLE_QUOTE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            abandon_current_tag(parser);
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //        default:
+            //            append_char_to_tag_buffer(parser, c, false);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_attr_value_unquoted_state()
+        {
+            throw new TODOImplementException();
+            //line:1828
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#attribute-value-unquoted-state
+            //static StateResult handle_attr_value_unquoted_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_ATTR_NAME);
+            //            finish_attribute_value(parser);
+            //            return NEXT_CHAR;
+            //        case '&':
+            //            tokenizer->_tag_state._attr_value_state = tokenizer->_state;
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_CHAR_REF_IN_ATTR_VALUE);
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            finish_attribute_value(parser);
+            //            return emit_current_tag(parser, output);
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            append_char_to_tag_buffer(parser, kUtf8ReplacementChar, true);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_UNQUOTED_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_reconsume_current_input = true;
+            //            abandon_current_tag(parser);
+            //            return NEXT_CHAR;
+            //        case '<':
+            //        case '=':
+            //        case '"':
+            //        case '\'':
+            //        case '`':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_UNQUOTED_EQUALS);
+            //        // Fall through.
+            //        default:
+            //            append_char_to_tag_buffer(parser, c, true);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+
+        void handle_char_ref_in_attr_value_state()
+        {
+            throw new TODOImplementException();
+            //line:1871
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#character-reference-in-attribute-value-state
+            //static StateResult handle_char_ref_in_attr_value_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    OneOrTwoCodepoints char_ref;
+            //    int allowed_char;
+            //    bool is_unquoted = false;
+            //    switch (tokenizer->_tag_state._attr_value_state)
+            //    {
+            //        case GUMBO_LEX_ATTR_VALUE_DOUBLE_QUOTED:
+            //            allowed_char = '"';
+            //            break;
+            //        case GUMBO_LEX_ATTR_VALUE_SINGLE_QUOTED:
+            //            allowed_char = '\'';
+            //            break;
+            //        case GUMBO_LEX_ATTR_VALUE_UNQUOTED:
+            //            allowed_char = '>';
+            //            is_unquoted = true;
+            //            break;
+            //        default:
+            //            // -Wmaybe-uninitialized is a little overzealous here, and doesn't
+            //            // get that the assert(0) means this codepath will never happen.
+            //            allowed_char = ' ';
+            //            assert(0);
+            //    }
+
+            //    // Ignore the status, since we don't have a convenient way of signalling that
+            //    // a parser error has occurred when the error occurs in the middle of a
+            //    // multi-state token.  We'd need a flag inside the TokenizerState to do this,
+            //    // but that's a low priority fix.
+            //    consume_char_ref(parser, &tokenizer->_input, allowed_char, true, &char_ref);
+            //    if (char_ref.first != kGumboNoChar)
+            //    {
+            //        tokenizer->_reconsume_current_input = true;
+            //        append_char_to_tag_buffer(parser, char_ref.first, is_unquoted);
+            //        if (char_ref.second != kGumboNoChar)
+            //        {
+            //            append_char_to_tag_buffer(parser, char_ref.second, is_unquoted);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        append_char_to_tag_buffer(parser, '&', is_unquoted);
+            //    }
+            //    gumbo_tokenizer_set_state(parser, tokenizer->_tag_state._attr_value_state);
+            //    return NEXT_CHAR;
+            //}
+
+        }
+
+        void handle_after_attr_value_quoted_state()
+        {
+            throw new TODOImplementException();
+            //line:1913
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#after-attribute-value-quoted-state
+            //static StateResult handle_after_attr_value_quoted_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    finish_attribute_value(parser);
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_ATTR_NAME);
+            //            return NEXT_CHAR;
+            //        case '/':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SELF_CLOSING_START_TAG);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            return emit_current_tag(parser, output);
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_AFTER_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            abandon_current_tag(parser);
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //        default:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_ATTR_AFTER_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_ATTR_NAME);
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+        }
+
+        void handle_self_closing_start_tag_state()
+        {
+            throw new TODOImplementException();
+            //line:1944
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#self-closing-start-tag-state
+            //static StateResult handle_self_closing_start_tag_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_tag_state._is_self_closing = true;
+            //            return emit_current_tag(parser, output);
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_SOLIDUS_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            abandon_current_tag(parser);
+            //            return NEXT_CHAR;
+            //        default:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_SOLIDUS_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_ATTR_NAME);
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+
+        }
+
+        void handle_bogus_comment_state()
+        {
+            throw new TODOImplementException();
+            //line:1965
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#bogus-comment-state
+            //static StateResult handle_bogus_comment_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    while (c != '>' && c != -1)
+            //    {
+            //        if (c == '\0')
+            //        {
+            //            c = 0xFFFD;
+            //        }
+            //        append_char_to_temporary_buffer(parser, c);
+            //        utf8iterator_next(&tokenizer->_input);
+            //        c = utf8iterator_current(&tokenizer->_input);
+            //    }
+            //    gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //    return emit_comment(parser, output);
+            //}
+        }
+
+        void handle_markup_declaration_state()
+        {
+            throw new TODOImplementException();
+            //line:1980
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#markup-declaration-open-state
+            //static StateResult handle_markup_declaration_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    if (utf8iterator_maybe_consume_match(
+            //            &tokenizer->_input, "--", sizeof("--") - 1, true)) {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT_START);
+            //        tokenizer->_reconsume_current_input = true;
+            //    } else if (utf8iterator_maybe_consume_match(
+            //            &tokenizer->_input, "DOCTYPE", sizeof("DOCTYPE") - 1, false)) {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_DOCTYPE);
+            //        tokenizer->_reconsume_current_input = true;
+            //        // If we get here, we know we'll eventually emit a doctype token, so now is
+            //        // the time to initialize the doctype strings.  (Not in doctype_state_init,
+            //        // since then they'll leak if ownership never gets transferred to the
+            //        // doctype token.
+            //        tokenizer->_doc_type_state.name = gumbo_copy_stringz(parser, "");
+            //        tokenizer->_doc_type_state.public_identifier =
+            //            gumbo_copy_stringz(parser, "");
+            //        tokenizer->_doc_type_state.system_identifier =
+            //            gumbo_copy_stringz(parser, "");
+            //    } else if (tokenizer->_is_current_node_foreign &&
+            //        utf8iterator_maybe_consume_match(
+            //            &tokenizer->_input, "[CDATA[", sizeof("[CDATA[") - 1, true)) {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_CDATA);
+            //        tokenizer->_is_in_cdata = true;
+            //        tokenizer->_reconsume_current_input = true;
+            //    } else {
+            //        tokenizer_add_parse_error(parser, GUMBO_ERR_DASHES_OR_DOCTYPE);
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_BOGUS_COMMENT);
+            //        tokenizer->_reconsume_current_input = true;
+            //        clear_temporary_buffer(parser);
+            //    }
+            //    return NEXT_CHAR;
+            //}
+        }
 
 
 
@@ -1624,8 +2667,9 @@ namespace Gumbo
 
         bool gumbo_lex(GumboTokenStream output)
         {
-            //line:2812
             throw new TODOImplementException();
+            //line:2812
+
             //lex current data to output token stream
             //bool gumbo_lex(GumboParser* parser, GumboToken* output)
             //{
