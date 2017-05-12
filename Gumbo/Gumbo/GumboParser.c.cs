@@ -440,6 +440,7 @@ namespace Gumbo
         //}
         public GumboInsertionMode get_appropriate_insertion_mode(int index)
         {
+            //line: 630
             //      const GumboVector* open_elements = &parser->_parser_state->_open_elements;
             //        const GumboNode* node = open_elements->data[index];
             //        const bool is_last = index == 0;
@@ -520,6 +521,118 @@ namespace Gumbo
             return is_last ? GumboInsertionMode.GUMBO_INSERTION_MODE_IN_BODY : GumboInsertionMode.GUMBO_INSERTION_MODE_INITIAL;
         }
 
+
+
+        GumboError parser_add_parse_error(List<GumboToken> tokens)
+        {
+
+            //line: 645
+            //static GumboError* parser_add_parse_error(
+            //    GumboParser* parser, const GumboToken* token) {
+            //  gumbo_debug("Adding parse error.\n");
+            //  GumboError* error = gumbo_add_error(parser);
+            //  if (!error) {
+            //    return NULL;
+            //  }
+            //    error->type = GUMBO_ERR_PARSER;
+            //  error->position = token->position;
+            //  error->original_text = token->original_text.data;
+            //  GumboParserError* extra_data = &error->v.parser;
+            //    extra_data->input_type = token->type;
+            //  extra_data->input_tag = GUMBO_TAG_UNKNOWN;
+            //  if (token->type == GUMBO_TOKEN_START_TAG) {
+            //    extra_data->input_tag = token->v.start_tag.tag;
+            //  } else if (token->type == GUMBO_TOKEN_END_TAG) {
+            //    extra_data->input_tag = token->v.end_tag;
+            //  }
+            //  GumboParserState* state = parser->_parser_state;
+            //extra_data->parser_state = state->_insertion_mode;
+            //  gumbo_vector_init(
+            //      parser, state->_open_elements.length, &extra_data->tag_stack);
+            //  for (unsigned int i = 0; i<state->_open_elements.length; ++i) {
+            //    const GumboNode* node = state->_open_elements.data[i];
+            //    assert(
+            //        node->type == GUMBO_NODE_ELEMENT || node->type == GUMBO_NODE_TEMPLATE);
+            //    gumbo_vector_add(
+            //        parser, (void*) node->v.element.tag, &extra_data->tag_stack);
+            //  }
+            //  return error;
+            //}
+            //-------------------------
+            throw new ToImplementException();
+            return null;
+        }
+
+
+
+        bool tag_in()
+        {
+            //line:676:
+            //        // Returns true if the specified token is either a start or end tag (specified
+            //        // by is_start) with one of the tag types in the varargs list.  Terminate the
+            //        // list with GUMBO_TAG_LAST; this functions as a sentinel since no portion of
+            //        // the spec references tags that are not in the spec.
+            //        static bool tag_in(
+            //    const GumboToken* token, bool is_start, const gumbo_tagset tags) {
+            //  GumboTag token_tag;
+            //  if (is_start && token->type == GUMBO_TOKEN_START_TAG) {
+            //    token_tag = token->v.start_tag.tag;
+            //  } else if (!is_start && token->type == GUMBO_TOKEN_END_TAG) {
+            //    token_tag = token->v.end_tag;
+            //  } else {
+            //    return false;
+            //  }
+            //  return (token_tag<GUMBO_TAG_LAST && tags[(int)token_tag] != 0);
+            //}
+            throw new ToImplementException();
+            return false;
+        }
+        bool tag_is()
+        {
+            //line:695
+            //// Like tag_in, but for the single-tag case.
+            //  static bool tag_is(const GumboToken* token, bool is_start, GumboTag tag) {
+            //  if (is_start && token->type == GUMBO_TOKEN_START_TAG) {
+            //    return token->v.start_tag.tag == tag;
+            //  } else if (!is_start && token->type == GUMBO_TOKEN_END_TAG) {
+            //    return token->v.end_tag == tag;
+            //  } else {
+            //    return false;
+            //  }
+            //}
+
+
+            throw new ToImplementException();
+        }
+
+        bool node_tag_in_set()
+        {
+            //line:706
+            //      // Like tag_in, but checks for the tag of a node, rather than a token.
+            //      static bool node_tag_in_set(const GumboNode* node, const gumbo_tagset tags) {
+            //assert(node != NULL);
+            //if (node->type != GUMBO_NODE_ELEMENT && node->type != GUMBO_NODE_TEMPLATE) {
+            //  return false;
+            //}
+            //return TAGSET_INCLUDES(
+            //    tags, node->v.element.tag_namespace, node->v.element.tag);
+            //  }
+            throw new ToImplementException();
+        }
+
+        bool node_qualified_tag_is()
+        {
+            //line: 716
+            //        // Like node_tag_in, but for the single-tag case.
+            //        static bool node_qualified_tag_is(
+            //    const GumboNode* node, GumboNamespaceEnum ns, GumboTag tag) {
+            //  assert(node);
+            //  return (node->type == GUMBO_NODE_ELEMENT ||
+            //             node->type == GUMBO_NODE_TEMPLATE) &&
+            //         node->v.element.tag == tag && node->v.element.tag_namespace == ns;
+            //}
+            throw new ToImplementException();
+        }
         GumboInsertionMode get_current_template_insertion_mode()
         {
             //        // Returns the current template insertion mode.  If the stack of template
