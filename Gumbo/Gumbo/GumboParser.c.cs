@@ -4847,6 +4847,221 @@ namespace Gumbo
             //}
         }
 
+        void fragment_parser_init()
+        {
+            throw new TODOImplementException();
+            //line: 4010
+
+            //    static void fragment_parser_init(GumboParser* parser, GumboTag fragment_ctx,
+            //GumboNamespaceEnum fragment_namespace)
+            //    {
+            //        GumboNode* root;
+            //        assert(fragment_ctx != GUMBO_TAG_LAST);
+
+            //        // 3
+            //        parser->_parser_state->_fragment_ctx = create_element(parser, fragment_ctx);
+            //        parser->_parser_state->_fragment_ctx->v.element.tag_namespace =
+            //            fragment_namespace;
+
+            //        // 4
+            //        if (fragment_namespace == GUMBO_NAMESPACE_HTML)
+            //        {
+            //            // Non-HTML namespaces always start in the DATA state.
+            //            switch (fragment_ctx)
+            //            {
+            //                case GUMBO_TAG_TITLE:
+            //                case GUMBO_TAG_TEXTAREA:
+            //                    gumbo_tokenizer_set_state(parser, GUMBO_LEX_RCDATA);
+            //                    break;
+
+            //                case GUMBO_TAG_STYLE:
+            //                case GUMBO_TAG_XMP:
+            //                case GUMBO_TAG_IFRAME:
+            //                case GUMBO_TAG_NOEMBED:
+            //                case GUMBO_TAG_NOFRAMES:
+            //                    gumbo_tokenizer_set_state(parser, GUMBO_LEX_RAWTEXT);
+            //                    break;
+
+            //                case GUMBO_TAG_SCRIPT:
+            //                    gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT);
+            //                    break;
+
+            //                case GUMBO_TAG_NOSCRIPT:
+            //                    /* scripting is disabled in Gumbo, so leave the tokenizer
+            //                     * in the default data state */
+            //                    break;
+
+            //                case GUMBO_TAG_PLAINTEXT:
+            //                    gumbo_tokenizer_set_state(parser, GUMBO_LEX_PLAINTEXT);
+            //                    break;
+
+            //                default:
+            //                    /* default data state */
+            //                    break;
+            //            }
+            //        }
+
+            //        // 5. 6. 7.
+            //        root = insert_element_of_tag_type(
+            //            parser, GUMBO_TAG_HTML, GUMBO_INSERTION_IMPLIED);
+            //        parser->_output->root = root;
+
+            //        // 8.
+            //        if (fragment_ctx == GUMBO_TAG_TEMPLATE)
+            //        {
+            //            push_template_insertion_mode(parser, GUMBO_INSERTION_MODE_IN_TEMPLATE);
+            //        }
+
+            //        // 10.
+            //        reset_insertion_mode_appropriately(parser);
+            //    }
+        }
+
+        void gumbo_parse()
+        {
+            throw new TODOImplementException();
+            //line: 4070
+
+            //      GumboOutput* gumbo_parse(const char* buffer) {
+            //return gumbo_parse_with_options(
+            //    &kGumboDefaultOptions, buffer, strlen(buffer));
+            //  }
+        }
+        void gumbo_parse_with_options()
+        {
+            throw new TODOImplementException();
+            //line: 4075
+            //        GumboOutput* gumbo_parse_with_options(
+            //    const GumboOptions* options, const char* buffer, size_t length) {
+            //  GumboParser parser;
+            //        parser._options = options;
+            //  output_init(&parser);
+            //  gumbo_tokenizer_state_init(&parser, buffer, length);
+            //  parser_state_init(&parser);
+
+            //  if (options->fragment_context != GUMBO_TAG_LAST) {
+            //    fragment_parser_init(
+            //        &parser, options->fragment_context, options->fragment_namespace);
+            //    }
+
+            //    GumboParserState* state = parser._parser_state;
+            //  gumbo_debug("Parsing %.*s.\n", length, buffer);
+
+            //    // Sanity check so that infinite loops die with an assertion failure instead
+            //    // of hanging the process before we ever get an error.
+            //    int loop_count = 0;
+
+            //    GumboToken token;
+            //    bool has_error = false;
+
+            //  do {
+            //    if (state->_reprocess_current_token) {
+            //      state->_reprocess_current_token = false;
+            //    } else {
+            //      GumboNode* current_node = get_current_node(&parser);
+            //      gumbo_tokenizer_set_is_current_node_foreign(&parser,
+            //          current_node &&
+            //              current_node->v.element.tag_namespace != GUMBO_NAMESPACE_HTML);
+            //has_error = !gumbo_lex(&parser, &token) || has_error;
+            //    }
+            //    const char* token_type = "text";
+            //    switch (token.type) {
+            //      case GUMBO_TOKEN_DOCTYPE:
+            //        token_type = "doctype";
+            //        break;
+            //      case GUMBO_TOKEN_START_TAG:
+            //        token_type = gumbo_normalized_tagname(token.v.start_tag.tag);
+            //        break;
+            //      case GUMBO_TOKEN_END_TAG:
+            //        token_type = gumbo_normalized_tagname(token.v.end_tag);
+            //        break;
+            //      case GUMBO_TOKEN_COMMENT:
+            //        token_type = "comment";
+            //        break;
+            //      default:
+            //        break;
+            //    }
+            //    gumbo_debug("Handling %s token @%d:%d in state %d.\n", (char*) token_type,
+            //        token.position.line, token.position.column, state->_insertion_mode);
+
+            //state->_current_token = &token;
+            //    state->_self_closing_flag_acknowledged =
+            //        !(token.type == GUMBO_TOKEN_START_TAG &&
+            //            token.v.start_tag.is_self_closing);
+
+            //    has_error = !handle_token(&parser, &token) || has_error;
+
+            //    // Check for memory leaks when ownership is transferred from start tag
+            //    // tokens to nodes.
+            //    assert(state->_reprocess_current_token ||
+            //           token.type != GUMBO_TOKEN_START_TAG ||
+            //           token.v.start_tag.attributes.data == NULL);
+
+            //    if (!state->_self_closing_flag_acknowledged) {
+            //      GumboError* error = parser_add_parse_error(&parser, &token);
+            //      if (error) {
+            //        error->type = GUMBO_ERR_UNACKNOWLEDGED_SELF_CLOSING_TAG;
+            //      }
+            //    }
+
+            //    ++loop_count;
+            //    assert(loop_count< 1000000000);
+
+            //  } while ((token.type != GUMBO_TOKEN_EOF || state->_reprocess_current_token) &&
+            //           !(options->stop_on_first_error && has_error));
+
+            //  finish_parsing(&parser);
+            //// For API uniformity reasons, if the doctype still has nulls, convert them to
+            //// empty strings.
+            //GumboDocument* doc_type = &parser._output->document->v.document;
+            //  if (doc_type->name == NULL) {
+            //    doc_type->name = gumbo_copy_stringz(&parser, "");
+            //  }
+            //  if (doc_type->public_identifier == NULL) {
+            //    doc_type->public_identifier = gumbo_copy_stringz(&parser, "");
+            //  }
+            //  if (doc_type->system_identifier == NULL) {
+            //    doc_type->system_identifier = gumbo_copy_stringz(&parser, "");
+            //  }
+
+            //  parser_state_destroy(&parser);
+            //  gumbo_tokenizer_state_destroy(&parser);
+            //  return parser._output;
+            //}
+        }
+
+        void gumbo_destroy_node()
+        {
+            throw new TODOImplementException();
+            //line: 4173
+            //void gumbo_destroy_node(GumboOptions* options, GumboNode* node)
+            //{
+            //    // Need a dummy GumboParser because the allocator comes along with the
+            //    // options object.
+            //    GumboParser parser;
+            //    parser._options = options;
+            //    destroy_node(&parser, node);
+            //}
+
+        }
+        void gumbo_destroy_output()
+        {
+            throw new TODOImplementException();
+            //line: 4181
+
+            //void gumbo_destroy_output(const GumboOptions* options, GumboOutput* output) {
+            //  // Need a dummy GumboParser because the allocator comes along with the
+            //  // options object.
+            //  GumboParser parser;
+            //        parser._options = options;
+            //  destroy_node(&parser, output->document);
+            //  for (unsigned int i = 0; i<output->errors.length; ++i) {
+            //    gumbo_error_destroy(&parser, output->errors.data[i]);
+            //    }
+            //  gumbo_vector_destroy(&parser, &output->errors);
+            //  gumbo_parser_deallocate(&parser, output);
+            //}
+        }
 
     }
 
