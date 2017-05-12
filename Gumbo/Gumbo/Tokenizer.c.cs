@@ -52,6 +52,47 @@ namespace Gumbo
 {
 
 
+    class GumboTokenDocType
+    {
+        //// Struct containing all information pertaining to doctype tokens.
+        //typedef struct GumboInternalTokenDocType
+        //{
+        //    const char* name;
+        //    const char* public_identifier;
+        //    const char* system_identifier;
+        //    bool force_quirks;
+        //    // There's no way to tell a 0-length public or system ID apart from the
+        //    // absence of a public or system ID, but they're handled different by the
+        //    // spec, so we need bool flags for them.
+        //    bool has_public_identifier;
+        //    bool has_system_identifier;
+        //}
+        //GumboTokenDocType;
+    }
+
+    class InputTextStream
+    {
+        char[] _buffer;
+        int _position;
+        public InputTextStream()
+        {
+
+        }
+        public void LoadText(char[] buffer)
+        {
+            this._buffer = buffer;
+        }
+        public int Position
+        {
+            get { return _position; }
+        }
+        public char CurrentChar
+        {
+            get { return _buffer[_position]; }
+        }
+
+
+    }
     enum StateResult
     {
         //line 69
@@ -119,223 +160,218 @@ namespace Gumbo
     class GumboTokenizerState
     {
         //line: 123
-        //// This is the main tokenizer state struct, containing all state used by in
-        //// tokenizing the input stream.
-        //typedef struct GumboInternalTokenizerState
-        //{
-        //    // The current lexer state.  Starts in GUMBO_LEX_DATA.
-        //    GumboTokenizerEnum _state;
+        /// <summary>
+        /// The current lexer state.  Starts in GUMBO_LEX_DATA.
+        /// </summary>
+        public GumboTokenizerEnum _state;
+        /// <summary>  
+        /// A flag indicating whether the current input character needs to reconsumed
+        ///in another state, or whether the next input character should be read for
+        ///the next iteration of the state loop.  This is set when the spec reads
+        ///"Reconsume the current input character in..."
+        /// </summary>
+        bool _reconsume_current_input;
+        /// <summary>
+        /// A flag indicating whether the current node is a foreign element.  This is
+        /// set by gumbo_tokenizer_set_is_current_node_foreign and checked in the
+        /// markup declaration state.
+        /// </summary>
+        bool _is_current_node_foreign;
+        /// <summary>
+        /// A flag indicating whether the tokenizer is in a CDATA section.  If so, then
+        ///  text tokens emitted will be GUMBO_TOKEN_CDATA.
+        /// </summary>
+        bool _is_in_cdata;
 
-        //    // A flag indicating whether the current input character needs to reconsumed
-        //    // in another state, or whether the next input character should be read for
-        //    // the next iteration of the state loop.  This is set when the spec reads
-        //    // "Reconsume the current input character in..."
-        //    bool _reconsume_current_input;
+        // Certain states (notably character references) may emit two character tokens
+        // at once, but the contract for lex() fills in only one token at a time.  The
+        // extra character is buffered here, and then this is checked on entry to
+        // lex().  If a character is stored here, it's immediately emitted and control
+        // returns from the lexer.  kGumboNoChar is used to represent 'no character
+        // stored.'
+        //
+        // Note that characters emitted through this mechanism will have their source
+        // position marked as the character under the mark, i.e. multiple characters
+        // may be emitted with the same position.  This is desirable for character
+        // references, but unsuitable for many other cases.  Use the _temporary_buffer
+        // mechanism if the buffered characters must have their original positions in
+        // the document.
+        int _buffered_emit_char;
 
-        //    // A flag indicating whether the current node is a foreign element.  This is
-        //    // set by gumbo_tokenizer_set_is_current_node_foreign and checked in the
-        //    // markup declaration state.
-        //    bool _is_current_node_foreign;
+        // A temporary buffer to accumulate characters, as described by the "temporary
+        // buffer" phrase in the tokenizer spec.  We use this in a somewhat unorthodox
+        // way: we record the specific character to go into the buffer, which may
+        // sometimes be a lowercased version of the actual input character.  However,
+        // we *also* use utf8iterator_mark() to record the position at tag start.
+        // When we start flushing the temporary buffer, we set _temporary_buffer_emit
+        // to the start of it, and then increment it for each call to the tokenizer.
+        // We also call utf8iterator_reset(), and utf8iterator_next() through the
+        // input stream, so that tokens emitted by emit_char have the correct position
+        // and original text.
+        GumboStringBuffer _temporary_buffer;
 
-        //    // A flag indicating whether the tokenizer is in a CDATA section.  If so, then
-        //    // text tokens emitted will be GUMBO_TOKEN_CDATA.
-        //    bool _is_in_cdata;
+        // The current cursor position we're emitting from within
+        // _temporary_buffer.data.  NULL whenever we're not flushing the buffer.
+        //const char* _temporary_buffer_emit;
+        StringBuilder _temporary_buffer_emit;
+        // The temporary buffer is also used by the spec to check whether we should
+        // enter the script data double escaped state, but we can't use the same
+        // buffer for both because we have to flush out "<s" as emits while still
+        // maintaining the context that will eventually become "script".  This is a
+        // separate buffer that's used in place of the temporary buffer for states
+        // that may enter the script data double escape start state.
+        GumboStringBuffer _script_data_buffer;
 
-        //    // Certain states (notably character references) may emit two character tokens
-        //    // at once, but the contract for lex() fills in only one token at a time.  The
-        //    // extra character is buffered here, and then this is checked on entry to
-        //    // lex().  If a character is stored here, it's immediately emitted and control
-        //    // returns from the lexer.  kGumboNoChar is used to represent 'no character
-        //    // stored.'
-        //    //
-        //    // Note that characters emitted through this mechanism will have their source
-        //    // position marked as the character under the mark, i.e. multiple characters
-        //    // may be emitted with the same position.  This is desirable for character
-        //    // references, but unsuitable for many other cases.  Use the _temporary_buffer
-        //    // mechanism if the buffered characters must have their original positions in
-        //    // the document.
-        //    int _buffered_emit_char;
-
-        //    // A temporary buffer to accumulate characters, as described by the "temporary
-        //    // buffer" phrase in the tokenizer spec.  We use this in a somewhat unorthodox
-        //    // way: we record the specific character to go into the buffer, which may
-        //    // sometimes be a lowercased version of the actual input character.  However,
-        //    // we *also* use utf8iterator_mark() to record the position at tag start.
-        //    // When we start flushing the temporary buffer, we set _temporary_buffer_emit
-        //    // to the start of it, and then increment it for each call to the tokenizer.
-        //    // We also call utf8iterator_reset(), and utf8iterator_next() through the
-        //    // input stream, so that tokens emitted by emit_char have the correct position
-        //    // and original text.
-        //    GumboStringBuffer _temporary_buffer;
-
-        //    // The current cursor position we're emitting from within
-        //    // _temporary_buffer.data.  NULL whenever we're not flushing the buffer.
-        //    const char* _temporary_buffer_emit;
-
-        //    // The temporary buffer is also used by the spec to check whether we should
-        //    // enter the script data double escaped state, but we can't use the same
-        //    // buffer for both because we have to flush out "<s" as emits while still
-        //    // maintaining the context that will eventually become "script".  This is a
-        //    // separate buffer that's used in place of the temporary buffer for states
-        //    // that may enter the script data double escape start state.
-        //    GumboStringBuffer _script_data_buffer;
-
-        //    // Pointer to the beginning of the current token in the original buffer; used
-        //    // to record the original text.
+        // Pointer to the beginning of the current token in the original buffer; used
+        // to record the original text.
         //    const char* _token_start;
+        InputTextStream _token_strart; //
 
-        //    // GumboSourcePosition recording the source location of the start of the
-        //    // current token.
-        //    GumboSourcePosition _token_start_pos;
 
-        //    // Current tag state.
-        //    GumboTagState _tag_state;
 
-        //    // Doctype state.  We use the temporary buffer to accumulate characters (it's
-        //    // not used for anything else in the doctype states), and then freshly
-        //    // allocate the strings in the doctype token, then copy it over on emit.
-        //    GumboTokenDocType _doc_type_state;
 
-        //    // The UTF8Iterator over the tokenizer input.
-        //    Utf8Iterator _input;
-        //}
-        //GumboTokenizerState;
+        // GumboSourcePosition recording the source location of the start of the
+        // current token.
+        GumboSourcePosition _token_start_pos;
+
+        // Current tag state.
+        GumboTagState _tag_state;
+
+        // Doctype state.  We use the temporary buffer to accumulate characters (it's
+        // not used for anything else in the doctype states), and then freshly
+        // allocate the strings in the doctype token, then copy it over on emit.
+        GumboTokenDocType _doc_type_state;
+
+        // The UTF8Iterator over the tokenizer input.
+        Utf8Iterator _input;
 
 
     }
 
+    struct Utf8Iterator
+    {
+
+    }
 
     partial class GumboParser
     {
         void tokenizer_add_parse_error(GumboErrorType type)
         {
+            // Adds an ERR_UNEXPECTED_CODE_POINT parse error to the parser's error struct.
+
+            //line: 202
             GumboError error = gumbo_add_error();
             if (error == null)
             {
                 return;
             }
-            
 
-
-
-            throw new TODOImplementException();
-            //line: 202
-            //// Adds an ERR_UNEXPECTED_CODE_POINT parse error to the parser's error struct.
-            //static void tokenizer_add_parse_error(
-            //    GumboParser* parser, GumboErrorType type)
-            //{
-            //    GumboError* error = gumbo_add_error(parser);
-            //    if (!error)
-            //    {
-            //        return;
-            //    }
-            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
-            //    utf8iterator_get_position(&tokenizer->_input, &error->position);
+            GumboTokenizerState tokenizer = this._tokenizer_state;
+            //utf8iterator_get_position(&tokenizer->_input, &error->position);
             //    error->original_text = utf8iterator_get_char_pointer(&tokenizer->_input);
             //    error->type = type;
             //    error->v.tokenizer.codepoint = utf8iterator_current(&tokenizer->_input);
-            //    switch (tokenizer->_state)
-            //    {
-            //        case GUMBO_LEX_DATA:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_DATA;
-            //            break;
-            //        case GUMBO_LEX_CHAR_REF_IN_DATA:
-            //        case GUMBO_LEX_CHAR_REF_IN_RCDATA:
-            //        case GUMBO_LEX_CHAR_REF_IN_ATTR_VALUE:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_CHAR_REF;
-            //            break;
-            //        case GUMBO_LEX_RCDATA:
-            //        case GUMBO_LEX_RCDATA_LT:
-            //        case GUMBO_LEX_RCDATA_END_TAG_OPEN:
-            //        case GUMBO_LEX_RCDATA_END_TAG_NAME:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_RCDATA;
-            //            break;
-            //        case GUMBO_LEX_RAWTEXT:
-            //        case GUMBO_LEX_RAWTEXT_LT:
-            //        case GUMBO_LEX_RAWTEXT_END_TAG_OPEN:
-            //        case GUMBO_LEX_RAWTEXT_END_TAG_NAME:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_RAWTEXT;
-            //            break;
-            //        case GUMBO_LEX_PLAINTEXT:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_PLAINTEXT;
-            //            break;
-            //        case GUMBO_LEX_SCRIPT:
-            //        case GUMBO_LEX_SCRIPT_LT:
-            //        case GUMBO_LEX_SCRIPT_END_TAG_OPEN:
-            //        case GUMBO_LEX_SCRIPT_END_TAG_NAME:
-            //        case GUMBO_LEX_SCRIPT_ESCAPED_START:
-            //        case GUMBO_LEX_SCRIPT_ESCAPED_START_DASH:
-            //        case GUMBO_LEX_SCRIPT_ESCAPED:
-            //        case GUMBO_LEX_SCRIPT_ESCAPED_DASH:
-            //        case GUMBO_LEX_SCRIPT_ESCAPED_DASH_DASH:
-            //        case GUMBO_LEX_SCRIPT_ESCAPED_LT:
-            //        case GUMBO_LEX_SCRIPT_ESCAPED_END_TAG_OPEN:
-            //        case GUMBO_LEX_SCRIPT_ESCAPED_END_TAG_NAME:
-            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_START:
-            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED:
-            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_DASH:
-            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_DASH_DASH:
-            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_LT:
-            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_END:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_SCRIPT;
-            //            break;
-            //        case GUMBO_LEX_TAG_OPEN:
-            //        case GUMBO_LEX_END_TAG_OPEN:
-            //        case GUMBO_LEX_TAG_NAME:
-            //        case GUMBO_LEX_BEFORE_ATTR_NAME:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_TAG;
-            //            break;
-            //        case GUMBO_LEX_SELF_CLOSING_START_TAG:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_SELF_CLOSING_TAG;
-            //            break;
-            //        case GUMBO_LEX_ATTR_NAME:
-            //        case GUMBO_LEX_AFTER_ATTR_NAME:
-            //        case GUMBO_LEX_BEFORE_ATTR_VALUE:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_ATTR_NAME;
-            //            break;
-            //        case GUMBO_LEX_ATTR_VALUE_DOUBLE_QUOTED:
-            //        case GUMBO_LEX_ATTR_VALUE_SINGLE_QUOTED:
-            //        case GUMBO_LEX_ATTR_VALUE_UNQUOTED:
-            //        case GUMBO_LEX_AFTER_ATTR_VALUE_QUOTED:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_ATTR_VALUE;
-            //            break;
-            //        case GUMBO_LEX_BOGUS_COMMENT:
-            //        case GUMBO_LEX_COMMENT_START:
-            //        case GUMBO_LEX_COMMENT_START_DASH:
-            //        case GUMBO_LEX_COMMENT:
-            //        case GUMBO_LEX_COMMENT_END_DASH:
-            //        case GUMBO_LEX_COMMENT_END:
-            //        case GUMBO_LEX_COMMENT_END_BANG:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_COMMENT;
-            //            break;
-            //        case GUMBO_LEX_MARKUP_DECLARATION:
-            //        case GUMBO_LEX_DOCTYPE:
-            //        case GUMBO_LEX_BEFORE_DOCTYPE_NAME:
-            //        case GUMBO_LEX_DOCTYPE_NAME:
-            //        case GUMBO_LEX_AFTER_DOCTYPE_NAME:
-            //        case GUMBO_LEX_AFTER_DOCTYPE_PUBLIC_KEYWORD:
-            //        case GUMBO_LEX_BEFORE_DOCTYPE_PUBLIC_ID:
-            //        case GUMBO_LEX_DOCTYPE_PUBLIC_ID_DOUBLE_QUOTED:
-            //        case GUMBO_LEX_DOCTYPE_PUBLIC_ID_SINGLE_QUOTED:
-            //        case GUMBO_LEX_AFTER_DOCTYPE_PUBLIC_ID:
-            //        case GUMBO_LEX_BETWEEN_DOCTYPE_PUBLIC_SYSTEM_ID:
-            //        case GUMBO_LEX_AFTER_DOCTYPE_SYSTEM_KEYWORD:
-            //        case GUMBO_LEX_BEFORE_DOCTYPE_SYSTEM_ID:
-            //        case GUMBO_LEX_DOCTYPE_SYSTEM_ID_DOUBLE_QUOTED:
-            //        case GUMBO_LEX_DOCTYPE_SYSTEM_ID_SINGLE_QUOTED:
-            //        case GUMBO_LEX_AFTER_DOCTYPE_SYSTEM_ID:
-            //        case GUMBO_LEX_BOGUS_DOCTYPE:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_DOCTYPE;
-            //            break;
-            //        case GUMBO_LEX_CDATA:
-            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_CDATA;
-            //            break;
-            //    }
-            //}
+            switch (tokenizer._state)
+            {
+                case GumboTokenizerEnum.GUMBO_LEX_DATA:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_DATA;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_CHAR_REF_IN_DATA:
+                case GumboTokenizerEnum.GUMBO_LEX_CHAR_REF_IN_RCDATA:
+                case GumboTokenizerEnum.GUMBO_LEX_CHAR_REF_IN_ATTR_VALUE:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_CHAR_REF;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_RCDATA:
+                case GumboTokenizerEnum.GUMBO_LEX_RCDATA_LT:
+                case GumboTokenizerEnum.GUMBO_LEX_RCDATA_END_TAG_OPEN:
+                case GumboTokenizerEnum.GUMBO_LEX_RCDATA_END_TAG_NAME:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_RCDATA;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_RAWTEXT:
+                case GumboTokenizerEnum.GUMBO_LEX_RAWTEXT_LT:
+                case GumboTokenizerEnum.GUMBO_LEX_RAWTEXT_END_TAG_OPEN:
+                case GumboTokenizerEnum.GUMBO_LEX_RAWTEXT_END_TAG_NAME:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_RAWTEXT;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_PLAINTEXT:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_PLAINTEXT;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_LT:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_END_TAG_OPEN:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_END_TAG_NAME:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_ESCAPED_START:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_ESCAPED_START_DASH:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_ESCAPED:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_ESCAPED_DASH:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_ESCAPED_DASH_DASH:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_ESCAPED_LT:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_ESCAPED_END_TAG_OPEN:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_ESCAPED_END_TAG_NAME:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_START:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_DASH:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_DASH_DASH:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_LT:
+                case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_END:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_SCRIPT;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_TAG_OPEN:
+                case GumboTokenizerEnum.GUMBO_LEX_END_TAG_OPEN:
+                case GumboTokenizerEnum.GUMBO_LEX_TAG_NAME:
+                case GumboTokenizerEnum.GUMBO_LEX_BEFORE_ATTR_NAME:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_TAG;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_SELF_CLOSING_START_TAG:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_SELF_CLOSING_TAG;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_ATTR_NAME:
+                case GumboTokenizerEnum.GUMBO_LEX_AFTER_ATTR_NAME:
+                case GumboTokenizerEnum.GUMBO_LEX_BEFORE_ATTR_VALUE:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_ATTR_NAME;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_ATTR_VALUE_DOUBLE_QUOTED:
+                case GumboTokenizerEnum.GUMBO_LEX_ATTR_VALUE_SINGLE_QUOTED:
+                case GumboTokenizerEnum.GUMBO_LEX_ATTR_VALUE_UNQUOTED:
+                case GumboTokenizerEnum.GUMBO_LEX_AFTER_ATTR_VALUE_QUOTED:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_ATTR_VALUE;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_BOGUS_COMMENT:
+                case GumboTokenizerEnum.GUMBO_LEX_COMMENT_START:
+                case GumboTokenizerEnum.GUMBO_LEX_COMMENT_START_DASH:
+                case GumboTokenizerEnum.GUMBO_LEX_COMMENT:
+                case GumboTokenizerEnum.GUMBO_LEX_COMMENT_END_DASH:
+                case GumboTokenizerEnum.GUMBO_LEX_COMMENT_END:
+                case GumboTokenizerEnum.GUMBO_LEX_COMMENT_END_BANG:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_COMMENT;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_MARKUP_DECLARATION:
+                case GumboTokenizerEnum.GUMBO_LEX_DOCTYPE:
+                case GumboTokenizerEnum.GUMBO_LEX_BEFORE_DOCTYPE_NAME:
+                case GumboTokenizerEnum.GUMBO_LEX_DOCTYPE_NAME:
+                case GumboTokenizerEnum.GUMBO_LEX_AFTER_DOCTYPE_NAME:
+                case GumboTokenizerEnum.GUMBO_LEX_AFTER_DOCTYPE_PUBLIC_KEYWORD:
+                case GumboTokenizerEnum.GUMBO_LEX_BEFORE_DOCTYPE_PUBLIC_ID:
+                case GumboTokenizerEnum.GUMBO_LEX_DOCTYPE_PUBLIC_ID_DOUBLE_QUOTED:
+                case GumboTokenizerEnum.GUMBO_LEX_DOCTYPE_PUBLIC_ID_SINGLE_QUOTED:
+                case GumboTokenizerEnum.GUMBO_LEX_AFTER_DOCTYPE_PUBLIC_ID:
+                case GumboTokenizerEnum.GUMBO_LEX_BETWEEN_DOCTYPE_PUBLIC_SYSTEM_ID:
+                case GumboTokenizerEnum.GUMBO_LEX_AFTER_DOCTYPE_SYSTEM_KEYWORD:
+                case GumboTokenizerEnum.GUMBO_LEX_BEFORE_DOCTYPE_SYSTEM_ID:
+                case GumboTokenizerEnum.GUMBO_LEX_DOCTYPE_SYSTEM_ID_DOUBLE_QUOTED:
+                case GumboTokenizerEnum.GUMBO_LEX_DOCTYPE_SYSTEM_ID_SINGLE_QUOTED:
+                case GumboTokenizerEnum.GUMBO_LEX_AFTER_DOCTYPE_SYSTEM_ID:
+                case GumboTokenizerEnum.GUMBO_LEX_BOGUS_DOCTYPE:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_DOCTYPE;
+                    break;
+                case GumboTokenizerEnum.GUMBO_LEX_CDATA:
+                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_CDATA;
+                    break;
+            }
         }
 
 
-        bool is_alpha(int c)
+        static bool is_alpha(int c)
         {
             return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
             //line: 
