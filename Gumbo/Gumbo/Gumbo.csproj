@@ -34,7 +34,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Error.c.cs" />
     <Compile Include="Gumbo.h.cs" />
+    <Compile Include="GumboError.h.cs" />
     <Compile Include="GumboParser.c.cs" />
     <Compile Include="GumboParser.h.cs" />
     <Compile Include="GumboTag.cs" />
