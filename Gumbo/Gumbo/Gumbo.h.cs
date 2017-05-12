@@ -800,7 +800,7 @@ namespace Gumbo
     //  GumboVector /* GumboError */ errors;
     //} GumboOutput;
 
-    class ToImplementException : Exception { }
+    class TODOImplementException : Exception { }
 
     class GumboError { }
     class GumboInternalOutput

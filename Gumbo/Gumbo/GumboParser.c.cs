@@ -559,7 +559,7 @@ namespace Gumbo
             //  return error;
             //}
             //-------------------------
-            throw new ToImplementException();
+            throw new TODOImplementException();
             return null;
         }
 
@@ -584,7 +584,7 @@ namespace Gumbo
             //  }
             //  return (token_tag<GUMBO_TAG_LAST && tags[(int)token_tag] != 0);
             //}
-            throw new ToImplementException();
+            throw new TODOImplementException();
             return false;
         }
         bool tag_is()
@@ -602,7 +602,7 @@ namespace Gumbo
             //}
 
 
-            throw new ToImplementException();
+            throw new TODOImplementException();
         }
 
         bool node_tag_in_set()
@@ -617,7 +617,7 @@ namespace Gumbo
             //return TAGSET_INCLUDES(
             //    tags, node->v.element.tag_namespace, node->v.element.tag);
             //  }
-            throw new ToImplementException();
+            throw new TODOImplementException();
         }
 
         bool node_qualified_tag_is()
@@ -631,7 +631,7 @@ namespace Gumbo
             //             node->type == GUMBO_NODE_TEMPLATE) &&
             //         node->v.element.tag == tag && node->v.element.tag_namespace == ns;
             //}
-            throw new ToImplementException();
+            throw new TODOImplementException();
         }
 
 
@@ -642,7 +642,7 @@ namespace Gumbo
             //      static bool node_html_tag_is(const GumboNode* node, GumboTag tag) {
             //return node_qualified_tag_is(node, GUMBO_NAMESPACE_HTML, tag);
             //  }
-            throw new ToImplementException();
+            throw new TODOImplementException();
         }
         void push_template_insertion_mode()
         {
@@ -653,7 +653,7 @@ namespace Gumbo
             //        gumbo_vector_add(
             //            parser, (void*)mode, &parser->_parser_state->_template_insertion_modes);
             //    }
-            throw new ToImplementException();
+            throw new TODOImplementException();
         }
         void pop_template_insertion_mode()
         {
@@ -662,7 +662,7 @@ namespace Gumbo
             //{
             //    gumbo_vector_pop(parser, &parser->_parser_state->_template_insertion_modes);
             //}
-            throw new ToImplementException();
+            throw new TODOImplementException();
         }
 
 
@@ -700,11 +700,11 @@ namespace Gumbo
             //                TAG_MATHML(MS), TAG_MATHML(MTEXT)});
             //}
 
-            throw new ToImplementException();
+            throw new TODOImplementException();
         }
         static bool is_html_integration_point()
         {
-            throw new ToImplementException();
+            throw new TODOImplementException();
             //line: 761
             //        // http://www.whatwg.org/specs/web-apps/current-work/multipage/tree-construction.html#html-integration-point
             //        static bool is_html_integration_point(const GumboNode* node) {
@@ -723,7 +723,7 @@ namespace Gumbo
 
         InsertionLocation get_appropriate_insertion_location()
         {
-            throw new ToImplementException();
+            throw new TODOImplementException();
             //line: 781
             //InsertionLocation get_appropriate_insertion_location(
             //    GumboParser* parser, GumboNode* override_target)
@@ -786,7 +786,7 @@ namespace Gumbo
 
         void append_node()
         {
-            throw new ToImplementException();
+            throw new TODOImplementException();
             //line: 829
             //// Appends a node to the end of its parent, setting the "parent" and
             //// "index_within_parent" fields appropriately.
@@ -815,7 +815,7 @@ namespace Gumbo
 
         void insert_node()
         {
-            throw new ToImplementException();
+            throw new TODOImplementException();
             //line: 850
             //// Inserts a node at the specified InsertionLocation, updating the
             //// "parent" and "index_within_parent" fields of it and all its siblings.
@@ -867,7 +867,7 @@ namespace Gumbo
         static void maybe_flush_text_node_buffer()
         {
 
-            throw new ToImplementException();
+            throw new TODOImplementException();
             //line: 884
             //static void maybe_flush_text_node_buffer(GumboParser* parser)
             //{
@@ -910,6 +910,141 @@ namespace Gumbo
             //    buffer_state->_type = GUMBO_NODE_WHITESPACE;
             //    assert(buffer_state->_buffer.length == 0);
             //}
+        }
+        void record_end_of_element()
+        {
+            throw new TODOImplementException();
+            //line: 921
+            //    static void record_end_of_element(
+            //GumboToken* current_token, GumboElement* element)
+            //    {
+            //        element->end_pos = current_token->position;
+            //        element->original_end_tag = current_token->type == GUMBO_TOKEN_END_TAG
+            //                                        ? current_token->original_text
+            //                                        : kGumboEmptyString;
+            //    }
+        }
+        void pop_current_node()
+        {
+            throw new TODOImplementException();
+            //line: 930
+            //static GumboNode* pop_current_node(GumboParser* parser)
+            //{
+            //    GumboParserState* state = parser->_parser_state;
+            //    maybe_flush_text_node_buffer(parser);
+            //    if (state->_open_elements.length > 0)
+            //    {
+            //        assert(node_html_tag_is(state->_open_elements.data[0], GUMBO_TAG_HTML));
+            //        gumbo_debug("Popping %s node.\n",
+            //            gumbo_normalized_tagname(get_current_node(parser)->v.element.tag));
+            //    }
+            //    GumboNode* current_node = gumbo_vector_pop(parser, &state->_open_elements);
+            //    if (!current_node)
+            //    {
+            //        assert(state->_open_elements.length == 0);
+            //        return NULL;
+            //    }
+            //    assert(current_node->type == GUMBO_NODE_ELEMENT ||
+            //           current_node->type == GUMBO_NODE_TEMPLATE);
+            //    bool is_closed_body_or_html_tag =
+            //        (node_html_tag_is(current_node, GUMBO_TAG_BODY) &&
+            //            state->_closed_body_tag) ||
+            //        (node_html_tag_is(current_node, GUMBO_TAG_HTML) &&
+            //            state->_closed_html_tag);
+            //    if ((state->_current_token->type != GUMBO_TOKEN_END_TAG ||
+            //            !node_html_tag_is(current_node, state->_current_token->v.end_tag)) &&
+            //        !is_closed_body_or_html_tag)
+            //    {
+            //        current_node->parse_flags |= GUMBO_INSERTION_IMPLICIT_END_TAG;
+            //    }
+            //    if (!is_closed_body_or_html_tag)
+            //    {
+            //        record_end_of_element(state->_current_token, &current_node->v.element);
+            //    }
+            //    return current_node;
+            //}
+        }
+        void append_comment_node()
+        {
+            throw new TODOImplementException();
+            //line:960
+            //      static void append_comment_node(
+            //          GumboParser* parser, GumboNode* node, const GumboToken* token) {
+            //maybe_flush_text_node_buffer(parser);
+            //      GumboNode* comment = create_node(parser, GUMBO_NODE_COMMENT);
+            //      comment->type = GUMBO_NODE_COMMENT;
+            //comment->parse_flags = GUMBO_INSERTION_NORMAL;
+            //comment->v.text.text = token->v.text;
+            //comment->v.text.original_text = token->original_text;
+            //comment->v.text.start_pos = token->position;
+            //append_node(parser, node, comment);
+            //  }
+
+        }
+        void clear_stack_to_table_row_context()
+        {
+            throw new TODOImplementException();
+            //line: 973
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete/tokenization.html#clear-the-stack-back-to-a-table-row-context
+            //static void clear_stack_to_table_row_context(GumboParser* parser)
+            //{
+            //    while (!node_tag_in_set(get_current_node(parser),
+            //               (gumbo_tagset){ TAG(HTML), TAG(TR), TAG(TEMPLATE)})) {
+            //        pop_current_node(parser);
+            //    }
+            //}
+        }
+
+        void clear_stack_to_table_context()
+        {
+            throw new TODOImplementException();
+            //line: 981
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete/tokenization.html#clear-the-stack-back-to-a-table-context
+            //static void clear_stack_to_table_context(GumboParser* parser)
+            //{
+            //    while (!node_tag_in_set(get_current_node(parser),
+            //               (gumbo_tagset){ TAG(HTML), TAG(TABLE), TAG(TEMPLATE)})) {
+            //        pop_current_node(parser);
+            //    }
+            //}
+        }
+
+        void clear_stack_to_table_body_context()
+        {
+            throw new TODOImplementException();
+            //line: 989
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete/tokenization.html#clear-the-stack-back-to-a-table-body-context
+            //void clear_stack_to_table_body_context(GumboParser* parser)
+            //{
+            //    while (!node_tag_in_set(get_current_node(parser),
+            //               (gumbo_tagset){
+            //        TAG(HTML), TAG(TBODY), TAG(TFOOT), TAG(THEAD),
+            //         TAG(TEMPLATE)})) {
+            //        pop_current_node(parser);
+            //    }
+            //} 
+        }
+        void create_element()
+        {
+            throw new TODOImplementException();
+            //line: 998
+            //// Creates a parser-inserted element in the HTML namespace and returns it.
+            //static GumboNode* create_element(GumboParser* parser, GumboTag tag)
+            //{
+            //    GumboNode* node = create_node(parser, GUMBO_NODE_ELEMENT);
+            //    GumboElement* element = &node->v.element;
+            //    gumbo_vector_init(parser, 1, &element->children);
+            //    gumbo_vector_init(parser, 0, &element->attributes);
+            //    element->tag = tag;
+            //    element->tag_namespace = GUMBO_NAMESPACE_HTML;
+            //    element->original_tag = kGumboEmptyString;
+            //    element->original_end_tag = kGumboEmptyString;
+            //    element->start_pos = (parser->_parser_state->_current_token)
+            //                             ? parser->_parser_state->_current_token->position
+            //                             : kGumboEmptySourcePosition;
+            //    element->end_pos = kGumboEmptySourcePosition;
+            //    return node;
+            //} 
         }
 
     }
