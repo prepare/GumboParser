@@ -719,7 +719,208 @@ namespace Gumbo
             //                     "application/xhtml+xml")));
             //}
         }
+        //line: 774 => struct InsertionLocation
 
+        InsertionLocation get_appropriate_insertion_location()
+        {
+            throw new ToImplementException();
+            //line: 781
+            //InsertionLocation get_appropriate_insertion_location(
+            //    GumboParser* parser, GumboNode* override_target)
+            //{
+            //    InsertionLocation retval = { override_target, -1 };
+            //    if (retval.target == NULL)
+            //    {
+            //        // No override target; default to the current node, but special-case the
+            //        // root node since get_current_node() assumes the stack of open elements is
+            //        // non-empty.
+            //        retval.target = parser->_output->root != NULL ? get_current_node(parser)
+            //                                                      : get_document_node(parser);
+            //    }
+            //    if (!parser->_parser_state->_foster_parent_insertions ||
+            //        !node_tag_in_set(retval.target, (gumbo_tagset){
+            //        TAG(TABLE), TAG(TBODY),
+            //                                  TAG(TFOOT), TAG(THEAD), TAG(TR)})) {
+            //        return retval;
+            //    }
 
+            //    // Foster-parenting case.
+            //    int last_template_index = -1;
+            //    int last_table_index = -1;
+            //    GumboVector* open_elements = &parser->_parser_state->_open_elements;
+            //    for (unsigned int i = 0; i < open_elements->length; ++i)
+            //    {
+            //        if (node_html_tag_is(open_elements->data[i], GUMBO_TAG_TEMPLATE))
+            //        {
+            //            last_template_index = i;
+            //        }
+            //        if (node_html_tag_is(open_elements->data[i], GUMBO_TAG_TABLE))
+            //        {
+            //            last_table_index = i;
+            //        }
+            //    }
+            //    if (last_template_index != -1 &&
+            //        (last_table_index == -1 || last_template_index > last_table_index))
+            //    {
+            //        retval.target = open_elements->data[last_template_index];
+            //        return retval;
+            //    }
+            //    if (last_table_index == -1)
+            //    {
+            //        retval.target = open_elements->data[0];
+            //        return retval;
+            //    }
+            //    GumboNode* last_table = open_elements->data[last_table_index];
+            //    if (last_table->parent != NULL)
+            //    {
+            //        retval.target = last_table->parent;
+            //        retval.index = last_table->index_within_parent;
+            //        return retval;
+            //    }
+
+            //    retval.target = open_elements->data[last_table_index - 1];
+            //    return retval;
+            //}
+
+        }
+
+        void append_node()
+        {
+            throw new ToImplementException();
+            //line: 829
+            //// Appends a node to the end of its parent, setting the "parent" and
+            //// "index_within_parent" fields appropriately.
+            //static void append_node(
+            //    GumboParser* parser, GumboNode* parent, GumboNode* node)
+            //{
+            //    assert(node->parent == NULL);
+            //    assert(node->index_within_parent == -1);
+            //    GumboVector* children;
+            //    if (parent->type == GUMBO_NODE_ELEMENT ||
+            //        parent->type == GUMBO_NODE_TEMPLATE)
+            //    {
+            //        children = &parent->v.element.children;
+            //    }
+            //    else
+            //    {
+            //        assert(parent->type == GUMBO_NODE_DOCUMENT);
+            //        children = &parent->v.document.children;
+            //    }
+            //    node->parent = parent;
+            //    node->index_within_parent = children->length;
+            //    gumbo_vector_add(parser, (void*)node, children);
+            //    assert(node->index_within_parent < children->length);
+            //}
+        }
+
+        void insert_node()
+        {
+            throw new ToImplementException();
+            //line: 850
+            //// Inserts a node at the specified InsertionLocation, updating the
+            //// "parent" and "index_within_parent" fields of it and all its siblings.
+            //// If the index of the location is -1, this calls append_node.
+            //static void insert_node(
+            //    GumboParser* parser, GumboNode* node, InsertionLocation location)
+            //{
+            //    assert(node->parent == NULL);
+            //    assert(node->index_within_parent == -1);
+            //    GumboNode* parent = location.target;
+            //    int index = location.index;
+            //    if (index != -1)
+            //    {
+            //        GumboVector* children = NULL;
+            //        if (parent->type == GUMBO_NODE_ELEMENT ||
+            //            parent->type == GUMBO_NODE_TEMPLATE)
+            //        {
+            //            children = &parent->v.element.children;
+            //        }
+            //        else if (parent->type == GUMBO_NODE_DOCUMENT)
+            //        {
+            //            children = &parent->v.document.children;
+            //            assert(children->length == 0);
+            //        }
+            //        else
+            //        {
+            //            assert(0);
+            //        }
+
+            //        assert(index >= 0);
+            //        assert((unsigned int) index < children->length);
+            //        node->parent = parent;
+            //        node->index_within_parent = index;
+            //        gumbo_vector_insert_at(parser, (void*)node, index, children);
+            //        assert(node->index_within_parent < children->length);
+            //        for (unsigned int i = index + 1; i < children->length; ++i)
+            //        {
+            //            GumboNode* sibling = children->data[i];
+            //            sibling->index_within_parent = i;
+            //            assert(sibling->index_within_parent < children->length);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        append_node(parser, parent, node);
+            //    }
+            //} 
+        }
+        static void maybe_flush_text_node_buffer()
+        {
+
+            throw new ToImplementException();
+            //line: 884
+            //static void maybe_flush_text_node_buffer(GumboParser* parser)
+            //{
+            //    GumboParserState* state = parser->_parser_state;
+            //    TextNodeBufferState* buffer_state = &state->_text_node;
+            //    if (buffer_state->_buffer.length == 0)
+            //    {
+            //        return;
+            //    }
+
+            //    assert(buffer_state->_type == GUMBO_NODE_WHITESPACE ||
+            //           buffer_state->_type == GUMBO_NODE_TEXT ||
+            //           buffer_state->_type == GUMBO_NODE_CDATA);
+            //    GumboNode* text_node = create_node(parser, buffer_state->_type);
+            //    GumboText* text_node_data = &text_node->v.text;
+            //    text_node_data->text =
+            //        gumbo_string_buffer_to_string(parser, &buffer_state->_buffer);
+            //    text_node_data->original_text.data = buffer_state->_start_original_text;
+            //    text_node_data->original_text.length =
+            //        state->_current_token->original_text.data -
+            //        buffer_state->_start_original_text;
+            //    text_node_data->start_pos = buffer_state->_start_position;
+
+            //    gumbo_debug("Flushing text node buffer of %.*s.\n",
+            //        (int)buffer_state->_buffer.length, buffer_state->_buffer.data);
+
+            //    InsertionLocation location = get_appropriate_insertion_location(parser, NULL);
+            //    if (location.target->type == GUMBO_NODE_DOCUMENT)
+            //    {
+            //        // The DOM does not allow Document nodes to have Text children, so per the
+            //        // spec, they are dropped on the floor.
+            //        destroy_node(parser, text_node);
+            //    }
+            //    else
+            //    {
+            //        insert_node(parser, text_node, location);
+            //    }
+
+            //    gumbo_string_buffer_clear(parser, &buffer_state->_buffer);
+            //    buffer_state->_type = GUMBO_NODE_WHITESPACE;
+            //    assert(buffer_state->_buffer.length == 0);
+            //}
+        }
+
+    }
+
+    struct InsertionLocation
+    {
+        //line: 774
+        // This represents a place to insert a node, consisting of a target parent and a
+        // child index within that parent.  If the node should be inserted at the end of
+        // the parent's child, index will be -1.
+        public GumboNode target;
+        int index;
     }
 }
