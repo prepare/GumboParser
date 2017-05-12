@@ -633,8 +633,43 @@ namespace Gumbo
             //}
             throw new ToImplementException();
         }
+
+
+        bool node_html_tag_is()
+        {
+            //line: 726
+            //      // Like node_tag_in, but for the single-tag case in the HTML namespace
+            //      static bool node_html_tag_is(const GumboNode* node, GumboTag tag) {
+            //return node_qualified_tag_is(node, GUMBO_NAMESPACE_HTML, tag);
+            //  }
+            throw new ToImplementException();
+        }
+        void push_template_insertion_mode()
+        {
+            //line : 729
+            //    static void push_template_insertion_mode(
+            //GumboParser* parser, GumboInsertionMode mode)
+            //    {
+            //        gumbo_vector_add(
+            //            parser, (void*)mode, &parser->_parser_state->_template_insertion_modes);
+            //    }
+            throw new ToImplementException();
+        }
+        void pop_template_insertion_mode()
+        {
+            //line: 735
+            //static void pop_template_insertion_mode(GumboParser* parser)
+            //{
+            //    gumbo_vector_pop(parser, &parser->_parser_state->_template_insertion_modes);
+            //}
+            throw new ToImplementException();
+        }
+
+
+
         GumboInsertionMode get_current_template_insertion_mode()
         {
+            //line: 741
             //        // Returns the current template insertion mode.  If the stack of template
             //        // insertion modes is empty, this returns GUMBO_INSERTION_MODE_INITIAL.
             //        static GumboInsertionMode get_current_template_insertion_mode(
@@ -654,5 +689,37 @@ namespace Gumbo
             }
             return template_insertion_modes[template_insertion_modes.Count - 1];
         }
+        static bool is_mathml_integration_point()
+        {
+            //line: 754
+            // // http://www.whatwg.org/specs/web-apps/current-work/multipage/tree-construction.html#mathml-text-integration-point
+            //        static bool is_mathml_integration_point(const GumboNode* node) {
+            //  return node_tag_in_set(
+            //      node, (gumbo_tagset){
+            //            TAG_MATHML(MI), TAG_MATHML(MO), TAG_MATHML(MN),
+            //                TAG_MATHML(MS), TAG_MATHML(MTEXT)});
+            //}
+
+            throw new ToImplementException();
+        }
+        static bool is_html_integration_point()
+        {
+            throw new ToImplementException();
+            //line: 761
+            //        // http://www.whatwg.org/specs/web-apps/current-work/multipage/tree-construction.html#html-integration-point
+            //        static bool is_html_integration_point(const GumboNode* node) {
+            //  return node_tag_in_set(node, (gumbo_tagset){
+            //            TAG_SVG(FOREIGNOBJECT),
+            //                                   TAG_SVG(DESC), TAG_SVG(TITLE)}) ||
+            //         (node_qualified_tag_is(
+            //              node, GUMBO_NAMESPACE_MATHML, GUMBO_TAG_ANNOTATION_XML) &&
+            //             (attribute_matches(
+            //                  &node->v.element.attributes, "encoding", "text/html") ||
+            //                 attribute_matches(&node->v.element.attributes, "encoding",
+            //                     "application/xhtml+xml")));
+            //}
+        }
+
+
     }
 }
