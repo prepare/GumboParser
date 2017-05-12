@@ -913,6 +913,6 @@ namespace Gumbo
         //       GumboOptions;
     }
 
-    enum GumboInternalTokenizerState { }
+  
 
 }

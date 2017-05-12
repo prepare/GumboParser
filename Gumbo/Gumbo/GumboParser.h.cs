@@ -73,7 +73,7 @@ namespace Gumbo
     {
         GumboOptions _options;
         GumboInternalOutput _output;
-        GumboInternalTokenizerState _tokenizer_state;
+        GumboTokenizerState _tokenizer_state;
         GumboParserState _parser_state;
     }
 }

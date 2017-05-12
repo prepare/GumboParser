@@ -44,6 +44,10 @@
 // prevents parse error position from being messed up by possible mark/resets in
 // temporary buffer manipulation.
 
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 namespace Gumbo
 {
 
@@ -203,8 +207,17 @@ namespace Gumbo
 
     partial class GumboParser
     {
-        void tokenizer_add_parse_error()
+        void tokenizer_add_parse_error(GumboErrorType type)
         {
+            GumboError error = gumbo_add_error();
+            if (error == null)
+            {
+                return;
+            }
+            
+
+
+
             throw new TODOImplementException();
             //line: 202
             //// Adds an ERR_UNEXPECTED_CODE_POINT parse error to the parser's error struct.
@@ -324,7 +337,7 @@ namespace Gumbo
 
         bool is_alpha(int c)
         {
-            throw new TODOImplementException();
+            return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
             //line: 
             //static bool is_alpha(int c)
             //{
@@ -368,6 +381,10 @@ namespace Gumbo
         void gumbo_debug(string str)
         {
             //see util.c, line: 50
+#if DEBUG
+
+
+#endif
 
         }
 
