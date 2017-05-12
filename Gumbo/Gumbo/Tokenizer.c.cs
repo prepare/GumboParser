@@ -44,14 +44,1249 @@
 // prevents parse error position from being messed up by possible mark/resets in
 // temporary buffer manipulation.
 
-
-
 namespace Gumbo
 {
 
 
+    enum StateResult
+    {
+        //line 69
+        //// An enum for the return value of each individual state.
+        //typedef enum {
+        //    RETURN_ERROR,    // Return false (error) from the tokenizer.
+        //    RETURN_SUCCESS,  // Return true (success) from the tokenizer.
+        //    NEXT_CHAR        // Proceed to the next character and continue lexing.
+        //}
+        //StateResult;
+        RETURN_ERROR,    // Return false (error) from the tokenizer.
+        RETURN_SUCCESS,  // Return true (success) from the tokenizer.
+        NEXT_CHAR        // Proceed to the next character and continue lexing.
+    }
+
+
+    class GumboTagState
+    {
+        //line: 77
+        //// This is a struct containing state necessary to build up a tag token,
+        //// character by character.
+        //// A buffer to accumulate characters for various GumboStringPiece fields.
+        //GumboStringBuffer _buffer;
+
+        //// A pointer to the start of the original text corresponding to the contents
+        //// of the buffer.
+        //const char* _original_text;
+
+        //// The current tag enum, computed once the tag name state has finished so that
+        //// the buffer can be re-used for building up attributes.
+        //GumboTag _tag;
+
+        //// The starting location of the text in the buffer.
+        //GumboSourcePosition _start_pos;
+
+        //// The current list of attributes.  This is copied (and ownership of its data
+        //// transferred) to the GumboStartTag token upon completion of the tag.  New
+        //// attributes are added as soon as their attribute name state is complete, and
+        //// values are filled in by operating on _attributes.data[attributes.length-1].
+        //GumboVector /* GumboAttribute */ _attributes;
+
+        //// If true, the next attribute value to be finished should be dropped.  This
+        //// happens if a duplicate attribute name is encountered - we want to consume
+        //// the attribute value, but shouldn't overwrite the existing value.
+        //bool _drop_next_attr_value;
+
+        //// The state that caused the tokenizer to switch into a character reference in
+        //// attribute value state.  This is used to set the additional allowed
+        //// character, and is switched back to on completion.  Initialized as the
+        //// tokenizer enters the character reference state.
+        //GumboTokenizerEnum _attr_value_state;
+
+        //// The last start tag to have been emitted by the tokenizer.  This is
+        //// necessary to check for appropriate end tags.
+        //GumboTag _last_start_tag;
+
+        //// If true, then this is a start tag.  If false, it's an end tag.  This is
+        //// necessary to generate the appropriate token type at tag-closing time.
+        //bool _is_start_tag;
+
+        //// If true, then this tag is "self-closing" and doesn't have an end tag.
+        //bool _is_self_closing;
+    }
+
+    class GumboTokenizerState
+    {
+        //line: 123
+        //// This is the main tokenizer state struct, containing all state used by in
+        //// tokenizing the input stream.
+        //typedef struct GumboInternalTokenizerState
+        //{
+        //    // The current lexer state.  Starts in GUMBO_LEX_DATA.
+        //    GumboTokenizerEnum _state;
+
+        //    // A flag indicating whether the current input character needs to reconsumed
+        //    // in another state, or whether the next input character should be read for
+        //    // the next iteration of the state loop.  This is set when the spec reads
+        //    // "Reconsume the current input character in..."
+        //    bool _reconsume_current_input;
+
+        //    // A flag indicating whether the current node is a foreign element.  This is
+        //    // set by gumbo_tokenizer_set_is_current_node_foreign and checked in the
+        //    // markup declaration state.
+        //    bool _is_current_node_foreign;
+
+        //    // A flag indicating whether the tokenizer is in a CDATA section.  If so, then
+        //    // text tokens emitted will be GUMBO_TOKEN_CDATA.
+        //    bool _is_in_cdata;
+
+        //    // Certain states (notably character references) may emit two character tokens
+        //    // at once, but the contract for lex() fills in only one token at a time.  The
+        //    // extra character is buffered here, and then this is checked on entry to
+        //    // lex().  If a character is stored here, it's immediately emitted and control
+        //    // returns from the lexer.  kGumboNoChar is used to represent 'no character
+        //    // stored.'
+        //    //
+        //    // Note that characters emitted through this mechanism will have their source
+        //    // position marked as the character under the mark, i.e. multiple characters
+        //    // may be emitted with the same position.  This is desirable for character
+        //    // references, but unsuitable for many other cases.  Use the _temporary_buffer
+        //    // mechanism if the buffered characters must have their original positions in
+        //    // the document.
+        //    int _buffered_emit_char;
+
+        //    // A temporary buffer to accumulate characters, as described by the "temporary
+        //    // buffer" phrase in the tokenizer spec.  We use this in a somewhat unorthodox
+        //    // way: we record the specific character to go into the buffer, which may
+        //    // sometimes be a lowercased version of the actual input character.  However,
+        //    // we *also* use utf8iterator_mark() to record the position at tag start.
+        //    // When we start flushing the temporary buffer, we set _temporary_buffer_emit
+        //    // to the start of it, and then increment it for each call to the tokenizer.
+        //    // We also call utf8iterator_reset(), and utf8iterator_next() through the
+        //    // input stream, so that tokens emitted by emit_char have the correct position
+        //    // and original text.
+        //    GumboStringBuffer _temporary_buffer;
+
+        //    // The current cursor position we're emitting from within
+        //    // _temporary_buffer.data.  NULL whenever we're not flushing the buffer.
+        //    const char* _temporary_buffer_emit;
+
+        //    // The temporary buffer is also used by the spec to check whether we should
+        //    // enter the script data double escaped state, but we can't use the same
+        //    // buffer for both because we have to flush out "<s" as emits while still
+        //    // maintaining the context that will eventually become "script".  This is a
+        //    // separate buffer that's used in place of the temporary buffer for states
+        //    // that may enter the script data double escape start state.
+        //    GumboStringBuffer _script_data_buffer;
+
+        //    // Pointer to the beginning of the current token in the original buffer; used
+        //    // to record the original text.
+        //    const char* _token_start;
+
+        //    // GumboSourcePosition recording the source location of the start of the
+        //    // current token.
+        //    GumboSourcePosition _token_start_pos;
+
+        //    // Current tag state.
+        //    GumboTagState _tag_state;
+
+        //    // Doctype state.  We use the temporary buffer to accumulate characters (it's
+        //    // not used for anything else in the doctype states), and then freshly
+        //    // allocate the strings in the doctype token, then copy it over on emit.
+        //    GumboTokenDocType _doc_type_state;
+
+        //    // The UTF8Iterator over the tokenizer input.
+        //    Utf8Iterator _input;
+        //}
+        //GumboTokenizerState;
+
+
+    }
+
+
     partial class GumboParser
     {
+        void tokenizer_add_parse_error()
+        {
+            throw new TODOImplementException();
+            //line: 202
+            //// Adds an ERR_UNEXPECTED_CODE_POINT parse error to the parser's error struct.
+            //static void tokenizer_add_parse_error(
+            //    GumboParser* parser, GumboErrorType type)
+            //{
+            //    GumboError* error = gumbo_add_error(parser);
+            //    if (!error)
+            //    {
+            //        return;
+            //    }
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    utf8iterator_get_position(&tokenizer->_input, &error->position);
+            //    error->original_text = utf8iterator_get_char_pointer(&tokenizer->_input);
+            //    error->type = type;
+            //    error->v.tokenizer.codepoint = utf8iterator_current(&tokenizer->_input);
+            //    switch (tokenizer->_state)
+            //    {
+            //        case GUMBO_LEX_DATA:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_DATA;
+            //            break;
+            //        case GUMBO_LEX_CHAR_REF_IN_DATA:
+            //        case GUMBO_LEX_CHAR_REF_IN_RCDATA:
+            //        case GUMBO_LEX_CHAR_REF_IN_ATTR_VALUE:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_CHAR_REF;
+            //            break;
+            //        case GUMBO_LEX_RCDATA:
+            //        case GUMBO_LEX_RCDATA_LT:
+            //        case GUMBO_LEX_RCDATA_END_TAG_OPEN:
+            //        case GUMBO_LEX_RCDATA_END_TAG_NAME:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_RCDATA;
+            //            break;
+            //        case GUMBO_LEX_RAWTEXT:
+            //        case GUMBO_LEX_RAWTEXT_LT:
+            //        case GUMBO_LEX_RAWTEXT_END_TAG_OPEN:
+            //        case GUMBO_LEX_RAWTEXT_END_TAG_NAME:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_RAWTEXT;
+            //            break;
+            //        case GUMBO_LEX_PLAINTEXT:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_PLAINTEXT;
+            //            break;
+            //        case GUMBO_LEX_SCRIPT:
+            //        case GUMBO_LEX_SCRIPT_LT:
+            //        case GUMBO_LEX_SCRIPT_END_TAG_OPEN:
+            //        case GUMBO_LEX_SCRIPT_END_TAG_NAME:
+            //        case GUMBO_LEX_SCRIPT_ESCAPED_START:
+            //        case GUMBO_LEX_SCRIPT_ESCAPED_START_DASH:
+            //        case GUMBO_LEX_SCRIPT_ESCAPED:
+            //        case GUMBO_LEX_SCRIPT_ESCAPED_DASH:
+            //        case GUMBO_LEX_SCRIPT_ESCAPED_DASH_DASH:
+            //        case GUMBO_LEX_SCRIPT_ESCAPED_LT:
+            //        case GUMBO_LEX_SCRIPT_ESCAPED_END_TAG_OPEN:
+            //        case GUMBO_LEX_SCRIPT_ESCAPED_END_TAG_NAME:
+            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_START:
+            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED:
+            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_DASH:
+            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_DASH_DASH:
+            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_LT:
+            //        case GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_END:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_SCRIPT;
+            //            break;
+            //        case GUMBO_LEX_TAG_OPEN:
+            //        case GUMBO_LEX_END_TAG_OPEN:
+            //        case GUMBO_LEX_TAG_NAME:
+            //        case GUMBO_LEX_BEFORE_ATTR_NAME:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_TAG;
+            //            break;
+            //        case GUMBO_LEX_SELF_CLOSING_START_TAG:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_SELF_CLOSING_TAG;
+            //            break;
+            //        case GUMBO_LEX_ATTR_NAME:
+            //        case GUMBO_LEX_AFTER_ATTR_NAME:
+            //        case GUMBO_LEX_BEFORE_ATTR_VALUE:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_ATTR_NAME;
+            //            break;
+            //        case GUMBO_LEX_ATTR_VALUE_DOUBLE_QUOTED:
+            //        case GUMBO_LEX_ATTR_VALUE_SINGLE_QUOTED:
+            //        case GUMBO_LEX_ATTR_VALUE_UNQUOTED:
+            //        case GUMBO_LEX_AFTER_ATTR_VALUE_QUOTED:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_ATTR_VALUE;
+            //            break;
+            //        case GUMBO_LEX_BOGUS_COMMENT:
+            //        case GUMBO_LEX_COMMENT_START:
+            //        case GUMBO_LEX_COMMENT_START_DASH:
+            //        case GUMBO_LEX_COMMENT:
+            //        case GUMBO_LEX_COMMENT_END_DASH:
+            //        case GUMBO_LEX_COMMENT_END:
+            //        case GUMBO_LEX_COMMENT_END_BANG:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_COMMENT;
+            //            break;
+            //        case GUMBO_LEX_MARKUP_DECLARATION:
+            //        case GUMBO_LEX_DOCTYPE:
+            //        case GUMBO_LEX_BEFORE_DOCTYPE_NAME:
+            //        case GUMBO_LEX_DOCTYPE_NAME:
+            //        case GUMBO_LEX_AFTER_DOCTYPE_NAME:
+            //        case GUMBO_LEX_AFTER_DOCTYPE_PUBLIC_KEYWORD:
+            //        case GUMBO_LEX_BEFORE_DOCTYPE_PUBLIC_ID:
+            //        case GUMBO_LEX_DOCTYPE_PUBLIC_ID_DOUBLE_QUOTED:
+            //        case GUMBO_LEX_DOCTYPE_PUBLIC_ID_SINGLE_QUOTED:
+            //        case GUMBO_LEX_AFTER_DOCTYPE_PUBLIC_ID:
+            //        case GUMBO_LEX_BETWEEN_DOCTYPE_PUBLIC_SYSTEM_ID:
+            //        case GUMBO_LEX_AFTER_DOCTYPE_SYSTEM_KEYWORD:
+            //        case GUMBO_LEX_BEFORE_DOCTYPE_SYSTEM_ID:
+            //        case GUMBO_LEX_DOCTYPE_SYSTEM_ID_DOUBLE_QUOTED:
+            //        case GUMBO_LEX_DOCTYPE_SYSTEM_ID_SINGLE_QUOTED:
+            //        case GUMBO_LEX_AFTER_DOCTYPE_SYSTEM_ID:
+            //        case GUMBO_LEX_BOGUS_DOCTYPE:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_DOCTYPE;
+            //            break;
+            //        case GUMBO_LEX_CDATA:
+            //            error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_CDATA;
+            //            break;
+            //    }
+            //}
+        }
+
+
+        bool is_alpha(int c)
+        {
+            throw new TODOImplementException();
+            //line: 
+            //static bool is_alpha(int c)
+            //{
+            //    // We don't use ISO C isupper/islower functions here because they
+            //    // depend upon the program's locale, while the behavior of the HTML5 spec is
+            //    // independent of which locale the program is run in.
+            //    return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
+            //}
+        }
+        static int ensure_lowercase(int c)
+        {
+            //line 318:
+            return c >= 'A' && c <= 'Z' ? c + 0x20 : c;
+        }
+
+        GumboTokenType get_char_token_type(bool is_in_cdata, int c)
+        {
+            //line: 322
+            if (is_in_cdata && c > 0)
+            {
+                return GumboTokenType.GUMBO_TOKEN_CDATA;
+            }
+
+            switch (c)
+            {
+                case '\t':
+                case '\n':
+                case '\r':
+                case '\f':
+                case ' ':
+                    return GumboTokenType.GUMBO_TOKEN_WHITESPACE;
+                case 0:
+                    gumbo_debug("Emitted null byte.\n");
+                    return GumboTokenType.GUMBO_TOKEN_NULL;
+                case -1:
+                    return GumboTokenType.GUMBO_TOKEN_EOF;
+                default:
+                    return GumboTokenType.GUMBO_TOKEN_CHARACTER;
+            }
+        }
+        void gumbo_debug(string str)
+        {
+            //see util.c, line: 50
+
+        }
+
+        void clear_temporary_buffer()
+        {
+            throw new TODOImplementException();
+            //line: 354
+            //// Starts recording characters in the temporary buffer.
+            //// Because this needs to reset the utf8iterator_mark to the beginning of the
+            //// text that will eventually be emitted, it needs to be called a couple of
+            //// states before the spec says "Set the temporary buffer to the empty string".
+            //// In general, this should be called whenever there's a transition to a
+            //// "less-than sign state".  The initial < and possibly / then need to be
+            //// appended to the temporary buffer, their presence needs to be accounted for in
+            //// states that compare the temporary buffer against a literal value, and
+            //// spec stanzas that say "emit a < and / character token along with a character
+            //// token for each character in the temporary buffer" need to be adjusted to
+            //// account for the presence of the < and / inside the temporary buffer.
+            //static void clear_temporary_buffer(GumboParser* parser)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    assert(!tokenizer->_temporary_buffer_emit);
+            //    utf8iterator_mark(&tokenizer->_input);
+            //    gumbo_string_buffer_clear(parser, &tokenizer->_temporary_buffer);
+            //    // The temporary buffer and script data buffer are the same object in the
+            //    // spec, so the script data buffer should be cleared as well.
+            //    gumbo_string_buffer_clear(parser, &tokenizer->_script_data_buffer);
+            //}
+        }
+
+
+        void append_char_to_temporary_buffer()
+        {
+            throw new TODOImplementException();
+            //line: 366
+            //// Appends a codepoint to the temporary buffer.
+            //static void append_char_to_temporary_buffer(
+            //    GumboParser* parser, int codepoint)
+            //{
+            //    gumbo_string_buffer_append_codepoint(
+            //        parser, codepoint, &parser->_tokenizer_state->_temporary_buffer);
+            //}
+        }
+
+        bool temporary_buffer_equals()
+        {
+            throw new TODOImplementException();
+            //        static bool temporary_buffer_equals(GumboParser* parser, const char* text) {
+            //  GumboStringBuffer* buffer = &parser->_tokenizer_state->_temporary_buffer;
+            //        // TODO(jdtang): See if the extra strlen is a performance problem, and replace
+            //        // it with an explicit sizeof(literal) if necessary.  I don't think it will
+            //        // be, as this is only used in a couple of rare states.
+            //        int text_len = strlen(text);
+            //  return text_len == buffer->length &&
+            //         memcmp(buffer->data, text, text_len) == 0;
+            //}
+        }
+
+        void doc_type_state_init()
+        {
+            throw new TODOImplementException();
+            //line: 386
+            //static void doc_type_state_init(GumboParser* parser)
+            //{
+            //    GumboTokenDocType* doc_type_state =
+            //        &parser->_tokenizer_state->_doc_type_state;
+            //    // We initialize these to NULL here so that we don't end up leaking memory if
+            //    // we never see a doctype token.  When we do see a doctype token, we reset
+            //    // them to a freshly-allocated empty string so that we can present a uniform
+            //    // interface to client code and not make them check for null.  Ownership is
+            //    // transferred to the doctype token when it's emitted.
+            //    doc_type_state->name = NULL;
+            //    doc_type_state->public_identifier = NULL;
+            //    doc_type_state->system_identifier = NULL;
+            //    doc_type_state->force_quirks = false;
+            //    doc_type_state->has_public_identifier = false;
+            //    doc_type_state->has_system_identifier = false;
+            //}
+        }
+        void reset_token_start_point()
+        {
+            throw new TODOImplementException();
+            //line: 405
+            //// Sets the token original_text and position to the current iterator position.
+            //// This is necessary because [CDATA[ sections may include text that is ignored
+            //// by the tokenizer.
+            //static void reset_token_start_point(GumboTokenizerState* tokenizer)
+            //{
+            //    tokenizer->_token_start = utf8iterator_get_char_pointer(&tokenizer->_input);
+            //    utf8iterator_get_position(&tokenizer->_input, &tokenizer->_token_start_pos);
+            //}
+        }
+        void reset_tag_buffer_start_point()
+        {
+            throw new TODOImplementException();
+            //line: 414
+            //// Sets the tag buffer original text and start point to the current iterator
+            //// position.  This is necessary because attribute names & values may have
+            //// whitespace preceeding them, and so we can't assume that the actual token
+            //// starting point was the end of the last tag buffer usage.
+            //static void reset_tag_buffer_start_point(GumboParser* parser)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    GumboTagState* tag_state = &tokenizer->_tag_state;
+
+            //    utf8iterator_get_position(&tokenizer->_input, &tag_state->_start_pos);
+            //    tag_state->_original_text = utf8iterator_get_char_pointer(&tokenizer->_input);
+            //}
+        }
+        void finish_temporary_buffer()
+        {
+            throw new TODOImplementException();
+            //line: 424
+            //      // Moves the temporary buffer contents over to the specified output string,
+            //      // and clears the temporary buffer.
+            //      static void finish_temporary_buffer(GumboParser* parser, const char** output) {
+            //GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //*output =
+            //    gumbo_string_buffer_to_string(parser, &tokenizer->_temporary_buffer);
+            //clear_temporary_buffer(parser);
+            //  }
+        }
+        void finish_token()
+        {
+            throw new TODOImplementException();
+            //line: 439
+            //// Advances the iterator past the end of the token, and then fills in the
+            //// relevant position fields.  It's assumed that after every emit, the tokenizer
+            //// will immediately return (letting the tree-construction stage read the filled
+            //// in Token).  Thus, it's safe to advance the input stream here, since it will
+            //// bypass the advance at the bottom of the state machine loop.
+            ////
+            //// Since this advances the iterator and resets the current input, make sure to
+            //// call it after you've recorded any other data you need for the token.
+            //static void finish_token(GumboParser* parser, GumboToken* token)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    if (!tokenizer->_reconsume_current_input)
+            //    {
+            //        utf8iterator_next(&tokenizer->_input);
+            //    }
+
+            //    token->position = tokenizer->_token_start_pos;
+            //    token->original_text.data = tokenizer->_token_start;
+            //    reset_token_start_point(tokenizer);
+            //    token->original_text.length =
+            //        tokenizer->_token_start - token->original_text.data;
+            //    if (token->original_text.length > 0 &&
+            //        token->original_text.data[token->original_text.length - 1] == '\r')
+            //    {
+            //        // The UTF8 iterator will ignore carriage returns in the input stream, which
+            //        // means that the next token may start one past a \r character.  The pointer
+            //        // arithmetic above results in that \r being appended to the original text
+            //        // of the preceding token, so we have to adjust its length here to chop the
+            //        // \r off.
+            //        --token->original_text.length;
+            //    }
+            //}
+        }
+
+        void finish_doctype_public_id()
+        {
+            throw new TODOImplementException();
+            //line: 463
+            //// Records the doctype public ID, assumed to be in the temporary buffer.
+            //// Convenience method that also sets has_public_identifier to true.
+            //static void finish_doctype_public_id(GumboParser* parser)
+            //{
+            //    GumboTokenDocType* doc_type_state =
+            //        &parser->_tokenizer_state->_doc_type_state;
+            //    gumbo_parser_deallocate(parser, (void*)doc_type_state->public_identifier);
+            //    finish_temporary_buffer(parser, &doc_type_state->public_identifier);
+            //    doc_type_state->has_public_identifier = true;
+            //}
+        }
+
+
+        void finish_doctype_system_id()
+        {
+            throw new TODOImplementException();
+            //line: 473
+            //// Records the doctype system ID, assumed to be in the temporary buffer.
+            //// Convenience method that also sets has_system_identifier to true.
+            //static void finish_doctype_system_id(GumboParser* parser)
+            //{
+            //    GumboTokenDocType* doc_type_state =
+            //        &parser->_tokenizer_state->_doc_type_state;
+            //    gumbo_parser_deallocate(parser, (void*)doc_type_state->system_identifier);
+            //    finish_temporary_buffer(parser, &doc_type_state->system_identifier);
+            //    doc_type_state->has_system_identifier = true;
+            //}
+        }
+
+
+
+        void emit_char()
+        {
+            throw new TODOImplementException();
+            //line: 482
+            //// Writes a single specified character to the output token.
+            //static void emit_char(GumboParser* parser, int c, GumboToken* output)
+            //{
+            //    output->type = get_char_token_type(parser->_tokenizer_state->_is_in_cdata, c);
+            //    output->v.character = c;
+            //    finish_token(parser, output);
+            //}
+        }
+        void emit_replacement_char()
+        {
+
+            throw new TODOImplementException();
+            //line: 490
+            //// Writes a replacement character token and records a parse error.
+            //// Always returns RETURN_ERROR, per gumbo_lex return value.
+            //static StateResult emit_replacement_char(
+            //    GumboParser* parser, GumboToken* output)
+            //{
+            //    // In all cases, this is because of a null byte in the input stream.
+            //    tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //    emit_char(parser, kUtf8ReplacementChar, output);
+            //    return RETURN_ERROR;
+            //} 
+        }
+        void emit_eof()
+        {
+            //line: 499
+            throw new TODOImplementException();
+            //// Writes an EOF character token.  Always returns RETURN_SUCCESS.
+            //static StateResult emit_eof(GumboParser* parser, GumboToken* output)
+            //{
+            //    emit_char(parser, -1, output);
+            //    return RETURN_SUCCESS;
+            //}
+        }
+
+        void emit_current_char()
+        {
+
+            throw new TODOImplementException();
+            //line: 506
+            //// Writes the current input character out as a character token.
+            //// Always returns RETURN_SUCCESS.
+            //static bool emit_current_char(GumboParser* parser, GumboToken* output)
+            //{
+            //    emit_char(
+            //        parser, utf8iterator_current(&parser->_tokenizer_state->_input), output);
+            //    return RETURN_SUCCESS;
+            //}
+        }
+        void emit_doctype()
+        {
+            //line: 513
+            throw new TODOImplementException();
+            //// Writes out a doctype token, copying it from the tokenizer state.
+            //static void emit_doctype(GumboParser* parser, GumboToken* output)
+            //{
+            //    output->type = GUMBO_TOKEN_DOCTYPE;
+            //    output->v.doc_type = parser->_tokenizer_state->_doc_type_state;
+            //    finish_token(parser, output);
+            //    doc_type_state_init(parser);
+            //}
+        }
+
+        void mark_tag_state_as_empty()
+        {
+
+            throw new TODOImplementException();
+            //line: 522
+            // Debug-only function that explicitly sets the attribute vector data to NULL so
+            //        // it can be asserted on tag creation, verifying that there are no memory leaks.
+            //        static void mark_tag_state_as_empty(GumboTagState* tag_state)
+            //        {
+            //# ifndef NDEBUG
+            //            tag_state->_attributes = kGumboEmptyVector;
+            //#endif
+            //        } 
+        }
+
+        StateResult emit_current_tag()
+        {
+            throw new TODOImplementException();
+            //line: 530
+            //// Writes out the current tag as a start or end tag token.
+            //// Always returns RETURN_SUCCESS.
+            //static StateResult emit_current_tag(GumboParser* parser, GumboToken* output)
+            //{
+            //    GumboTagState* tag_state = &parser->_tokenizer_state->_tag_state;
+            //    if (tag_state->_is_start_tag)
+            //    {
+            //        output->type = GUMBO_TOKEN_START_TAG;
+            //        output->v.start_tag.tag = tag_state->_tag;
+            //        output->v.start_tag.attributes = tag_state->_attributes;
+            //        output->v.start_tag.is_self_closing = tag_state->_is_self_closing;
+            //        tag_state->_last_start_tag = tag_state->_tag;
+            //        mark_tag_state_as_empty(tag_state);
+            //        gumbo_debug(
+            //            "Emitted start tag %s.\n", gumbo_normalized_tagname(tag_state->_tag));
+            //    }
+            //    else
+            //    {
+            //        output->type = GUMBO_TOKEN_END_TAG;
+            //        output->v.end_tag = tag_state->_tag;
+            //        // In end tags, ownership of the attributes vector is not transferred to the
+            //        // token, but it's still initialized as normal, so it must be manually
+            //        // deallocated.  There may also be attributes to destroy, in certain broken
+            //        // cases like </div</th> (the "th" is an attribute there).
+            //        for (unsigned int i = 0; i < tag_state->_attributes.length; ++i)
+            //        {
+            //            gumbo_destroy_attribute(parser, tag_state->_attributes.data[i]);
+            //        }
+            //        gumbo_parser_deallocate(parser, tag_state->_attributes.data);
+            //        mark_tag_state_as_empty(tag_state);
+            //        gumbo_debug(
+            //            "Emitted end tag %s.\n", gumbo_normalized_tagname(tag_state->_tag));
+            //    }
+            //    gumbo_string_buffer_destroy(parser, &tag_state->_buffer);
+            //    finish_token(parser, output);
+            //    gumbo_debug("Original text = %.*s.\n", output->original_text.length,
+            //        output->original_text.data);
+            //    assert(output->original_text.length >= 2);
+            //    assert(output->original_text.data[0] == '<');
+            //    assert(output->original_text.data[output->original_text.length - 1] == '>');
+            //    return RETURN_SUCCESS;
+            //}
+        }
+
+        void abandon_current_tag()
+        {
+            throw new TODOImplementException();
+            //line: 570
+            //// In some states, we speculatively start a tag, but don't know whether it'll be
+            //// emitted as tag token or as a series of character tokens until we finish it.
+            //// We need to abandon the tag we'd started & free its memory in that case to
+            //// avoid a memory leak.
+            //static void abandon_current_tag(GumboParser* parser)
+            //{
+            //    GumboTagState* tag_state = &parser->_tokenizer_state->_tag_state;
+            //    for (unsigned int i = 0; i < tag_state->_attributes.length; ++i)
+            //    {
+            //        gumbo_destroy_attribute(parser, tag_state->_attributes.data[i]);
+            //    }
+            //    gumbo_parser_deallocate(parser, tag_state->_attributes.data);
+            //    mark_tag_state_as_empty(tag_state);
+            //    gumbo_string_buffer_destroy(parser, &tag_state->_buffer);
+            //    gumbo_debug("Abandoning current tag.\n");
+            //}
+        }
+
+
+        StateResult emit_char_ref()
+        {
+            throw new TODOImplementException();
+            //line: 584
+            //// Wraps the consume_char_ref function to handle its output and make the
+            //// appropriate TokenizerState modifications.  Returns RETURN_ERROR if a parse
+            //// error occurred, RETURN_SUCCESS otherwise.
+            //static StateResult emit_char_ref(GumboParser* parser,
+            //    int additional_allowed_char, bool is_in_attribute, GumboToken* output)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    OneOrTwoCodepoints char_ref;
+            //    bool status = consume_char_ref(
+            //        parser, &tokenizer->_input, additional_allowed_char, false, &char_ref);
+            //    if (char_ref.first != kGumboNoChar)
+            //    {
+            //        // consume_char_ref ends with the iterator pointing at the next character,
+            //        // so we need to be sure not advance it again before reading the next token.
+            //        tokenizer->_reconsume_current_input = true;
+            //        emit_char(parser, char_ref.first, output);
+            //        tokenizer->_buffered_emit_char = char_ref.second;
+            //    }
+            //    else
+            //    {
+            //        emit_char(parser, '&', output);
+            //    }
+            //    return status ? RETURN_SUCCESS : RETURN_ERROR;
+            //}
+        }
+
+        StateResult emit_comment()
+        {
+            //line:605
+            throw new TODOImplementException();
+            //// Emits a comment token.  Comments use the temporary buffer to accumulate their
+            //// data, and then it's copied over and released to the 'text' field of the
+            //// GumboToken union.  Always returns RETURN_SUCCESS.
+            //static StateResult emit_comment(GumboParser* parser, GumboToken* output)
+            //{
+            //    output->type = GUMBO_TOKEN_COMMENT;
+            //    finish_temporary_buffer(parser, &output->v.text);
+            //    finish_token(parser, output);
+            //    return RETURN_SUCCESS;
+            //} 
+        }
+        bool maybe_emit_from_temporary_buffer()
+        {
+            //line:617
+            throw new TODOImplementException();
+            //// Checks to see we should be flushing accumulated characters in the temporary
+            //// buffer, and fills the output token with the next output character if so.
+            //// Returns true if a character has been emitted and the tokenizer should
+            //// immediately return, false if we're at the end of the temporary buffer and
+            //// should resume normal operation.
+            //static bool maybe_emit_from_temporary_buffer(
+            //    GumboParser* parser, GumboToken* output)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    const char* c = tokenizer->_temporary_buffer_emit;
+            //    GumboStringBuffer* buffer = &tokenizer->_temporary_buffer;
+
+            //    if (!c || c >= buffer->data + buffer->length)
+            //    {
+            //        tokenizer->_temporary_buffer_emit = NULL;
+            //        return false;
+            //    }
+
+            //    assert(*c == utf8iterator_current(&tokenizer->_input));
+            //    // emit_char also advances the input stream.  We need to do some juggling of
+            //    // the _reconsume_current_input flag to get the proper behavior when emitting
+            //    // previous tokens.  Basically, _reconsume_current_input should *never* be set
+            //    // when emitting anything from the temporary buffer, since those characters
+            //    // have already been advanced past.  However, it should be preserved so that
+            //    // when the *next* character is encountered again, the tokenizer knows not to
+            //    // advance past it.
+            //    bool saved_reconsume_state = tokenizer->_reconsume_current_input;
+            //    tokenizer->_reconsume_current_input = false;
+            //    emit_char(parser, *c, output);
+            //    ++tokenizer->_temporary_buffer_emit;
+            //    tokenizer->_reconsume_current_input = saved_reconsume_state;
+            //    return true;
+            //}
+        }
+
+
+
+        bool emit_temporary_buffer()
+        {
+            throw new TODOImplementException();
+            //line: 649 
+            //// Sets up the tokenizer to begin flushing the temporary buffer.
+            //// This resets the input iterator stream to the start of the last tag, sets up
+            //// _temporary_buffer_emit, and then (if the temporary buffer is non-empty) emits
+            //// the first character in it.  It returns true if a character was emitted, false
+            //// otherwise.
+            //static bool emit_temporary_buffer(GumboParser* parser, GumboToken* output)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    assert(tokenizer->_temporary_buffer.data);
+            //    utf8iterator_reset(&tokenizer->_input);
+            //    tokenizer->_temporary_buffer_emit = tokenizer->_temporary_buffer.data;
+            //    return maybe_emit_from_temporary_buffer(parser, output);
+            //}
+        }
+
+
+        void initialize_tag_buffer()
+        {
+            throw new TODOImplementException();
+            //line: 673
+            //// (Re-)initialize the tag buffer.  This also resets the original_text pointer
+            //// and _start_pos field to point to the current position.
+            //static void initialize_tag_buffer(GumboParser* parser)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    GumboTagState* tag_state = &tokenizer->_tag_state;
+
+            //    gumbo_string_buffer_init(parser, &tag_state->_buffer);
+            //    reset_tag_buffer_start_point(parser);
+            //}
+        }
+        void start_new_tag()
+        {
+            throw new TODOImplementException();
+            //line: 684
+            //// Initializes the tag_state to start a new tag, keeping track of the opening
+            //// positions and original text.  Takes a boolean indicating whether this is a
+            //// start or end tag.
+            //static void start_new_tag(GumboParser* parser, bool is_start_tag)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    GumboTagState* tag_state = &tokenizer->_tag_state;
+            //    int c = utf8iterator_current(&tokenizer->_input);
+            //    assert(is_alpha(c));
+            //    c = ensure_lowercase(c);
+            //    assert(is_alpha(c));
+
+            //    initialize_tag_buffer(parser);
+            //    gumbo_string_buffer_append_codepoint(parser, c, &tag_state->_buffer);
+
+            //    assert(tag_state->_attributes.data == NULL);
+            //    // Initial size chosen by statistical analysis of a corpus of 60k webpages.
+            //    // 99.5% of elements have 0 attributes, 93% of the remainder have 1.  These
+            //    // numbers are a bit higher for more modern websites (eg. ~45% = 0, ~40% = 1
+            //    // for the HTML5 Spec), but still have basically 99% of nodes with <= 2 attrs.
+            //    gumbo_vector_init(parser, 1, &tag_state->_attributes);
+            //    tag_state->_drop_next_attr_value = false;
+            //    tag_state->_is_start_tag = is_start_tag;
+            //    tag_state->_is_self_closing = false;
+            //    gumbo_debug("Starting new tag.\n");
+            //} 
+        }
+
+
+        void copy_over_tag_buffer()
+        {
+            throw new TODOImplementException();
+            //line: 708
+            //      // Fills in the specified char* with the contents of the tag buffer.
+            //      static void copy_over_tag_buffer(GumboParser* parser, const char** output) {
+            //GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //      GumboTagState* tag_state = &tokenizer->_tag_state;
+            //*output = gumbo_string_buffer_to_string(parser, &tag_state->_buffer);
+            //  }
+        }
+
+        void copy_over_original_tag_text()
+        {   //line: 720
+            throw new TODOImplementException();
+            //// Fills in:
+            //// * The original_text GumboStringPiece with the portion of the original
+            //// buffer that corresponds to the tag buffer.
+            //// * The start_pos GumboSourcePosition with the start position of the tag
+            //// buffer.
+            //// * The end_pos GumboSourcePosition with the current source position.
+            //static void copy_over_original_tag_text(GumboParser* parser,
+            //    GumboStringPiece* original_text, GumboSourcePosition* start_pos,
+            //    GumboSourcePosition* end_pos)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    GumboTagState* tag_state = &tokenizer->_tag_state;
+
+            //    original_text->data = tag_state->_original_text;
+            //    original_text->length = utf8iterator_get_char_pointer(&tokenizer->_input) -
+            //                            tag_state->_original_text;
+            //    if (original_text->data[original_text->length - 1] == '\r')
+            //    {
+            //        // Since \r is skipped by the UTF-8 iterator, it can sometimes end up
+            //        // appended to the end of original text even when it's really the first part
+            //        // of the next character.  If we detect this situation, shrink the length of
+            //        // the original text by 1 to remove the carriage return.
+            //        --original_text->length;
+            //    }
+            //    *start_pos = tag_state->_start_pos;
+            //    utf8iterator_get_position(&tokenizer->_input, end_pos);
+            //}
+        }
+
+
+        void reinitialize_tag_buffer()
+        {
+            throw new TODOImplementException();
+            //line: 741
+            //// Releases and then re-initializes the tag buffer.
+            //static void reinitialize_tag_buffer(GumboParser* parser)
+            //{
+            //    gumbo_parser_deallocate(
+            //        parser, parser->_tokenizer_state->_tag_state._buffer.data);
+            //    initialize_tag_buffer(parser);
+            //}
+        }
+
+        void finish_tag_name()
+        {
+            throw new TODOImplementException();
+            //line: 749
+            //// Moves some data from the temporary buffer over the the tag-based fields in
+            //// TagState.
+            //static void finish_tag_name(GumboParser* parser)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    GumboTagState* tag_state = &tokenizer->_tag_state;
+
+            //    tag_state->_tag =
+            //        gumbo_tagn_enum(tag_state->_buffer.data, tag_state->_buffer.length);
+            //    reinitialize_tag_buffer(parser);
+            //}
+        }
+
+        void add_duplicate_attr_error()
+        {
+            throw new TODOImplementException();
+            //line: 759
+            //      // Adds an ERR_DUPLICATE_ATTR parse error to the parser's error struct.
+            //      static void add_duplicate_attr_error(GumboParser* parser, const char* attr_name,
+            //  int original_index, int new_index) {
+            //GumboError* error = gumbo_add_error(parser);
+            //if (!error) {
+            //  return;
+            //}
+            //GumboTagState* tag_state = &parser->_tokenizer_state->_tag_state;
+            //      error->type = GUMBO_ERR_DUPLICATE_ATTR;
+            //error->position = tag_state->_start_pos;
+            //error->original_text = tag_state->_original_text;
+            //error->v.duplicate_attr.original_index = original_index;
+            //error->v.duplicate_attr.new_index = new_index;
+            //copy_over_tag_buffer(parser, &error->v.duplicate_attr.name);
+            //reinitialize_tag_buffer(parser);
+            //  }
+
+        }
+        bool finish_attribute_name()
+        {
+            throw new TODOImplementException();
+            //line: 781
+            //// Creates a new attribute in the current tag, copying the current tag buffer to
+            //// the attribute's name.  The attribute's value starts out as the empty string
+            //// (following the "Boolean attributes" section of the spec) and is only
+            //// overwritten on finish_attribute_value().  If the attribute has already been
+            //// specified, the new attribute is dropped, a parse error is added, and the
+            //// function returns false.  Otherwise, this returns true.
+            //static bool finish_attribute_name(GumboParser* parser)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    GumboTagState* tag_state = &tokenizer->_tag_state;
+            //    // May've been set by a previous attribute without a value; reset it here.
+            //    tag_state->_drop_next_attr_value = false;
+            //    assert(tag_state->_attributes.data);
+            //    assert(tag_state->_attributes.capacity);
+
+            //    GumboVector* /* GumboAttribute* */ attributes = &tag_state->_attributes;
+            //    for (unsigned int i = 0; i < attributes->length; ++i)
+            //    {
+            //        GumboAttribute* attr = attributes->data[i];
+            //        if (strlen(attr->name) == tag_state->_buffer.length &&
+            //            memcmp(attr->name, tag_state->_buffer.data,
+            //                tag_state->_buffer.length) == 0)
+            //        {
+            //            // Identical attribute; bail.
+            //            add_duplicate_attr_error(parser, attr->name, i, attributes->length);
+            //            tag_state->_drop_next_attr_value = true;
+            //            return false;
+            //        }
+            //    }
+
+            //    GumboAttribute* attr = gumbo_parser_allocate(parser, sizeof(GumboAttribute));
+            //    attr->attr_namespace = GUMBO_ATTR_NAMESPACE_NONE;
+            //    copy_over_tag_buffer(parser, &attr->name);
+            //    copy_over_original_tag_text(
+            //        parser, &attr->original_name, &attr->name_start, &attr->name_end);
+            //    attr->value = gumbo_copy_stringz(parser, "");
+            //    copy_over_original_tag_text(
+            //        parser, &attr->original_value, &attr->name_start, &attr->name_end);
+            //    gumbo_vector_add(parser, attr, attributes);
+            //    reinitialize_tag_buffer(parser);
+            //    return true;
+            //}
+
+        }
+
+        void finish_attribute_value()
+        {
+            throw new TODOImplementException();
+            //line: 817
+            //// Finishes an attribute value.  This sets the value of the most recently added
+            //// attribute to the current contents of the tag buffer.
+            //static void finish_attribute_value(GumboParser* parser)
+            //{
+            //    GumboTagState* tag_state = &parser->_tokenizer_state->_tag_state;
+            //    if (tag_state->_drop_next_attr_value)
+            //    {
+            //        // Duplicate attribute name detected in an earlier state, so we have to
+            //        // ignore the value.
+            //        tag_state->_drop_next_attr_value = false;
+            //        reinitialize_tag_buffer(parser);
+            //        return;
+            //    }
+
+            //    GumboAttribute* attr =
+            //        tag_state->_attributes.data[tag_state->_attributes.length - 1];
+            //    gumbo_parser_deallocate(parser, (void*)attr->value);
+            //    copy_over_tag_buffer(parser, &attr->value);
+            //    copy_over_original_tag_text(
+            //        parser, &attr->original_value, &attr->value_start, &attr->value_end);
+            //    reinitialize_tag_buffer(parser);
+            //}
+        }
+        bool is_appropriate_end_tag()
+        {
+            throw new TODOImplementException();
+            //line: 837
+            //// Returns true if the current end tag matches the last start tag emitted.
+            //static bool is_appropriate_end_tag(GumboParser* parser)
+            //{
+            //    GumboTagState* tag_state = &parser->_tokenizer_state->_tag_state;
+            //    assert(!tag_state->_is_start_tag);
+            //    return tag_state->_last_start_tag != GUMBO_TAG_LAST &&
+            //           tag_state->_last_start_tag == gumbo_tagn_enum(tag_state->_buffer.data,
+            //                                             tag_state->_buffer.length);
+            //}
+        }
+        void gumbo_tokenizer_state_init()
+        {
+            throw new TODOImplementException();
+            //line: 845
+            // void gumbo_tokenizer_state_init(
+            //          GumboParser* parser, const char* text, size_t text_length) {
+            //GumboTokenizerState* tokenizer =
+            //    gumbo_parser_allocate(parser, sizeof(GumboTokenizerState));
+            //      parser->_tokenizer_state = tokenizer;
+            //gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //      tokenizer->_reconsume_current_input = false;
+            //tokenizer->_is_current_node_foreign = false;
+            //tokenizer->_is_in_cdata = false;
+            //tokenizer->_tag_state._last_start_tag = GUMBO_TAG_LAST;
+
+            //tokenizer->_buffered_emit_char = kGumboNoChar;
+            //gumbo_string_buffer_init(parser, &tokenizer->_temporary_buffer);
+            //      tokenizer->_temporary_buffer_emit = NULL;
+
+            //mark_tag_state_as_empty(&tokenizer->_tag_state);
+
+            //gumbo_string_buffer_init(parser, &tokenizer->_script_data_buffer);
+            //      tokenizer->_token_start = text;
+            //utf8iterator_init(parser, text, text_length, &tokenizer->_input);
+            //utf8iterator_get_position(&tokenizer->_input, &tokenizer->_token_start_pos);
+            //doc_type_state_init(parser);
+            //  }
+        }
+        void gumbo_tokenizer_state_destroy()
+        {
+            throw new TODOImplementException();
+            //line: 869
+            //void gumbo_tokenizer_state_destroy(GumboParser* parser)
+            //{
+            //    GumboTokenizerState* tokenizer = parser->_tokenizer_state;
+            //    assert(tokenizer->_doc_type_state.name == NULL);
+            //    assert(tokenizer->_doc_type_state.public_identifier == NULL);
+            //    assert(tokenizer->_doc_type_state.system_identifier == NULL);
+            //    gumbo_string_buffer_destroy(parser, &tokenizer->_temporary_buffer);
+            //    gumbo_string_buffer_destroy(parser, &tokenizer->_script_data_buffer);
+            //    gumbo_parser_deallocate(parser, tokenizer);
+            //}
+
+        }
+        void gumbo_tokenizer_set_state()
+        {
+            throw new TODOImplementException();
+            //line: 879
+            //void gumbo_tokenizer_set_state(GumboParser* parser, GumboTokenizerEnum state)
+            //{
+            //    parser->_tokenizer_state->_state = state;
+            //}
+        }
+        void gumbo_tokenizer_set_is_current_node_foreign()
+        {
+            throw new TODOImplementException();
+            //line: 883
+            //    void gumbo_tokenizer_set_is_current_node_foreign(
+            //GumboParser* parser, bool is_foreign)
+            //    {
+            //        if (is_foreign != parser->_tokenizer_state->_is_current_node_foreign)
+            //        {
+            //            gumbo_debug("Toggling is_current_node_foreign to %s.\n",
+            //                is_foreign ? "true" : "false");
+            //        }
+            //        parser->_tokenizer_state->_is_current_node_foreign = is_foreign;
+            //    }
+
+        }
+        void handle_data_state()
+        {
+            throw new TODOImplementException();
+            //line: 893
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#data-state
+            //static StateResult handle_data_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '&':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_CHAR_REF_IN_DATA);
+            //            // The char_ref machinery expects to be on the & so it can mark that
+            //            // and return to it if the text isn't a char ref, so we need to
+            //            // reconsume it.
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //        case '<':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_TAG_OPEN);
+            //            clear_temporary_buffer(parser);
+            //            append_char_to_temporary_buffer(parser, '<');
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            emit_char(parser, c, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            return emit_current_char(parser, output);
+            //    }
+            //}
+
+
+
+        }
+
+        void handle_char_ref_in_data_state()
+        {
+            throw new TODOImplementException();
+            //line: 918
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#character-reference-in-data-state
+            //static StateResult handle_char_ref_in_data_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //    return emit_char_ref(parser, ' ', false, output);
+            //}
+        }
+
+        void handle_rcdata_state()
+        {
+            throw new TODOImplementException();
+            //line: 925
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#rcdata-state
+            //static StateResult handle_rcdata_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '&':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_CHAR_REF_IN_RCDATA);
+            //            tokenizer->_reconsume_current_input = true;
+            //            return NEXT_CHAR;
+            //        case '<':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_RCDATA_LT);
+            //            clear_temporary_buffer(parser);
+            //            append_char_to_temporary_buffer(parser, '<');
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            return emit_replacement_char(parser, output);
+            //        case -1:
+            //            return emit_eof(parser, output);
+            //        default:
+            //            return emit_current_char(parser, output);
+            //    }
+            //}
+        }
+
+
+
+        void handle_char_ref_in_rcdata_state()
+        {
+            throw new TODOImplementException();
+            //line: 947
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#character-reference-in-rcdata-state
+            //static StateResult handle_char_ref_in_rcdata_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    gumbo_tokenizer_set_state(parser, GUMBO_LEX_RCDATA);
+            //    return emit_char_ref(parser, ' ', false, output);
+            //}
+        }
+
+
+
+        void handle_rawtext_state()
+        {
+            //line:954
+            throw new TODOImplementException();
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#rawtext-state
+            //static StateResult handle_rawtext_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '<':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_RAWTEXT_LT);
+            //            clear_temporary_buffer(parser);
+            //            append_char_to_temporary_buffer(parser, '<');
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            return emit_replacement_char(parser, output);
+            //        case -1:
+            //            return emit_eof(parser, output);
+            //        default:
+            //            return emit_current_char(parser, output);
+            //    }
+            //}
+        }
+
+        void handle_script_state()
+        {
+            //line: 972
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#script-data-state
+            //static StateResult handle_script_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '<':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_SCRIPT_LT);
+            //            clear_temporary_buffer(parser);
+            //            append_char_to_temporary_buffer(parser, '<');
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            return emit_replacement_char(parser, output);
+            //        case -1:
+            //            return emit_eof(parser, output);
+            //        default:
+            //            return emit_current_char(parser, output);
+            //    }
+            //}
+
+        }
+
+        //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#plaintext-state
+        //static StateResult handle_plaintext_state(GumboParser* parser,
+        //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+        //{
+        //    switch (c)
+        //    {
+        //        case '\0':
+        //            return emit_replacement_char(parser, output);
+        //        case -1:
+        //            return emit_eof(parser, output);
+        //        default:
+        //            return emit_current_char(parser, output);
+        //    }
+        //}
+
+
         bool gumbo_lex(GumboTokenStream output)
         {
             //line:2812
