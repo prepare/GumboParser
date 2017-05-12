@@ -2660,8 +2660,977 @@ namespace Gumbo
             //}
         }
 
+        void handle_comment_start_state()
+        {
+            throw new TODOImplementException();
+            //line:2015
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#comment-start-state
+            //static StateResult handle_comment_start_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '-':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT_START_DASH);
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT);
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_COMMENT_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_comment(parser, output);
+            //            return RETURN_ERROR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_COMMENT_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_comment(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT);
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_comment_start_dash_state()
+        {
+            throw new TODOImplementException();
+            //line:2044
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#comment-start-dash-state
+            //static StateResult handle_comment_start_dash_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '-':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT_END);
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT);
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_COMMENT_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_comment(parser, output);
+            //            return RETURN_ERROR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_COMMENT_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_comment(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT);
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_comment_state()
+        {
+            throw new TODOImplementException();
+            //line:2075
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#comment-state
+            //static StateResult handle_comment_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '-':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT_END_DASH);
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_COMMENT_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_comment(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+        }
+
+        void handle_comment_end_dash_state()
+        {
+            throw new TODOImplementException();
+            //line:2097
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#comment-end-dash-state
+            //static StateResult handle_comment_end_dash_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '-':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT_END);
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT);
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_COMMENT_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_comment(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT);
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_comment_end_state()
+        {
+            throw new TODOImplementException();
+            //line:2123
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#comment-end-state
+            //static StateResult handle_comment_end_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            return emit_comment(parser, output);
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT);
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case '!':
+            //            tokenizer_add_parse_error(
+            //                parser, GUMBO_ERR_COMMENT_BANG_AFTER_DOUBLE_DASH);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT_END_BANG);
+            //            return NEXT_CHAR;
+            //        case '-':
+            //            tokenizer_add_parse_error(
+            //                parser, GUMBO_ERR_COMMENT_DASH_AFTER_DOUBLE_DASH);
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_comment(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_COMMENT_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT);
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+        }
+
+        void handle_comment_end_bang_state()
+        {
+            throw new TODOImplementException();
+            //line:2162
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#comment-end-bang-state
+            //static StateResult handle_comment_end_bang_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '-':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT_END_DASH);
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, '!');
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            return emit_comment(parser, output);
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT);
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, '!');
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_COMMENT_END_BANG_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_comment(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_COMMENT);
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, '-');
+            //            append_char_to_temporary_buffer(parser, '!');
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_doctype_state()
+        {
+            throw new TODOImplementException();
+            //line:2198
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#doctype-state
+            //static StateResult handle_doctype_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    assert(!tokenizer->_temporary_buffer.length);
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_DOCTYPE_NAME);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_SPACE);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_DOCTYPE_NAME);
+            //            tokenizer->_reconsume_current_input = true;
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_before_doctype_name_state()
+        {
+            throw new TODOImplementException();
+            //line:2224
+
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#before-doctype-name-state
+            //static StateResult handle_before_doctype_name_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DOCTYPE_NAME);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_RIGHT_BRACKET);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DOCTYPE_NAME);
+            //            tokenizer->_doc_type_state.force_quirks = false;
+            //            append_char_to_temporary_buffer(parser, ensure_lowercase(c));
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_doctype_name_state()
+        {
+            throw new TODOImplementException();
+            //line:2812
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete5/tokenization.html#doctype-name-state
+            //static StateResult handle_doctype_name_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_AFTER_DOCTYPE_NAME);
+            //            gumbo_parser_deallocate(parser, (void*)tokenizer->_doc_type_state.name);
+            //            finish_temporary_buffer(parser, &tokenizer->_doc_type_state.name);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            gumbo_parser_deallocate(parser, (void*)tokenizer->_doc_type_state.name);
+            //            finish_temporary_buffer(parser, &tokenizer->_doc_type_state.name);
+            //            emit_doctype(parser, output);
+            //            return RETURN_SUCCESS;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            gumbo_parser_deallocate(parser, (void*)tokenizer->_doc_type_state.name);
+            //            finish_temporary_buffer(parser, &tokenizer->_doc_type_state.name);
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DOCTYPE_NAME);
+            //            tokenizer->_doc_type_state.force_quirks = false;
+            //            append_char_to_temporary_buffer(parser, ensure_lowercase(c));
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+        }
+
+        void handle_after_doctype_name_state()
+        {
+            throw new TODOImplementException();
+            //line:2812
+
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#after-doctype-name-state
+            //static StateResult handle_after_doctype_name_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_doctype(parser, output);
+            //            return RETURN_SUCCESS;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            if (utf8iterator_maybe_consume_match(
+            //                    &tokenizer->_input, "PUBLIC", sizeof("PUBLIC") - 1, false)) {
+            //                gumbo_tokenizer_set_state(
+            //                    parser, GUMBO_LEX_AFTER_DOCTYPE_PUBLIC_KEYWORD);
+            //                tokenizer->_reconsume_current_input = true;
+            //            } else if (utf8iterator_maybe_consume_match(&tokenizer->_input, "SYSTEM",
+            //                    sizeof("SYSTEM") - 1, false)) {
+            //                gumbo_tokenizer_set_state(
+            //                    parser, GUMBO_LEX_AFTER_DOCTYPE_SYSTEM_KEYWORD);
+            //                tokenizer->_reconsume_current_input = true;
+            //            } else {
+            //                tokenizer_add_parse_error(
+            //                    parser, GUMBO_ERR_DOCTYPE_SPACE_OR_RIGHT_BRACKET);
+            //                gumbo_tokenizer_set_state(parser, GUMBO_LEX_BOGUS_DOCTYPE);
+            //                tokenizer->_doc_type_state.force_quirks = true;
+            //            }
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+        }
+
+        void handle_after_doctype_public_keyword_state()
+        {
+            throw new TODOImplementException();
+            //line:2337
+
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#after-doctype-public-keyword-state
+            //static StateResult handle_after_doctype_public_keyword_state(
+            //    GumboParser* parser, GumboTokenizerState* tokenizer, int c,
+            //    GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_DOCTYPE_PUBLIC_ID);
+            //            return NEXT_CHAR;
+            //        case '"':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_PUBLIC_ID_DOUBLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '\'':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_PUBLIC_ID_SINGLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_RIGHT_BRACKET);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BOGUS_DOCTYPE);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //    }
+            //}
+        }
+
+        void handle_before_doctype_public_id_state()
+        {
+            throw new TODOImplementException();
+            //line:2381
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#before-doctype-public-identifier-state
+            //static StateResult handle_before_doctype_public_id_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            return NEXT_CHAR;
+            //        case '"':
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_PUBLIC_ID_DOUBLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '\'':
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_PUBLIC_ID_SINGLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_END);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BOGUS_DOCTYPE);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //    }
+            //}
+        }
+
+        void handle_doctype_public_id_double_quoted_state()
+        {
+            throw new TODOImplementException();
+            //line:2421
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#doctype-public-identifier-(double-quoted)-state
+            //static StateResult handle_doctype_public_id_double_quoted_state(
+            //    GumboParser* parser, GumboTokenizerState* tokenizer, int c,
+            //    GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '"':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_AFTER_DOCTYPE_PUBLIC_ID);
+            //            finish_doctype_public_id(parser);
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_END);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            finish_doctype_public_id(parser);
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            finish_doctype_public_id(parser);
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+        }
+
+        void handle_doctype_public_id_single_quoted_state()
+        {
+            throw new TODOImplementException();
+            //line:2454
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#doctype-public-identifier-(single-quoted)-state
+            //static StateResult handle_doctype_public_id_single_quoted_state(
+            //    GumboParser* parser, GumboTokenizerState* tokenizer, int c,
+            //    GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\'':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_AFTER_DOCTYPE_PUBLIC_ID);
+            //            finish_doctype_public_id(parser);
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_END);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            finish_doctype_public_id(parser);
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            finish_doctype_public_id(parser);
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_after_doctype_public_id_state()
+        {
+            throw new TODOImplementException();
+            //line:2487
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#after-doctype-public-identifier-state
+            //static StateResult handle_after_doctype_public_id_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_BETWEEN_DOCTYPE_PUBLIC_SYSTEM_ID);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_doctype(parser, output);
+            //            return RETURN_SUCCESS;
+            //        case '"':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_SYSTEM_ID_DOUBLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '\'':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_SYSTEM_ID_SINGLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_reconsume_current_input = true;
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BOGUS_DOCTYPE);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_between_doctype_public_system_id_state()
+        {
+            throw new TODOImplementException();
+            //line:2529
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#between-doctype-public-and-system-identifiers-state
+            //static StateResult handle_between_doctype_public_system_id_state(
+            //    GumboParser* parser, GumboTokenizerState* tokenizer, int c,
+            //    GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_doctype(parser, output);
+            //            return RETURN_SUCCESS;
+            //        case '"':
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_SYSTEM_ID_DOUBLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '\'':
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_SYSTEM_ID_SINGLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BOGUS_DOCTYPE);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //    }
+            //}
+        }
+
+        void handle_after_doctype_system_keyword_state()
+        {
+            throw new TODOImplementException();
+            //line:2568
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#after-doctype-system-keyword-state
+            //static StateResult handle_after_doctype_system_keyword_state(
+            //    GumboParser* parser, GumboTokenizerState* tokenizer, int c,
+            //    GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BEFORE_DOCTYPE_SYSTEM_ID);
+            //            return NEXT_CHAR;
+            //        case '"':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_SYSTEM_ID_DOUBLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '\'':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_SYSTEM_ID_SINGLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_END);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BOGUS_DOCTYPE);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_before_doctype_system_id_state()
+        {
+            throw new TODOImplementException();
+            //line:2611
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#before-doctype-system-identifier-state
+            //static StateResult handle_before_doctype_system_id_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            return NEXT_CHAR;
+            //        case '"':
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_SYSTEM_ID_DOUBLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '\'':
+            //            assert(temporary_buffer_equals(parser, ""));
+            //            gumbo_tokenizer_set_state(
+            //                parser, GUMBO_LEX_DOCTYPE_SYSTEM_ID_SINGLE_QUOTED);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_END);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BOGUS_DOCTYPE);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+        }
 
 
+        void handle_doctype_system_id_double_quoted_state()
+        {
+            throw new TODOImplementException();
+            //line:2650
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#doctype-system-identifier-(double-quoted)-state
+            //static StateResult handle_doctype_system_id_double_quoted_state(
+            //    GumboParser* parser, GumboTokenizerState* tokenizer, int c,
+            //    GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '"':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_AFTER_DOCTYPE_SYSTEM_ID);
+            //            finish_doctype_system_id(parser);
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_END);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            finish_doctype_system_id(parser);
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            finish_doctype_system_id(parser);
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+
+        void handle_doctype_system_id_single_quoted_state()
+        {
+            throw new TODOImplementException();
+            //line:2683
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#doctype-system-identifier-(single-quoted)-state
+            //static StateResult handle_doctype_system_id_single_quoted_state(
+            //    GumboParser* parser, GumboTokenizerState* tokenizer, int c,
+            //    GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\'':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_AFTER_DOCTYPE_SYSTEM_ID);
+            //            finish_doctype_system_id(parser);
+            //            return NEXT_CHAR;
+            //        case '\0':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_UTF8_NULL);
+            //            append_char_to_temporary_buffer(parser, kUtf8ReplacementChar);
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_END);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            finish_doctype_system_id(parser);
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            finish_doctype_system_id(parser);
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            append_char_to_temporary_buffer(parser, c);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+
+        }
+
+        void handle_after_doctype_system_id_state()
+        {
+            throw new TODOImplementException();
+            //line:2716
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#after-doctype-system-identifier-state
+            //static StateResult handle_after_doctype_system_id_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    switch (c)
+            //    {
+            //        case '\t':
+            //        case '\n':
+            //        case '\f':
+            //        case ' ':
+            //            return NEXT_CHAR;
+            //        case '>':
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            emit_doctype(parser, output);
+            //            return RETURN_SUCCESS;
+            //        case -1:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_EOF);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //            tokenizer->_doc_type_state.force_quirks = true;
+            //            emit_doctype(parser, output);
+            //            return RETURN_ERROR;
+            //        default:
+            //            tokenizer_add_parse_error(parser, GUMBO_ERR_DOCTYPE_INVALID);
+            //            gumbo_tokenizer_set_state(parser, GUMBO_LEX_BOGUS_DOCTYPE);
+            //            return NEXT_CHAR;
+            //    }
+            //}
+        }
+
+        void handle_bogus_doctype_state()
+        {
+            throw new TODOImplementException();
+            //line:2742
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#bogus-doctype-state
+            //static StateResult handle_bogus_doctype_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    if (c == '>' || c == -1)
+            //    {
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //        emit_doctype(parser, output);
+            //        return RETURN_ERROR;
+            //    }
+            //    return NEXT_CHAR;
+            //}
+        }
+        void handle_cdata_state()
+        {
+            throw new TODOImplementException();
+            //line:2753
+            //// http://www.whatwg.org/specs/web-apps/current-work/complete.html#cdata-section-state
+            //static StateResult handle_cdata_state(GumboParser* parser,
+            //    GumboTokenizerState* tokenizer, int c, GumboToken* output)
+            //{
+            //    if (c == -1 || utf8iterator_maybe_consume_match(
+            //                       &tokenizer->_input, "]]>", sizeof("]]>") - 1, true)) {
+            //        tokenizer->_reconsume_current_input = true;
+            //        reset_token_start_point(tokenizer);
+            //        gumbo_tokenizer_set_state(parser, GUMBO_LEX_DATA);
+            //        tokenizer->_is_in_cdata = false;
+            //        return NEXT_CHAR;
+            //    } else {
+            //        return emit_current_char(parser, output);
+            //    }
+            //}
+
+        }
+
+        //delegate, line: 2767
+        //typedef StateResult(*GumboLexerStateFunction)(
+        //   GumboParser*, GumboTokenizerState*, int, GumboToken*);
+
+        //line: 2770
+        //    static GumboLexerStateFunction dispatch_table[] = {handle_data_state,
+        //handle_char_ref_in_data_state, handle_rcdata_state,
+        //handle_char_ref_in_rcdata_state, handle_rawtext_state, handle_script_state,
+        //handle_plaintext_state, handle_tag_open_state, handle_end_tag_open_state,
+        //handle_tag_name_state, handle_rcdata_lt_state,
+        //handle_rcdata_end_tag_open_state, handle_rcdata_end_tag_name_state,
+        //handle_rawtext_lt_state, handle_rawtext_end_tag_open_state,
+        //handle_rawtext_end_tag_name_state, handle_script_lt_state,
+        //handle_script_end_tag_open_state, handle_script_end_tag_name_state,
+        //handle_script_escaped_start_state, handle_script_escaped_start_dash_state,
+        //handle_script_escaped_state, handle_script_escaped_dash_state,
+        //handle_script_escaped_dash_dash_state, handle_script_escaped_lt_state,
+        //handle_script_escaped_end_tag_open_state,
+        //handle_script_escaped_end_tag_name_state,
+        //handle_script_double_escaped_start_state,
+        //handle_script_double_escaped_state, handle_script_double_escaped_dash_state,
+        //handle_script_double_escaped_dash_dash_state,
+        //handle_script_double_escaped_lt_state,
+        //handle_script_double_escaped_end_state, handle_before_attr_name_state,
+        //handle_attr_name_state, handle_after_attr_name_state,
+        //handle_before_attr_value_state, handle_attr_value_double_quoted_state,
+        //handle_attr_value_single_quoted_state, handle_attr_value_unquoted_state,
+        //handle_char_ref_in_attr_value_state, handle_after_attr_value_quoted_state,
+        //handle_self_closing_start_tag_state, handle_bogus_comment_state,
+        //handle_markup_declaration_state, handle_comment_start_state,
+        //handle_comment_start_dash_state, handle_comment_state,
+        //handle_comment_end_dash_state, handle_comment_end_state,
+        //handle_comment_end_bang_state, handle_doctype_state,
+        //handle_before_doctype_name_state, handle_doctype_name_state,
+        //handle_after_doctype_name_state, handle_after_doctype_public_keyword_state,
+        //handle_before_doctype_public_id_state,
+        //handle_doctype_public_id_double_quoted_state,
+        //handle_doctype_public_id_single_quoted_state,
+        //handle_after_doctype_public_id_state,
+        //handle_between_doctype_public_system_id_state,
+        //handle_after_doctype_system_keyword_state,
+        //handle_before_doctype_system_id_state,
+        //handle_doctype_system_id_double_quoted_state,
+        //handle_doctype_system_id_single_quoted_state,
+        //handle_after_doctype_system_id_state, handle_bogus_doctype_state,
+        //handle_cdata_state};
 
 
 
@@ -2734,6 +3703,44 @@ namespace Gumbo
             //        {
             //            utf8iterator_next(&tokenizer->_input);
             //        }
+            //    }
+            //}
+        }
+        void gumbo_token_destroy()
+        {
+            throw new TODOImplementException();
+            //line:2870
+            //void gumbo_token_destroy(GumboParser* parser, GumboToken* token)
+            //{
+            //    if (!token) return;
+
+            //    switch (token->type)
+            //    {
+            //        case GUMBO_TOKEN_DOCTYPE:
+            //            gumbo_parser_deallocate(parser, (void*)token->v.doc_type.name);
+            //            gumbo_parser_deallocate(
+            //                parser, (void*)token->v.doc_type.public_identifier);
+            //            gumbo_parser_deallocate(
+            //                parser, (void*)token->v.doc_type.system_identifier);
+            //            return;
+            //        case GUMBO_TOKEN_START_TAG:
+            //            for (unsigned int i = 0; i < token->v.start_tag.attributes.length; ++i)
+            //            {
+            //                GumboAttribute* attr = token->v.start_tag.attributes.data[i];
+            //                if (attr)
+            //                {
+            //                    // May have been nulled out if this token was merged with another.
+            //                    gumbo_destroy_attribute(parser, attr);
+            //                }
+            //            }
+            //            gumbo_parser_deallocate(
+            //                parser, (void*)token->v.start_tag.attributes.data);
+            //            return;
+            //        case GUMBO_TOKEN_COMMENT:
+            //            gumbo_parser_deallocate(parser, (void*)token->v.text);
+            //            return;
+            //        default:
+            //            return;
             //    }
             //}
         }
