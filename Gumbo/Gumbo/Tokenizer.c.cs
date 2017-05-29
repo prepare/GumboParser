@@ -267,34 +267,40 @@ namespace Gumbo
             }
 
             GumboTokenizerState tokenizer = this._tokenizer_state;
+            //get original text at position
+
             //utf8iterator_get_position(&tokenizer->_input, &error->position);
             //    error->original_text = utf8iterator_get_char_pointer(&tokenizer->_input);
             //    error->type = type;
             //    error->v.tokenizer.codepoint = utf8iterator_current(&tokenizer->_input);
+            throw new TODOImplementException();
+            error.tokenizer.codepoint = 0;
+            error.type = type;
+
             switch (tokenizer._state)
             {
                 case GumboTokenizerEnum.GUMBO_LEX_DATA:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_DATA;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_DATA;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_CHAR_REF_IN_DATA:
                 case GumboTokenizerEnum.GUMBO_LEX_CHAR_REF_IN_RCDATA:
                 case GumboTokenizerEnum.GUMBO_LEX_CHAR_REF_IN_ATTR_VALUE:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_CHAR_REF;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_CHAR_REF;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_RCDATA:
                 case GumboTokenizerEnum.GUMBO_LEX_RCDATA_LT:
                 case GumboTokenizerEnum.GUMBO_LEX_RCDATA_END_TAG_OPEN:
                 case GumboTokenizerEnum.GUMBO_LEX_RCDATA_END_TAG_NAME:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_RCDATA;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_RCDATA;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_RAWTEXT:
                 case GumboTokenizerEnum.GUMBO_LEX_RAWTEXT_LT:
                 case GumboTokenizerEnum.GUMBO_LEX_RAWTEXT_END_TAG_OPEN:
                 case GumboTokenizerEnum.GUMBO_LEX_RAWTEXT_END_TAG_NAME:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_RAWTEXT;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_RAWTEXT;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_PLAINTEXT:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_PLAINTEXT;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_PLAINTEXT;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_SCRIPT:
                 case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_LT:
@@ -314,27 +320,27 @@ namespace Gumbo
                 case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_DASH_DASH:
                 case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_LT:
                 case GumboTokenizerEnum.GUMBO_LEX_SCRIPT_DOUBLE_ESCAPED_END:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_SCRIPT;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_SCRIPT;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_TAG_OPEN:
                 case GumboTokenizerEnum.GUMBO_LEX_END_TAG_OPEN:
                 case GumboTokenizerEnum.GUMBO_LEX_TAG_NAME:
                 case GumboTokenizerEnum.GUMBO_LEX_BEFORE_ATTR_NAME:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_TAG;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_TAG;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_SELF_CLOSING_START_TAG:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_SELF_CLOSING_TAG;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_SELF_CLOSING_TAG;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_ATTR_NAME:
                 case GumboTokenizerEnum.GUMBO_LEX_AFTER_ATTR_NAME:
                 case GumboTokenizerEnum.GUMBO_LEX_BEFORE_ATTR_VALUE:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_ATTR_NAME;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_ATTR_NAME;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_ATTR_VALUE_DOUBLE_QUOTED:
                 case GumboTokenizerEnum.GUMBO_LEX_ATTR_VALUE_SINGLE_QUOTED:
                 case GumboTokenizerEnum.GUMBO_LEX_ATTR_VALUE_UNQUOTED:
                 case GumboTokenizerEnum.GUMBO_LEX_AFTER_ATTR_VALUE_QUOTED:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_ATTR_VALUE;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_ATTR_VALUE;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_BOGUS_COMMENT:
                 case GumboTokenizerEnum.GUMBO_LEX_COMMENT_START:
@@ -343,7 +349,7 @@ namespace Gumbo
                 case GumboTokenizerEnum.GUMBO_LEX_COMMENT_END_DASH:
                 case GumboTokenizerEnum.GUMBO_LEX_COMMENT_END:
                 case GumboTokenizerEnum.GUMBO_LEX_COMMENT_END_BANG:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_COMMENT;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_COMMENT;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_MARKUP_DECLARATION:
                 case GumboTokenizerEnum.GUMBO_LEX_DOCTYPE:
@@ -362,10 +368,10 @@ namespace Gumbo
                 case GumboTokenizerEnum.GUMBO_LEX_DOCTYPE_SYSTEM_ID_SINGLE_QUOTED:
                 case GumboTokenizerEnum.GUMBO_LEX_AFTER_DOCTYPE_SYSTEM_ID:
                 case GumboTokenizerEnum.GUMBO_LEX_BOGUS_DOCTYPE:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_DOCTYPE;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_DOCTYPE;
                     break;
                 case GumboTokenizerEnum.GUMBO_LEX_CDATA:
-                    error->v.tokenizer.state = GUMBO_ERR_TOKENIZER_CDATA;
+                    error.tokenizer.state = GumboTokenizerErrorState.GUMBO_ERR_TOKENIZER_CDATA;
                     break;
             }
         }
@@ -426,7 +432,7 @@ namespace Gumbo
 
         void clear_temporary_buffer()
         {
-            throw new TODOImplementException();
+
             //line: 354
             //// Starts recording characters in the temporary buffer.
             //// Because this needs to reset the utf8iterator_mark to the beginning of the
@@ -449,6 +455,9 @@ namespace Gumbo
             //    // spec, so the script data buffer should be cleared as well.
             //    gumbo_string_buffer_clear(parser, &tokenizer->_script_data_buffer);
             //}
+          
+
+            throw new TODOImplementException();
         }
 
 

@@ -155,6 +155,30 @@ namespace Gumbo
     partial class GumboError
     {
         //line: 147
+
+        /// <summary>
+        /// The type of error.
+        /// </summary>
+        public GumboErrorType type;
+        /// <summary>
+        /// The position within the source file where the error occurred.
+        /// </summary>
+        public GumboSourcePosition position;
+        public string original_text;
+
+        //TODO: review union?
+        public ulong codepoint;
+        public GumboTokenizerError tokenizer;
+        public GumboStringPiece text;
+        public GumboDuplicateAttrError duplicate_attr;
+        public GumboParserError parser;
+
+        public GumboError()
+        {
+            tokenizer = new GumboTokenizerError();
+        }
+
+        //line: 147
         //    // The overall error struct representing an error in decoding/tokenizing/parsing
         //    // the HTML.  This contains an enumerated type flag, a source position, and then
         //    // a union of fields containing data specific to the error.
